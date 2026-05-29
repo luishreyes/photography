@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Luis H. Reyes — Photography</title>
+    <script>
+      // SPA redirect for GitHub Pages: encode the path into a query string
+      // so index.html can restore it via React Router.
+      // https://github.com/rafgraph/spa-github-pages
+      (function () {
+        var l = window.location;
+        var segmentCount = 0; // custom domain root → 0
+        l.replace(
+          l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+          l.pathname.split('/').slice(0, 1 + segmentCount).join('/') + '/?/' +
+          l.pathname.slice(1).split('/').slice(segmentCount).join('/').replace(/&/g, '~and~') +
+          (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+          l.hash
+        );
+      })();
+    </script>
+  </head>
+  <body></body>
+</html>
