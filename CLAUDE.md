@@ -6,10 +6,13 @@
 
 Portafolio de fotografía artística en blanco y negro, hospedado en GitHub Pages.
 
-- **Repo:** `luishreyes/photography` *(por crear — ver sección Pendiente)*
-- **URL live:** https://photography.luishreyes.com
+- **Repo:** `luishreyes/photography` (público)
+- **URL live:** https://photography.luishreyes.com — ✓ EN PRODUCCIÓN (HTTPS forzado)
 - **Stack:** React 19 + TypeScript + Vite + React Router 7 + Tailwind CSS + Framer Motion
-- **Deploy:** GitHub Actions → GitHub Pages (workflow por crear)
+- **Deploy:** ✓ Automático al pushear a `main` (`.github/workflows/deploy.yml` → GitHub Pages)
+  - `public/CNAME` = `photography.luishreyes.com` (custom domain también seteado vía API)
+  - `public/404.html` = redirect SPA (rafgraph/spa-github-pages) para rutas directas
+  - El workflow fuerza Node 24 en las JS actions (`FORCE_JAVASCRIPT_ACTIONS_TO_NODE24`)
 - **Imágenes:** WebP optimizados servidos **localmente** desde `public/photography/{serie}/` (NO Supabase). Los originales hi-res viven en `originals/{serie}/` y NO se versionan en git.
 
 ## Estructura del proyecto
@@ -128,15 +131,14 @@ Definidas en `data/series.ts`. Cada serie tiene:
 ## Pendiente (próximos pasos)
 
 1. **Procesar fotos de `organic` y `close`** — flujo en sección Imágenes
-2. **Construir páginas restantes** — Studies, Loose, Contact
-3. **Configurar GitHub Actions** — deploy automático a GitHub Pages
-4. **Agregar CNAME** — `photography.luishreyes.com` + custom domain en repo settings + HTTPS
+2. **Construir páginas restantes** — Studies, Loose, Contact (hoy son placeholders inline en `App.tsx`)
 
 ### Hecho
 - Proyecto scaffoldeado (mismo stack que portafolio académico)
 - HomePage (hero parallax + grid), WorkPage, SeriesPage (masonry + lightbox)
 - 4/6 series con fotos: geometries, abstractions, in-passing, elsewhere
-- Repo GitHub `luishreyes/photography` creado
+- Repo GitHub `luishreyes/photography` creado (público)
+- **Deploy en producción**: https://photography.luishreyes.com con HTTPS forzado y deploy automático
 
 ## Principios
 
