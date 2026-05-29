@@ -1,10 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { series } from '../data/series';
+import { useI18n } from '../context/i18n';
 
 export default function SeriesPage() {
   const { slug } = useParams<{ slug: string }>();
-  const navigate = useNavigate();
+  const { t, lang } = useI18n();
   const s = series.find(s => s.slug === slug);
   const [lightbox, setLightbox] = useState<number | null>(null);
 
@@ -31,7 +32,7 @@ export default function SeriesPage() {
     <main className="min-h-screen bg-brand-dark flex items-center justify-center">
       <div className="text-center">
         <p className="text-white/40 mb-4">Series not found</p>
-        <Link to="/work" className="text-brand-yellow underline">← Back to Work</Link>
+        <Link to="/work" className="text-brand-yellow underline">{t('series.back')}</Link>
       </div>
     </main>
   );
@@ -44,17 +45,17 @@ export default function SeriesPage() {
       {/* Header */}
       <div className="pt-28 pb-12 px-6 md:px-16 max-w-7xl mx-auto">
         <Link to="/work" className="text-white/30 text-xs tracking-[0.2em] uppercase hover:text-brand-yellow transition-colors mb-6 inline-block">
-          ← Work
+          {t('series.back')}
         </Link>
         <h1 className="text-4xl md:text-6xl font-bold text-white">{s.title}</h1>
-        <p className="mt-4 text-white/50 text-base md:text-lg max-w-2xl leading-relaxed">{s.description}</p>
+        <p className="mt-4 text-white/50 text-base md:text-lg max-w-2xl leading-relaxed">{s.description[lang]}</p>
         {s.quote && (
           <blockquote className="mt-6 border-l-2 border-brand-yellow pl-4">
             <p className="text-white/30 text-sm italic">"{s.quote.text}"</p>
             <p className="text-white/20 text-xs mt-1">— {s.quote.author}</p>
           </blockquote>
         )}
-        <p className="mt-6 text-white/20 text-xs tracking-widest uppercase">{s.photos.length} photographs · {s.year}</p>
+        <p className="mt-6 text-white/20 text-xs tracking-widest uppercase">{s.photos.length} {t('series.count')} · {s.year}</p>
       </div>
 
       {/* Masonry grid */}
@@ -95,7 +96,7 @@ export default function SeriesPage() {
         >
           {/* Close */}
           <button className="absolute top-6 right-6 text-white/40 hover:text-white text-sm tracking-widest uppercase z-10" onClick={() => setLightbox(null)}>
-            Close
+            {t('lightbox.close')}
           </button>
 
           {/* Prev */}

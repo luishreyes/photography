@@ -1,15 +1,40 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useI18n, type UIKey } from '../context/i18n';
 
-const links = [
-  { label: 'Work', href: '/work' },
-  { label: 'Studies', href: '/studies' },
-  { label: 'Loose', href: '/loose' },
-  { label: 'Contact', href: '/contact' },
+const links: { key: UIKey; href: string }[] = [
+  { key: 'nav.work',    href: '/work' },
+  { key: 'nav.studies', href: '/studies' },
+  { key: 'nav.loose',   href: '/loose' },
+  { key: 'nav.contact', href: '/contact' },
 ];
 
+function LangToggle({ className = '' }: { className?: string }) {
+  const { lang, setLang } = useI18n();
+  return (
+    <div className={`flex items-center gap-1 text-xs font-semibold tracking-wide ${className}`}>
+      <button
+        onClick={() => setLang('en')}
+        className={lang === 'en' ? 'text-brand-yellow' : 'text-white/40 hover:text-white transition-colors'}
+        aria-label="English"
+      >
+        EN
+      </button>
+      <span className="text-white/20">/</span>
+      <button
+        onClick={() => setLang('es')}
+        className={lang === 'es' ? 'text-brand-yellow' : 'text-white/40 hover:text-white transition-colors'}
+        aria-label="Español"
+      >
+        ES
+      </button>
+    </div>
+  );
+}
+
 export default function Navbar() {
+  const { t } = useI18n();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
@@ -35,33 +60,40 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop */}
-          <ul className="hidden lg:flex items-center gap-8">
-            {links.map(({ label, href }) => (
-              <li key={href}>
-                <Link
-                  to={href}
-                  className={`text-sm font-medium tracking-wide transition-colors ${
-                    location.pathname.startsWith(href)
-                      ? 'text-brand-yellow'
-                      : 'text-white/60 hover:text-white'
-                  }`}
-                >
-                  {label}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <div className="hidden lg:flex items-center gap-8">
+            <ul className="flex items-center gap-8">
+              {links.map(({ key, href }) => (
+                <li key={href}>
+                  <Link
+                    to={href}
+                    className={`text-sm font-medium tracking-wide transition-colors ${
+                      location.pathname.startsWith(href)
+                        ? 'text-brand-yellow'
+                        : 'text-white/60 hover:text-white'
+                    }`}
+                  >
+                    {t(key)}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <span className="w-px h-4 bg-white/15" />
+            <LangToggle />
+          </div>
 
-          {/* Mobile toggle */}
-          <button
-            className="lg:hidden flex flex-col gap-1.5 p-1"
-            onClick={() => setMenuOpen(o => !o)}
-            aria-label="Menu"
-          >
-            <span className={`block w-5 h-px bg-white transition-all ${menuOpen ? 'rotate-45 translate-y-2' : ''}`} />
-            <span className={`block w-5 h-px bg-white transition-all ${menuOpen ? 'opacity-0' : ''}`} />
-            <span className={`block w-5 h-px bg-white transition-all ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
-          </button>
+          {/* Mobile: toggle de idioma + hamburguesa */}
+          <div className="lg:hidden flex items-center gap-4">
+            <LangToggle />
+            <button
+              className="flex flex-col gap-1.5 p-1"
+              onClick={() => setMenuOpen(o => !o)}
+              aria-label="Menu"
+            >
+              <span className={`block w-5 h-px bg-white transition-all ${menuOpen ? 'rotate-45 translate-y-2' : ''}`} />
+              <span className={`block w-5 h-px bg-white transition-all ${menuOpen ? 'opacity-0' : ''}`} />
+              <span className={`block w-5 h-px bg-white transition-all ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+            </button>
+          </div>
         </nav>
       </header>
 
@@ -74,13 +106,13 @@ export default function Navbar() {
             exit={{ opacity: 0, y: -10 }}
             className="fixed inset-0 z-40 bg-brand-dark flex flex-col items-center justify-center gap-10"
           >
-            {links.map(({ label, href }) => (
+            {links.map(({ key, href }) => (
               <Link
                 key={href}
                 to={href}
                 className="text-3xl font-bold text-white hover:text-brand-yellow transition-colors"
               >
-                {label}
+                {t(key)}
               </Link>
             ))}
           </motion.div>

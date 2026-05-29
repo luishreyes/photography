@@ -1,15 +1,17 @@
 import { Link } from 'react-router-dom';
 import { series } from '../data/series';
+import { useI18n } from '../context/i18n';
 
 export default function WorkPage() {
+  const { t, lang } = useI18n();
   return (
     <main className="min-h-screen bg-brand-dark pt-24 pb-16 px-6 md:px-16">
       <div className="max-w-7xl mx-auto">
         <div className="mb-16">
-          <p className="text-white/30 text-xs tracking-[0.25em] uppercase mb-3">Collections</p>
-          <h1 className="text-4xl md:text-5xl font-bold text-white">The work</h1>
+          <p className="text-white/30 text-xs tracking-[0.25em] uppercase mb-3">{t('work.kicker')}</p>
+          <h1 className="text-4xl md:text-5xl font-bold text-white">{t('work.title')}</h1>
           <p className="mt-3 text-white/40 max-w-md">
-            Six series. They follow an order, but you don't have to.
+            {t('work.introShort')}
           </p>
         </div>
 
@@ -34,7 +36,7 @@ export default function WorkPage() {
               <div className="absolute bottom-0 left-0 right-0 p-6">
                 <p className="text-white/50 text-xs tracking-[0.2em] uppercase mb-1">{s.year}</p>
                 <h3 className="text-white font-bold text-xl group-hover:text-brand-yellow transition-colors duration-300">{s.title}</h3>
-                <p className="text-white/0 group-hover:text-white text-sm mt-2 transition-all duration-400 translate-y-2 group-hover:translate-y-0 leading-snug">{s.description}</p>
+                <p className="text-white/0 group-hover:text-white text-sm mt-2 transition-all duration-400 translate-y-2 group-hover:translate-y-0 leading-snug">{s.description[lang]}</p>
               </div>
               <div className="absolute top-5 right-5 text-white/10 text-5xl font-bold leading-none group-hover:text-brand-yellow/20 transition-colors duration-300">
                 {String(i + 1).padStart(2, '0')}

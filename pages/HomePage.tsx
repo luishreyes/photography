@@ -2,10 +2,12 @@ import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { series } from '../data/series';
+import { useI18n } from '../context/i18n';
 
 const HERO_IMAGE = '/hero.webp';
 
 export default function HomePage() {
+  const { t, lang } = useI18n();
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
   const heroScale = useTransform(scrollYProgress, [0, 1], [1, 1.08]);
@@ -39,7 +41,7 @@ export default function HomePage() {
             transition={{ delay: 0.3, duration: 0.8 }}
             className="text-white/50 text-sm tracking-[0.25em] uppercase mb-4 font-medium"
           >
-            Luis H. Reyes — Black & White Fine Art Photography
+            {t('hero.kicker')}
           </motion.p>
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
@@ -47,7 +49,7 @@ export default function HomePage() {
             transition={{ delay: 0.5, duration: 0.9 }}
             className="text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight max-w-3xl"
           >
-            There's a version of every scene that only shows up when you strip the color away.
+            {t('hero.title')}
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -55,7 +57,7 @@ export default function HomePage() {
             transition={{ delay: 0.8, duration: 0.8 }}
             className="mt-4 text-white/60 text-lg font-medium"
           >
-            That's the one I'm after.
+            {t('hero.sub')}
           </motion.p>
 
           {/* Scroll indicator */}
@@ -65,7 +67,7 @@ export default function HomePage() {
             transition={{ delay: 1.4, duration: 1 }}
             className="absolute bottom-8 right-8 md:right-16 flex flex-col items-center gap-2"
           >
-            <span className="text-white/30 text-xs tracking-[0.2em] uppercase rotate-90 origin-center mb-4">Scroll</span>
+            <span className="text-white/30 text-xs tracking-[0.2em] uppercase rotate-90 origin-center mb-4">{t('hero.scroll')}</span>
             <div className="w-px h-12 bg-gradient-to-b from-white/40 to-transparent" />
           </motion.div>
         </motion.div>
@@ -75,18 +77,18 @@ export default function HomePage() {
       <section className="bg-brand-dark py-24 px-6 md:px-16">
         <div className="max-w-7xl mx-auto">
           <div className="mb-16">
-            <p className="text-white/30 text-xs tracking-[0.25em] uppercase mb-3">Collections</p>
+            <p className="text-white/30 text-xs tracking-[0.25em] uppercase mb-3">{t('work.kicker')}</p>
             <h2 className="text-3xl md:text-4xl font-bold text-white">
-              The work
+              {t('work.title')}
             </h2>
             <p className="mt-3 text-white/40 max-w-md">
-              Six series. They follow an order, but you don't have to. Pick whatever catches your eye, or start at the top and let the sequence do its thing.
+              {t('work.intro')}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-white/5">
             {series.map((s, i) => (
-              <SeriesCard key={s.slug} series={s} index={i} />
+              <SeriesCard key={s.slug} series={s} index={i} lang={lang} />
             ))}
           </div>
         </div>
@@ -95,7 +97,7 @@ export default function HomePage() {
   );
 }
 
-function SeriesCard({ series: s, index }: { series: typeof series[0]; index: number }) {
+function SeriesCard({ series: s, index, lang }: { series: typeof series[0]; index: number; lang: 'en' | 'es' }) {
   return (
     <div>
       <Link
@@ -125,7 +127,7 @@ function SeriesCard({ series: s, index }: { series: typeof series[0]; index: num
             {s.title}
           </h3>
           <p className="text-white/0 group-hover:text-white text-sm mt-2 transition-all duration-400 translate-y-2 group-hover:translate-y-0 leading-snug">
-            {s.description}
+            {s.description[lang]}
           </p>
         </div>
 

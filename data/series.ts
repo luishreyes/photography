@@ -11,8 +11,8 @@ export interface Series {
   slug: string;
   title: string;
   year: number;
-  description: string;
-  quote?: { text: string; author: string };
+  description: { en: string; es: string };
+  quote?: { text: string; author: string }; // queda en inglés (original)
   coverPhoto: string;
   photos: Photo[];
 }
@@ -24,7 +24,10 @@ export const series: Series[] = [
     slug: 'geometries',
     title: 'Geometries',
     year: 2026,
-    description: "I keep finding myself looking at buildings the way other people look at faces. Lines, curves, repetition. There's something in the way a structure holds space that feels almost alive. These photographs are about that feeling: the moment when architecture stops being a backdrop and starts being the subject.",
+    description: {
+      en: "I keep finding myself looking at buildings the way other people look at faces. Lines, curves, repetition. There's something in the way a structure holds space that feels almost alive. These photographs are about that feeling: the moment when architecture stops being a backdrop and starts being the subject.",
+      es: "Me descubro mirando los edificios como otros miran los rostros. Líneas, curvas, repetición. Hay algo en la forma en que una estructura sostiene el espacio que se siente casi vivo. Estas fotografías tratan de esa sensación: el momento en que la arquitectura deja de ser un telón de fondo y empieza a ser el tema.",
+    },
     quote: { text: "A good photograph is knowing where to stand.", author: "Ansel Adams" },
     coverPhoto: `${BASE_LOCAL}/geometries/cover.webp`,
     photos: [
@@ -46,7 +49,10 @@ export const series: Series[] = [
     slug: 'abstractions',
     title: 'Abstractions',
     year: 2026,
-    description: "Everything here started as something recognizable. A chandelier, a horse, a city at night. But movement, blur, and light got in the way, and the original thing dissolved into something else. I'm less interested in what you see and more interested in what you feel before you figure out what you're looking at.",
+    description: {
+      en: "Everything here started as something recognizable. A chandelier, a horse, a city at night. But movement, blur, and light got in the way, and the original thing dissolved into something else. I'm less interested in what you see and more interested in what you feel before you figure out what you're looking at.",
+      es: "Todo aquí empezó siendo algo reconocible. Una araña de luces, un caballo, una ciudad de noche. Pero el movimiento, el desenfoque y la luz se interpusieron, y aquello original se disolvió en otra cosa. Me interesa menos lo que ves y más lo que sientes antes de descifrar qué estás mirando.",
+    },
     quote: { text: "The camera sees more than the eye, so why not make use of it?", author: "Edward Weston" },
     coverPhoto: `${BASE_LOCAL}/abstractions/cover.webp`,
     photos: [
@@ -68,7 +74,10 @@ export const series: Series[] = [
     slug: 'in-passing',
     title: 'In Passing',
     year: 2026,
-    description: "Street life moves fast and most of it disappears. But every now and then something shows up for a second, a gesture, a look, a weird little scene, and if the camera is ready, it stays. These are the ones I managed to catch. Some are funny, some are heavy, and a few are both at the same time.",
+    description: {
+      en: "Street life moves fast and most of it disappears. But every now and then something shows up for a second, a gesture, a look, a weird little scene, and if the camera is ready, it stays. These are the ones I managed to catch. Some are funny, some are heavy, and a few are both at the same time.",
+      es: "La vida en la calle va rápido y casi todo desaparece. Pero de vez en cuando algo aparece por un segundo —un gesto, una mirada, una escena rara— y si la cámara está lista, se queda. Estas son las que alcancé a atrapar. Algunas son graciosas, otras pesan, y unas pocas son ambas cosas a la vez.",
+    },
     quote: { text: "The eye should learn to listen before it looks.", author: "Robert Frank" },
     coverPhoto: `${BASE_LOCAL}/in-passing/cover.webp`,
     photos: [
@@ -90,7 +99,10 @@ export const series: Series[] = [
     slug: 'elsewhere',
     title: 'Elsewhere',
     year: 2026,
-    description: "These aren't travel photos. I mean, they were taken in other places, but that's not the point. The point is that some places stick with you long after you leave. A ruin, a statue, a storm over a city you'll probably never visit again. This is my collection of places I couldn't shake off.",
+    description: {
+      en: "These aren't travel photos. I mean, they were taken in other places, but that's not the point. The point is that some places stick with you long after you leave. A ruin, a statue, a storm over a city you'll probably never visit again. This is my collection of places I couldn't shake off.",
+      es: "Estas no son fotos de viaje. Bueno, fueron tomadas en otros lugares, pero ese no es el punto. El punto es que algunos lugares se quedan contigo mucho después de irte. Una ruina, una estatua, una tormenta sobre una ciudad que probablemente nunca vuelvas a visitar. Esta es mi colección de lugares que no pude quitarme de encima.",
+    },
     quote: { text: "To me, photography is an art of observation. It's about finding something interesting in an ordinary place.", author: "Elliott Erwitt" },
     coverPhoto: `${BASE_LOCAL}/elsewhere/cover.webp`,
     photos: [
@@ -112,7 +124,10 @@ export const series: Series[] = [
     slug: 'organic',
     title: 'Organic',
     year: 2026,
-    description: "Animals, plants, insects, feathers. Living things have this way of being incredibly delicate and ridiculously strong at the same time. Up close, a leaf looks like a map, a spider looks like a blueprint, and a horse pushing through a hole in a wall looks like it's been planning its entrance for years. This section is about paying attention to that.",
+    description: {
+      en: "Animals, plants, insects, feathers. Living things have this way of being incredibly delicate and ridiculously strong at the same time. Up close, a leaf looks like a map, a spider looks like a blueprint, and a horse pushing through a hole in a wall looks like it's been planning its entrance for years. This section is about paying attention to that.",
+      es: "Animales, plantas, insectos, plumas. Los seres vivos tienen esa manera de ser increíblemente delicados y ridículamente fuertes al mismo tiempo. De cerca, una hoja parece un mapa, una araña parece un plano, y un caballo asomándose por un hueco en un muro parece que llevara años planeando su entrada. Esta sección trata de prestarle atención a eso.",
+    },
     quote: { text: "The mystery isn't in the technique, it's in each of us.", author: "Harry Callahan" },
     coverPhoto: `${BASE_LOCAL}/organic/cover.jpg`,
     photos: [],
@@ -121,7 +136,10 @@ export const series: Series[] = [
     slug: 'close',
     title: 'Close',
     year: 2026,
-    description: "This is the personal stuff. My daughter discovering her own reflection. My parents under an umbrella in the rain. My wife's grandmother laughing by her oven. The camera gets quieter here, closer. These are the people I love, photographed the way I see them: in ordinary light, doing ordinary things, being everything.",
+    description: {
+      en: "This is the personal stuff. My daughter discovering her own reflection. My parents under an umbrella in the rain. My wife's grandmother laughing by her oven. The camera gets quieter here, closer. These are the people I love, photographed the way I see them: in ordinary light, doing ordinary things, being everything.",
+      es: "Esto es lo personal. Mi hija descubriendo su propio reflejo. Mis padres bajo un paraguas en la lluvia. La abuela de mi esposa riéndose junto a su horno. Aquí la cámara se hace más callada, más cercana. Estas son las personas que amo, fotografiadas como las veo: en luz ordinaria, haciendo cosas ordinarias, siéndolo todo.",
+    },
     quote: { text: "A portrait is not made in the camera but on either side of it.", author: "Edward Steichen" },
     coverPhoto: `${BASE_LOCAL}/close/cover.jpg`,
     photos: [],
