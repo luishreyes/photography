@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { series } from '../data/series';
 
-const HERO_IMAGE = '/DSCF2737 2.JPG';
+const HERO_IMAGE = '/hero.webp';
 
 export default function HomePage() {
   const heroRef = useRef<HTMLDivElement>(null);
