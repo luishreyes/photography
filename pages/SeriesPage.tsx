@@ -1,5 +1,6 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { AnimatePresence, motion } from 'framer-motion';
 import { series } from '../data/series';
 import { useI18n } from '../context/i18n';
 
@@ -7,26 +8,46 @@ export default function SeriesPage() {
   const { slug } = useParams<{ slug: string }>();
   const { t, lang } = useI18n();
   const s = series.find(s => s.slug === slug);
-  const [lightbox, setLightbox] = useState<number | null>(null);
 
-  // Keyboard nav for lightbox
-  const handleKey = useCallback((e: KeyboardEvent) => {
-    if (lightbox === null || !s) return;
-    if (e.key === 'ArrowRight') setLightbox(i => i !== null ? Math.min(i + 1, s.photos.length - 1) : null);
-    if (e.key === 'ArrowLeft')  setLightbox(i => i !== null ? Math.max(i - 1, 0) : null);
-    if (e.key === 'Escape') setLightbox(null);
-  }, [lightbox, s]);
+  const [active, setActive] = useState(0);
+  const [dir, setDir] = useState(1); // 1 = next, -1 = prev
+  const [zoom, setZoom] = useState(false); // fullscreen viewer
+  const touchStartX = useRef<number | null>(null);
+  const thumbRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
+  const total = s?.photos.length ?? 0;
+
+  const go = useCallback((next: number) => {
+    if (!total) return;
+    const clamped = Math.max(0, Math.min(next, total - 1));
+    setDir(clamped >= active ? 1 : -1);
+    setActive(clamped);
+  }, [active, total]);
+
+  // Reset on series change
+  useEffect(() => { setActive(0); setDir(1); }, [slug]);
+
+  // Keyboard nav
   useEffect(() => {
-    window.addEventListener('keydown', handleKey);
-    return () => window.removeEventListener('keydown', handleKey);
-  }, [handleKey]);
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowRight') go(active + 1);
+      if (e.key === 'ArrowLeft') go(active - 1);
+      if (e.key === 'Escape') setZoom(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [go, active]);
 
-  // Lock scroll when lightbox open
+  // Lock body scroll while zoomed
   useEffect(() => {
-    document.body.style.overflow = lightbox !== null ? 'hidden' : '';
+    document.body.style.overflow = zoom ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
-  }, [lightbox]);
+  }, [zoom]);
+
+  // Keep active thumbnail in view
+  useEffect(() => {
+    thumbRefs.current[active]?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+  }, [active]);
 
   if (!s) return (
     <main className="min-h-screen bg-brand-dark flex items-center justify-center">
@@ -37,138 +58,170 @@ export default function SeriesPage() {
     </main>
   );
 
-  // Build masonry columns (3 on desktop, 2 on tablet, 1 on mobile)
-  const cols = buildColumns(s.photos, 3);
+  const photo = s.photos[active];
+
+  const onTouchStart = (e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX; };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const delta = e.changedTouches[0].clientX - touchStartX.current;
+    if (Math.abs(delta) > 50) go(delta < 0 ? active + 1 : active - 1);
+    touchStartX.current = null;
+  };
 
   return (
-    <main className="min-h-screen bg-brand-dark">
+    <main className="h-screen overflow-hidden bg-brand-dark flex flex-col">
       {/* Header */}
-      <div className="pt-28 pb-12 px-6 md:px-16 max-w-7xl mx-auto">
-        <Link to="/work" className="text-white/30 text-xs tracking-[0.2em] uppercase hover:text-brand-yellow transition-colors mb-6 inline-block">
+      <div className="pt-24 pb-4 px-6 md:px-16 max-w-5xl mx-auto w-full">
+        <Link to="/work" className="text-white/30 text-xs tracking-[0.2em] uppercase hover:text-brand-yellow transition-colors mb-5 inline-block">
           {t('series.back')}
         </Link>
-        <h1 className="text-4xl md:text-6xl font-bold text-white">{s.title}</h1>
-        <p className="mt-4 text-white/50 text-base md:text-lg max-w-2xl leading-relaxed">{s.description[lang]}</p>
+        <h1 className="text-3xl md:text-5xl font-bold text-white">{s.title}</h1>
+        <p className="mt-3 text-white/50 text-sm md:text-base max-w-2xl leading-relaxed">{s.description[lang]}</p>
         {s.quote && (
-          <blockquote className="mt-6 border-l-2 border-brand-yellow pl-4">
+          <blockquote className="mt-4 border-l-2 border-brand-yellow pl-4">
             <p className="text-white/30 text-sm italic">"{s.quote.text}"</p>
             <p className="text-white/20 text-xs mt-1">— {s.quote.author}</p>
           </blockquote>
         )}
-        <p className="mt-6 text-white/20 text-xs tracking-widest uppercase">{s.photos.length} {t('series.count')} · {s.year}</p>
       </div>
 
-      {/* Masonry grid */}
-      <div className="px-6 md:px-16 pb-24 max-w-7xl mx-auto">
-        {/* Desktop: 3 cols */}
-        <div className="hidden lg:grid grid-cols-3 gap-3">
-          {cols.map((col, ci) => (
-            <div key={ci} className="flex flex-col gap-3">
-              {col.map(photo => (
-                <MasonryPhoto key={photo.id} photo={photo} onClick={() => setLightbox(s.photos.indexOf(photo))} />
-              ))}
-            </div>
-          ))}
-        </div>
-        {/* Tablet: 2 cols */}
-        <div className="hidden md:grid lg:hidden grid-cols-2 gap-3">
-          {buildColumns(s.photos, 2).map((col, ci) => (
-            <div key={ci} className="flex flex-col gap-3">
-              {col.map(photo => (
-                <MasonryPhoto key={photo.id} photo={photo} onClick={() => setLightbox(s.photos.indexOf(photo))} />
-              ))}
-            </div>
-          ))}
-        </div>
-        {/* Mobile: 1 col */}
-        <div className="md:hidden flex flex-col gap-3">
-          {s.photos.map(photo => (
-            <MasonryPhoto key={photo.id} photo={photo} onClick={() => setLightbox(s.photos.indexOf(photo))} />
-          ))}
-        </div>
-      </div>
-
-      {/* Lightbox */}
-      {lightbox !== null && (
-        <div
-          className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center"
-          onClick={() => setLightbox(null)}
-        >
-          {/* Close */}
-          <button className="absolute top-6 right-6 text-white/40 hover:text-white text-sm tracking-widest uppercase z-10" onClick={() => setLightbox(null)}>
-            {t('lightbox.close')}
-          </button>
-
-          {/* Prev */}
-          {lightbox > 0 && (
-            <button
-              className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 text-white/30 hover:text-white z-10 text-3xl px-4 py-8"
-              onClick={e => { e.stopPropagation(); setLightbox(lightbox - 1); }}
-            >
-              ←
-            </button>
-          )}
-
-          {/* Image */}
-          <img
-            src={s.photos[lightbox].src}
-            alt={s.photos[lightbox].title}
-            className="max-h-[90vh] max-w-[90vw] object-contain"
-            onClick={e => e.stopPropagation()}
+      {/* Cinematic viewer */}
+      <div
+        className="relative flex-1 min-h-0 flex items-center justify-center select-none overflow-hidden"
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
+      >
+        <AnimatePresence initial={false} custom={dir} mode="popLayout">
+          <motion.img
+            key={photo.id}
+            src={photo.src}
+            alt={photo.title}
+            custom={dir}
+            initial={{ opacity: 0, x: dir * 40 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: dir * -40 }}
+            transition={{ duration: 0.35, ease: 'easeOut' }}
+            onClick={() => setZoom(true)}
+            className="max-h-full max-w-[90vw] object-contain cursor-zoom-in"
+            draggable={false}
           />
+        </AnimatePresence>
 
-          {/* Next */}
-          {lightbox < s.photos.length - 1 && (
+        {/* Desktop arrows */}
+        {active > 0 && (
+          <button
+            aria-label="Previous"
+            onClick={() => go(active - 1)}
+            className="hidden md:flex absolute left-4 lg:left-10 top-1/2 -translate-y-1/2 text-white/30 hover:text-brand-yellow text-4xl px-4 py-8 transition-colors"
+          >
+            ←
+          </button>
+        )}
+        {active < total - 1 && (
+          <button
+            aria-label="Next"
+            onClick={() => go(active + 1)}
+            className="hidden md:flex absolute right-4 lg:right-10 top-1/2 -translate-y-1/2 text-white/30 hover:text-brand-yellow text-4xl px-4 py-8 transition-colors"
+          >
+            →
+          </button>
+        )}
+      </div>
+
+      {/* Caption */}
+      <div className="text-center px-6 pt-4">
+        <p className="text-white/60 text-sm font-medium">{photo.title}</p>
+        <p className="text-white/20 text-xs mt-1 tracking-widest">{active + 1} / {total} · {s.year}</p>
+      </div>
+
+      {/* Thumbnail strip */}
+      <div className="px-4 md:px-10 pb-8 pt-4">
+        <div className="flex gap-2 overflow-x-auto justify-start md:justify-center no-scrollbar">
+          {s.photos.map((p, i) => (
             <button
-              className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 text-white/30 hover:text-white z-10 text-3xl px-4 py-8"
-              onClick={e => { e.stopPropagation(); setLightbox(lightbox + 1); }}
+              key={p.id}
+              ref={el => { thumbRefs.current[i] = el; }}
+              onClick={() => go(i)}
+              aria-label={p.title}
+              className="relative shrink-0 h-14 w-14 md:h-16 md:w-16 overflow-hidden bg-zinc-900 transition-all duration-300"
             >
-              →
+              <img
+                src={p.src}
+                alt={p.title}
+                loading="lazy"
+                className={`h-full w-full object-cover transition-all duration-300 ${
+                  i === active ? 'grayscale-0 opacity-100' : 'grayscale opacity-50 hover:opacity-80'
+                }`}
+              />
+              {i === active && <span className="absolute inset-0 ring-2 ring-brand-yellow ring-inset" />}
             </button>
-          )}
-
-          {/* Caption */}
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-center">
-            <p className="text-white/60 text-sm font-medium">{s.photos[lightbox].title}</p>
-            <p className="text-white/20 text-xs mt-1">{lightbox + 1} / {s.photos.length}</p>
-          </div>
+          ))}
         </div>
-      )}
+      </div>
+
+      {/* Fullscreen viewer */}
+      <AnimatePresence>
+        {zoom && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-50 bg-black flex items-center justify-center cursor-zoom-out"
+            onClick={() => setZoom(false)}
+            onTouchStart={onTouchStart}
+            onTouchEnd={onTouchEnd}
+          >
+            <button
+              aria-label={t('lightbox.close')}
+              onClick={() => setZoom(false)}
+              className="absolute top-6 right-6 text-white/40 hover:text-white text-xs tracking-widest uppercase z-10"
+            >
+              {t('lightbox.close')}
+            </button>
+
+            <AnimatePresence initial={false} custom={dir} mode="popLayout">
+              <motion.img
+                key={photo.id}
+                src={photo.src}
+                alt={photo.title}
+                custom={dir}
+                initial={{ opacity: 0, x: dir * 40 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: dir * -40 }}
+                transition={{ duration: 0.35, ease: 'easeOut' }}
+                onClick={() => setZoom(false)}
+                className="max-h-[92vh] max-w-[94vw] object-contain cursor-zoom-out"
+                draggable={false}
+              />
+            </AnimatePresence>
+
+            {active > 0 && (
+              <button
+                aria-label="Previous"
+                onClick={e => { e.stopPropagation(); go(active - 1); }}
+                className="hidden md:flex absolute left-4 lg:left-10 top-1/2 -translate-y-1/2 text-white/30 hover:text-brand-yellow text-4xl px-4 py-8 transition-colors z-10"
+              >
+                ←
+              </button>
+            )}
+            {active < total - 1 && (
+              <button
+                aria-label="Next"
+                onClick={e => { e.stopPropagation(); go(active + 1); }}
+                className="hidden md:flex absolute right-4 lg:right-10 top-1/2 -translate-y-1/2 text-white/30 hover:text-brand-yellow text-4xl px-4 py-8 transition-colors z-10"
+              >
+                →
+              </button>
+            )}
+
+            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-center pointer-events-none">
+              <p className="text-white/60 text-sm font-medium">{photo.title}</p>
+              <p className="text-white/20 text-xs mt-1 tracking-widest">{active + 1} / {total}</p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </main>
   );
-}
-
-function MasonryPhoto({ photo, onClick }: { photo: { id: string; title: string; src: string; width: number; height: number }; onClick: () => void }) {
-  const aspectRatio = photo.height / photo.width;
-  return (
-    <div className="group cursor-pointer" onClick={onClick}>
-      {/* Photo */}
-      <div
-        className="relative overflow-hidden bg-zinc-900"
-        style={{ paddingBottom: `${aspectRatio * 100}%` }}
-      >
-        <img
-          src={photo.src}
-          alt={photo.title}
-          loading="lazy"
-          className="absolute inset-0 w-full h-full object-cover grayscale transition-all duration-500 group-hover:grayscale-0 group-hover:scale-[1.02]"
-        />
-      </div>
-      {/* Title always visible below photo */}
-      <p className="mt-2 text-white/40 text-xs tracking-wide group-hover:text-white/70 transition-colors duration-300">
-        {photo.title}
-      </p>
-    </div>
-  );
-}
-
-function buildColumns<T extends { width: number; height: number }>(photos: T[], numCols: number): T[][] {
-  const cols: T[][] = Array.from({ length: numCols }, () => []);
-  const heights = new Array(numCols).fill(0);
-  for (const photo of photos) {
-    const shortest = heights.indexOf(Math.min(...heights));
-    cols[shortest].push(photo);
-    heights[shortest] += photo.height / photo.width;
-  }
-  return cols;
 }

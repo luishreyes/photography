@@ -118,11 +118,17 @@ Definidas en `data/series.ts`. Cada serie tiene:
 
 ## Páginas
 
-### SeriesPage (`/work/:slug`) — ✓ construida
-- Encabezado: título + intro completo + quote (línea amarilla) + conteo de fotos
-- Masonry: 3 col desktop / 2 col tablet / 1 col móvil (columnas balanceadas por altura, ver `buildColumns`)
-- Título de cada foto **siempre visible debajo** (no en hover) — réplica de Adobe Portfolio
-- Lightbox a pantalla completa: navegación ←/→ teclado, Escape para cerrar, contador `n / total`
+### SeriesPage (`/work/:slug`) — ✓ construida (visor cinematográfico)
+- Layout `h-screen overflow-hidden`: todo cabe en una pantalla, sin scroll vertical.
+- Encabezado compacto: título + intro + quote (línea amarilla).
+- **Visor cinematográfico centrado**: una foto grande a la vez (`flex-1`, `object-contain`), fondo negro, transición fade/slide con framer-motion (`AnimatePresence`, dir 1/-1).
+- **Foto activa a todo color**; los thumbnails en grayscale (el activo a color con borde `ring-brand-yellow`).
+- **Navegación horizontal**:
+  - Desktop: flechas ←/→ (hover regions) + teclado ←/→.
+  - Móvil: **swipe** táctil (`touchstart`/`touchend`, umbral 50px).
+  - Tira de thumbnails abajo (scroll-x, `no-scrollbar`): click salta a la foto; la activa se auto-centra (`scrollIntoView`).
+- Caption: título de la foto + contador `n / total · año`.
+- **Click en la foto → visor a pantalla completa** (`zoom`): foto al 92vh, fondo negro, misma navegación (flechas/teclado/swipe). Cerrar con click al fondo, botón CLOSE o Escape; bloquea el scroll del body mientras está abierto.
 
 ### WorkPage (`/work`) — ✓ construida
 - Grid de las 6 series. Hover: overlay `bg-black/60` + descripción en blanco (legibilidad)
