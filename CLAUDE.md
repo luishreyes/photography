@@ -113,8 +113,8 @@ Definidas en `data/series.ts`. Cada serie tiene:
 | `abstractions` | Abstractions | ✓ 12 fotos + texto + quote |
 | `in-passing` | In Passing | ✓ 12 fotos + texto + quote |
 | `elsewhere` | Elsewhere | ✓ 12 fotos + texto + quote |
-| `organic` | Organic | Texto + quote listos; **fotos pendientes** |
-| `close` | Close | Texto + quote listos; **fotos pendientes** |
+| `organic` | Organic | ✓ 12 fotos + texto + quote |
+| `close` | Close | ✓ 12 fotos + texto + quote |
 
 ## Páginas
 
@@ -158,13 +158,12 @@ Definidas en `data/series.ts`. Cada serie tiene:
 
 ## Pendiente (próximos pasos)
 
-1. **Procesar fotos de `organic` y `close`** — flujo en sección Imágenes
-2. **Construir páginas restantes** — Studies, Loose, Contact (hoy son placeholders inline en `App.tsx`)
+1. **Construir páginas restantes** — Studies, Loose, Contact (hoy son placeholders inline en `App.tsx`)
 
 ### Hecho
 - Proyecto scaffoldeado (mismo stack que portafolio académico)
 - HomePage (hero parallax + grid), WorkPage, SeriesPage (masonry + lightbox)
-- 4/6 series con fotos: geometries, abstractions, in-passing, elsewhere
+- 6/6 series con fotos: geometries, abstractions, in-passing, elsewhere, organic, close
 - Repo GitHub `luishreyes/photography` creado (público)
 - **Deploy en producción**: https://photography.luishreyes.com con HTTPS forzado y deploy automático
 
