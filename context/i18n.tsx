@@ -27,6 +27,14 @@ const ui = {
   'series.count': { en: 'photographs', es: 'fotografías' },
   'lightbox.close': { en: 'Close', es: 'Cerrar' },
 
+  // Studies
+  'studies.kicker': { en: 'Studies', es: 'Estudios' },
+  'studies.title':  { en: 'Studies', es: 'Estudios' },
+  'studies.intro':  { en: "Collections have rules. Studies work differently. One subject, one inquiry, as many images as the subject demands. The only rule is that each photograph has to say something the others don't.", es: 'Las colecciones tienen reglas. Los estudios funcionan distinto. Un sujeto, una indagación, tantas imágenes como el sujeto demande. La única regla es que cada fotografía diga algo que las demás no dicen.' },
+  'studies.ongoing': { en: 'Ongoing', es: 'En progreso' },
+  'studies.empty':   { en: 'Coming soon', es: 'Próximamente' },
+  'study.back':      { en: '← Studies', es: '← Estudios' },
+
   // Placeholders
   'soon': { en: 'coming soon', es: 'próximamente' },
 } as const;
