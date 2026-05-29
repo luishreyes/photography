@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.DS_Store
+
+# Hi-res originals — never commit to git
+originals/
+
+# JPGs intermedios en public/ — solo se versionan los .webp
+public/photography/**/*.jpg
+public/photography/**/*.JPG
