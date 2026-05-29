@@ -20,22 +20,25 @@ Portafolio de fotografía artística en blanco y negro, hospedado en GitHub Page
 ```
 data/
   series.ts         ← Definición de todas las series y fotos (FUENTE DE VERDAD)
+context/
+  i18n.tsx          ← Sistema de idiomas EN/ES (provider + hook + strings de UI)
 components/
-  Navbar.tsx        ← Navegación fija con mobile menu
+  Navbar.tsx        ← Navegación fija + mobile menu + toggle EN/ES
 pages/
   HomePage.tsx      ← Landing: hero a pantalla completa + grid de series
   WorkPage.tsx      ← Índice de todas las series (✓ construida)
   SeriesPage.tsx    ← Galería masonry con lightbox (✓ construida)
-App.tsx             ← Router. Studies/Loose/Contact aún son placeholders inline
+App.tsx             ← <I18nProvider> + Router. Studies/Loose/Contact son placeholders inline
 originals/          ← Originales hi-res por serie (NO versionado — ver .gitignore)
   {serie}/
 public/
-  DSCF2737 2.JPG    ← Foto hero de la landing
+  hero.webp         ← Foto hero de la landing (DEBE estar en public/, no en raíz)
   photography/      ← WebP optimizados servidos en producción
     {serie}/
       cover.webp
       01-titulo.webp ... 12-titulo.webp
-CNAME               ← photography.luishreyes.com (por crear al deployar)
+  CNAME             ← photography.luishreyes.com
+  404.html          ← redirect SPA para rutas directas
 ```
 
 ## Colores del sistema (Tailwind)
@@ -50,6 +53,25 @@ Idénticos al portafolio académico:
 
 - **Manrope Variable** (sans) — autoalojada vía `@fontsource-variable/manrope`
 - No usar Google Fonts CDN
+
+## Idiomas (i18n) — EN / ES
+
+El sitio es **bilingüe** con toggle EN/ES en el navbar. Implementado en `context/i18n.tsx`.
+
+- **`useI18n()`** expone `{ lang, setLang, toggle, t }`. `lang` es `'en' | 'es'`.
+- **Persistencia:** `localStorage` key `lhr-photo-lang`. Por defecto detecta el idioma del navegador.
+- **Strings de UI:** objeto `ui` en `i18n.tsx`, tipado por `UIKey`. Se accede con `t('clave')`.
+  - **Al agregar texto nuevo de interfaz:** añadir la clave en `ui` con `{ en, es }` y usar `t('...')`. NUNCA hardcodear texto visible en los componentes.
+
+### Qué se traduce y qué NO
+| Contenido | ¿Traducido? | Dónde |
+|---|---|---|
+| Menú, etiquetas, hero, botones, lightbox | ✓ EN/ES | `ui` en `i18n.tsx` |
+| **Statements** de cada serie (`description`) | ✓ EN/ES | `description: { en, es }` en `series.ts` |
+| **Citas** de fotógrafos (`quote`) | ✗ solo inglés (original) | `series.ts` |
+| **Títulos de fotos** y de series | ✗ solo inglés (original) | `series.ts` |
+
+⚠️ Al **agregar una serie nueva**, `description` DEBE ser `{ en: '...', es: '...' }`. Si solo tienes el inglés, traduce el statement al español manteniendo el tono personal y en primera persona (la revisa el usuario).
 
 ## Imágenes
 
@@ -78,8 +100,8 @@ Definidas en `data/series.ts`. Cada serie tiene:
 - `slug` — URL friendly (`in-passing`, no `in passing`)
 - `title` — nombre visible
 - `year`
-- `description` — párrafo intro completo (copiado verbatim de Adobe Portfolio)
-- `quote?` — `{ text, author }` cita de fotógrafo (de Adobe Portfolio)
+- `description` — `{ en, es }` párrafo intro (EN verbatim de Adobe Portfolio; ES traducido)
+- `quote?` — `{ text, author }` cita de fotógrafo (solo inglés, de Adobe Portfolio)
 - `coverPhoto` — ruta local `.webp` de la portada
 - `photos[]` — array con `id`, `title`, `src`, `width`, `height` (en orden de Adobe Portfolio)
 
@@ -112,12 +134,12 @@ Definidas en `data/series.ts`. Cada serie tiene:
 ## Convenciones
 
 ### Idioma
-- Todo el sitio en **inglés**
+- Sitio **bilingüe EN/ES** — ver sección "Idiomas (i18n)". Todo texto visible nuevo va por `t()` o como `{ en, es }`.
 
 ### Tono
 - Personal, directo, primera persona
 - No académico, no corporativo
-- Las descripciones de series son frases cortas con voz propia
+- Los statements de serie tienen voz propia; la traducción ES debe preservar ese tono (no traducción literal robótica)
 
 ### Git
 - Commits descriptivos
