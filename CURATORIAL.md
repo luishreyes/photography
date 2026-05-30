@@ -285,17 +285,17 @@ Los Studies son exploraciones temáticas enfocadas. A diferencia de las coleccio
 
 ### Studies actuales
 
-**Villeta (finalizado, 26 fotografías)**
-- Tema: Vegetación tropical de una casa de campo en las tierras cálidas cerca de Bogotá. Las formas en sí, no el jardín como paisaje.
+**Villeta (finalizado, 24 fotografías)**
+- Tema: Vegetación tropical de una casa de campo en las tierras cálidas cerca de Bogotá. Las formas en sí, no el jardín como paisaje. **Orden intencional: de lo vivo a la muerte.**
 - Equipo: Fujifilm X-T50 · Fujinon 27mm f/2.8
-- Secuencia: Abundance, Dendrite, Cascade, Branches, In Rain, Colonnade, Vertebrae, Canopy, Constellation, Meridian, Tightrope, Vessel, The Bloom, Aria, Tendril, Hung, Lantern, Pendant, Dispersal, Cursive, Rainfall, Consumed, Contorsion, Stranded, Emergence, Husk
+- Secuencia: Abundance, Dendrite, Cascade, Colonnade, Vertebrae, Canopy, Constellation, Meridian, Tightrope, Vessel, The Bloom, Aria, Tendril, Hung, Lantern, Pendant, Dispersal, Cursive, Rainfall, Consumed, Contorsion, Stranded, Emergence, Husk
 - En el sitio React: `data/studies.ts` (slug `villeta`), fotos WebP en `public/photography/studies/villeta/`, masters en `originals/studies/villeta/`.
 
 **Dosel (en progreso)**
 - Tema: El dosel vegetal visto desde abajo, mirando siempre hacia arriba. Las copas de los árboles, la luz filtrada. Nunca horizontes, siempre la mirada elevada. Sin restricción geográfica.
 - Descripción web: "Look up. Always up. Through leaves, branches, canopy. The sky broken into fragments by whatever grows between you and it. This study is about the ceiling that trees make, the light they filter, and the feeling of standing beneath something alive and enormous. No horizons here. Just the weight of green above."
-- Imágenes actuales: ninguna (In Rain y Branches se reubicaron en Villeta).
-- Estado: ongoing, vacío.
+- Imágenes actuales: In Rain, Branches.
+- Estado: ongoing, 2 imágenes.
 
 
 **Containment (en progreso)**

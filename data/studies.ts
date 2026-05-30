@@ -16,24 +16,31 @@ export interface Study {
 
 const BASE_LOCAL = '/photography/studies';
 
-const VILLETA_TITLES = [
-  'Abundance', 'Dendrite', 'Cascade', 'Branches', 'In Rain',
-  'Colonnade', 'Vertebrae', 'Canopy', 'Constellation', 'Meridian',
-  'Tightrope', 'Vessel', 'The Bloom', 'Aria', 'Tendril',
-  'Hung', 'Lantern', 'Pendant', 'Dispersal', 'Cursive',
-  'Rainfall', 'Consumed', 'Contorsion', 'Stranded', 'Emergence', 'Husk',
-];
-
 const slugify = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
-const villetaPhotos: StudyPhoto[] = VILLETA_TITLES.map((title, i) => {
-  const n = String(i + 1).padStart(2, '0');
-  return {
-    id: `villeta-${n}`,
-    title,
-    src: `${BASE_LOCAL}/villeta/${n}-${slugify(title)}.webp`,
-  };
-});
+// Build a study's photo list from an ordered title array.
+const buildPhotos = (study: string, titles: string[]): StudyPhoto[] =>
+  titles.map((title, i) => {
+    const n = String(i + 1).padStart(2, '0');
+    return {
+      id: `${study}-${n}`,
+      title,
+      src: `${BASE_LOCAL}/${study}/${n}-${slugify(title)}.webp`,
+    };
+  });
+
+// Villeta — orden intencional: de lo vivo a la muerte.
+const VILLETA_TITLES = [
+  'Abundance', 'Dendrite', 'Cascade', 'Colonnade', 'Vertebrae',
+  'Canopy', 'Constellation', 'Meridian', 'Tightrope', 'Vessel',
+  'The Bloom', 'Aria', 'Tendril', 'Hung', 'Lantern',
+  'Pendant', 'Dispersal', 'Cursive', 'Rainfall', 'Consumed',
+  'Contorsion', 'Stranded', 'Emergence', 'Husk',
+];
+const DOSEL_TITLES = ['In Rain', 'Branches'];
+
+const villetaPhotos = buildPhotos('villeta', VILLETA_TITLES);
+const doselPhotos = buildPhotos('dosel', DOSEL_TITLES);
 
 export const studies: Study[] = [
   {
@@ -56,7 +63,8 @@ export const studies: Study[] = [
       en: "Look up. Always up. Through leaves, branches, canopy. The sky broken into fragments by whatever grows between you and it. This study is about the ceiling that trees make, the light they filter, and the feeling of standing beneath something alive and enormous. No horizons here. Just the weight of green above.",
       es: "Mira hacia arriba. Siempre hacia arriba. A través de hojas, ramas, dosel. El cielo roto en fragmentos por todo lo que crece entre tú y él. Este estudio trata del techo que hacen los árboles, la luz que filtran, y la sensación de estar parado bajo algo vivo y enorme. Aquí no hay horizontes. Solo el peso del verde por encima.",
     },
-    photos: [],
+    coverPhoto: `${BASE_LOCAL}/dosel/cover.webp`,
+    photos: doselPhotos,
   },
   {
     slug: 'containment',
