@@ -80,8 +80,8 @@ export default function MobileGallery({
         )}
       </div>
 
-      {/* 2-column masonry grid */}
-      <div className="px-2.5 pb-16 columns-2 gap-2.5 [column-fill:_balance]">
+      {/* 2-column grid of square thumbnails (full image shown on tap) */}
+      <div className="px-2.5 pb-16 grid grid-cols-2 gap-2.5">
         {photos.map((p, i) => (
           <motion.button
             key={p.id}
@@ -92,8 +92,7 @@ export default function MobileGallery({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.15 }}
             transition={{ duration: 0.55, ease: 'easeOut' }}
-            className="mb-2.5 block w-full break-inside-avoid overflow-hidden bg-zinc-900"
-            style={p.width && p.height ? { aspectRatio: `${p.width} / ${p.height}` } : undefined}
+            className="aspect-square block w-full overflow-hidden bg-zinc-900"
           >
             <img
               src={p.src}
