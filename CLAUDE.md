@@ -131,8 +131,8 @@ Definidas en `data/series.ts`. Cada serie tiene:
 **Móvil — galería limpia** (`components/MobileGallery.tsx`, inspirada en franklinyeep.com):
 - Página con scroll vertical normal (`min-h-screen`), NO `h-screen`.
 - **Encabezado compacto**: back link + título pequeño y condensado (`text-xl font-bold uppercase tracking-tight`) + descripción breve y discreta (`text-xs text-white/40`). Sin quote en móvil.
-- **Grid masonry de 2 columnas** (`columns-2`): cada foto conserva su `aspect-ratio` real (vía `width`/`height` de `series.ts`, sin recorte). Aparecen suavemente al hacer scroll (`whileInView`, `once`, fade + `y`).
-- **Tap en una foto → pantalla completa**: `object-contain`, fondo negro, fade suave (no aparece "de golpe"). Cerrar con **tap en cualquier lado** (sin botón X). Swipe ←/→ navega (umbral 50px; un swipe no cierra), teclado/Escape también. Bloquea el scroll del body mientras está abierta. Caption discreto abajo.
+- **Grid de 2 columnas con thumbnails cuadrados** (`grid grid-cols-2`, `aspect-square` + `object-cover`): parrilla pareja y limpia. Aparecen suavemente al hacer scroll (`whileInView`, `once`, fade + `y`).
+- **Tap en una foto → pantalla completa**: `object-contain` (muestra la foto entera, sin recorte), fondo negro, fade suave (no aparece "de golpe"). Cerrar con **tap en cualquier lado** (sin botón X). Swipe ←/→ navega (umbral 50px; un swipe no cierra), teclado/Escape también. Bloquea el scroll del body mientras está abierta. Caption discreto abajo.
 
 ### WorkPage (`/work`) — ✓ construida
 - Grid de las 6 series. Hover: overlay `bg-black/60` + descripción en blanco (legibilidad)
