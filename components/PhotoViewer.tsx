@@ -2,14 +2,18 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useI18n } from '../context/i18n';
+import MobileGallery from './MobileGallery';
+import { useIsMobile } from '../hooks/useIsMobile';
 
-interface ViewerPhoto {
+export interface ViewerPhoto {
   id: string;
   title: string;
   src: string;
+  width?: number;
+  height?: number;
 }
 
-interface PhotoViewerProps {
+export interface PhotoViewerProps {
   backHref: string;
   backLabel: string;
   title: string;
@@ -20,7 +24,14 @@ interface PhotoViewerProps {
   resetKey?: string; // resets to first photo when this changes
 }
 
-export default function PhotoViewer({
+// Switches between the cinematic one-at-a-time viewer (desktop) and the
+// clean scrolling 2-column gallery (mobile). The photo always comes first.
+export default function PhotoViewer(props: PhotoViewerProps) {
+  const isMobile = useIsMobile();
+  return isMobile ? <MobileGallery {...props} /> : <CinematicViewer {...props} />;
+}
+
+function CinematicViewer({
   backHref, backLabel, title, description, quote, metaSuffix, photos, resetKey,
 }: PhotoViewerProps) {
   const { t } = useI18n();

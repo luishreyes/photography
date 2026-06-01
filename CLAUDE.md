@@ -118,17 +118,21 @@ Definidas en `data/series.ts`. Cada serie tiene:
 
 ## Páginas
 
-### SeriesPage (`/work/:slug`) — ✓ construida (visor cinematográfico)
+### SeriesPage (`/work/:slug`) — ✓ construida (responsive: visor cinematográfico en desktop, grid limpio en móvil)
+`SeriesPage` (y `StudyPage`) renderizan `<PhotoViewer>`, que conmuta por breakpoint con el hook `hooks/useIsMobile.ts` (`max-width: 767px`): `< md` → `<MobileGallery>`; `md+` → visor cinematográfico (`CinematicViewer`, antes el único modo). El desktop NO cambió.
+
+**Desktop — visor cinematográfico** (`components/PhotoViewer.tsx`, `CinematicViewer`):
 - Layout `h-screen overflow-hidden`: todo cabe en una pantalla, sin scroll vertical.
-- Encabezado compacto: título + intro + quote (línea amarilla).
-- **Visor cinematográfico centrado**: una foto grande a la vez (`flex-1`, `object-contain`), fondo negro, transición fade/slide con framer-motion (`AnimatePresence`, dir 1/-1).
-- **Foto activa a todo color**; los thumbnails en grayscale (el activo a color con borde `ring-brand-yellow`).
-- **Navegación horizontal**:
-  - Desktop: flechas ←/→ (hover regions) + teclado ←/→.
-  - Móvil: **swipe** táctil (`touchstart`/`touchend`, umbral 50px).
-  - Tira de thumbnails abajo (scroll-x, `no-scrollbar`): click salta a la foto; la activa se auto-centra (`scrollIntoView`).
-- Caption: título de la foto + contador `n / total · año`.
-- **Click en la foto → visor a pantalla completa** (`zoom`): foto al 92vh, fondo negro, misma navegación (flechas/teclado/swipe). Cerrar con click al fondo, botón CLOSE o Escape; bloquea el scroll del body mientras está abierto.
+- Encabezado compacto: título (`text-5xl`) + intro + quote (línea amarilla).
+- **Visor centrado**: una foto grande a la vez (`flex-1`, `object-contain`), fondo negro, transición fade/slide con framer-motion (`AnimatePresence`, dir 1/-1). Foto activa a color, thumbnails en grayscale (activo con `ring-brand-yellow`).
+- Navegación: flechas ←/→ (hover regions) + teclado ←/→ + tira de thumbnails (scroll-x, auto-centra la activa).
+- Caption: título + contador `n / total · año`. Click en la foto → pantalla completa (`zoom`, 92vh); cerrar con click al fondo, botón CLOSE o Escape.
+
+**Móvil — galería limpia** (`components/MobileGallery.tsx`, inspirada en franklinyeep.com):
+- Página con scroll vertical normal (`min-h-screen`), NO `h-screen`.
+- **Encabezado compacto**: back link + título pequeño y condensado (`text-xl font-bold uppercase tracking-tight`) + descripción breve y discreta (`text-xs text-white/40`). Sin quote en móvil.
+- **Grid masonry de 2 columnas** (`columns-2`): cada foto conserva su `aspect-ratio` real (vía `width`/`height` de `series.ts`, sin recorte). Aparecen suavemente al hacer scroll (`whileInView`, `once`, fade + `y`).
+- **Tap en una foto → pantalla completa**: `object-contain`, fondo negro, fade suave (no aparece "de golpe"). Cerrar con **tap en cualquier lado** (sin botón X). Swipe ←/→ navega (umbral 50px; un swipe no cierra), teclado/Escape también. Bloquea el scroll del body mientras está abierta. Caption discreto abajo.
 
 ### WorkPage (`/work`) — ✓ construida
 - Grid de las 6 series. Hover: overlay `bg-black/60` + descripción en blanco (legibilidad)
