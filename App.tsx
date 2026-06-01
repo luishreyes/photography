@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { I18nProvider, useI18n } from './context/i18n';
 import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
@@ -6,6 +7,15 @@ import WorkPage from './pages/WorkPage';
 import SeriesPage from './pages/SeriesPage';
 import StudiesPage from './pages/StudiesPage';
 import StudyPage from './pages/StudyPage';
+
+// Always start a freshly navigated page at the top — React Router otherwise
+// keeps the previous scroll position, which left long pages (mobile gallery)
+// mid-page on entry.
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  return null;
+}
 
 function Placeholder({ label }: { label: string }) {
   const { t } = useI18n();
@@ -16,6 +26,7 @@ export default function App() {
   return (
     <I18nProvider>
       <BrowserRouter>
+        <ScrollToTop />
         <Navbar />
         <Routes>
           <Route path="/" element={<HomePage />} />
