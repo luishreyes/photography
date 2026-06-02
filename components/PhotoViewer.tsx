@@ -1,9 +1,6 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useI18n } from '../context/i18n';
-import MobileGallery from './MobileGallery';
-import { useIsMobile } from '../hooks/useIsMobile';
 
 export interface ViewerPhoto {
   id: string;
@@ -21,215 +18,163 @@ export interface PhotoViewerProps {
   quote?: { text: string; author: string };
   metaSuffix?: string; // appended after "n / total", e.g. "· 2026"
   photos: ViewerPhoto[];
-  resetKey?: string; // resets to first photo when this changes
+  resetKey?: string; // resets/closes the viewer when this changes
 }
 
-// Switches between the cinematic one-at-a-time viewer (desktop) and the
-// clean scrolling 2-column gallery (mobile). The photo always comes first.
-export default function PhotoViewer(props: PhotoViewerProps) {
-  const isMobile = useIsMobile();
-  return isMobile ? <MobileGallery {...props} /> : <CinematicViewer {...props} />;
-}
-
-function CinematicViewer({
-  backHref, backLabel, title, description, quote, metaSuffix, photos, resetKey,
+// Clean gallery used on every breakpoint: compact header + a grid of square
+// thumbnails (2 columns on phones, 3 on tablet/desktop) that fade in softly as
+// they scroll into view. Tapping a photo opens it full-screen at full size; a
+// tap anywhere (no close button) dismisses it, swipe/arrows navigate.
+export default function PhotoViewer({
+  backHref, backLabel, title, description, metaSuffix, photos, resetKey,
 }: PhotoViewerProps) {
-  const { t } = useI18n();
-  const [active, setActive] = useState(0);
+  const [open, setOpen] = useState<number | null>(null);
   const [dir, setDir] = useState(1); // 1 = next, -1 = prev
-  const [zoom, setZoom] = useState(false);
   const touchStartX = useRef<number | null>(null);
-  const thumbRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const swiped = useRef(false);
 
   const total = photos.length;
 
   const go = useCallback((next: number) => {
-    if (!total) return;
-    const clamped = Math.max(0, Math.min(next, total - 1));
-    setDir(clamped >= active ? 1 : -1);
-    setActive(clamped);
-  }, [active, total]);
+    if (next < 0 || next >= total) return;
+    setOpen(prev => {
+      if (prev === null) return prev;
+      setDir(next >= prev ? 1 : -1);
+      return next;
+    });
+  }, [total]);
 
-  useEffect(() => { setActive(0); setDir(1); }, [resetKey]);
+  // Reset to a closed gallery when the series/study changes.
+  useEffect(() => { setOpen(null); }, [resetKey]);
 
+  // Lock body scroll + wire keyboard while the full-screen view is open.
   useEffect(() => {
+    if (open === null) return;
+    document.body.style.overflow = 'hidden';
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowRight') go(active + 1);
-      if (e.key === 'ArrowLeft') go(active - 1);
-      if (e.key === 'Escape') setZoom(false);
+      if (e.key === 'Escape') setOpen(null);
+      if (e.key === 'ArrowRight') go(open + 1);
+      if (e.key === 'ArrowLeft') go(open - 1);
     };
     window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [go, active]);
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [open, go]);
 
-  useEffect(() => {
-    document.body.style.overflow = zoom ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
-  }, [zoom]);
-
-  useEffect(() => {
-    thumbRefs.current[active]?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-  }, [active]);
-
-  const photo = photos[active];
-
-  const onTouchStart = (e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX; };
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    swiped.current = false;
+  };
   const onTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartX.current === null) return;
+    if (touchStartX.current === null || open === null) return;
     const delta = e.changedTouches[0].clientX - touchStartX.current;
-    if (Math.abs(delta) > 50) go(delta < 0 ? active + 1 : active - 1);
+    if (Math.abs(delta) > 50) {
+      swiped.current = true; // a swipe should navigate, not close
+      go(delta < 0 ? open + 1 : open - 1);
+    }
     touchStartX.current = null;
   };
 
+  const photo = open !== null ? photos[open] : null;
+
   return (
-    <main className="h-screen overflow-hidden bg-brand-dark flex flex-col">
-      {/* Header */}
-      <div className="pt-24 pb-4 px-6 md:px-16 max-w-5xl mx-auto w-full">
-        <Link to={backHref} className="text-white/30 text-xs tracking-[0.2em] uppercase hover:text-brand-yellow transition-colors mb-5 inline-block">
+    <main className="min-h-screen bg-brand-dark">
+      {/* Compact header */}
+      <div className="max-w-screen-xl mx-auto pt-24 pb-5 px-5 md:px-6">
+        <Link
+          to={backHref}
+          className="text-white/30 text-[11px] tracking-[0.25em] uppercase hover:text-brand-yellow transition-colors mb-3 inline-block"
+        >
           {backLabel}
         </Link>
-        <h1 className="text-3xl md:text-5xl font-bold text-white">{title}</h1>
-        {description && <p className="mt-3 text-white/50 text-sm md:text-base max-w-2xl leading-relaxed">{description}</p>}
-        {quote && (
-          <blockquote className="mt-4 border-l-2 border-brand-yellow pl-4">
-            <p className="text-white/30 text-sm italic">"{quote.text}"</p>
-            <p className="text-white/20 text-xs mt-1">— {quote.author}</p>
-          </blockquote>
+        <h1 className="text-xl md:text-2xl font-bold uppercase tracking-tight leading-none text-white">
+          {title}
+        </h1>
+        {description && (
+          <p className="mt-2.5 text-white/40 text-xs md:text-sm leading-relaxed max-w-2xl">{description}</p>
         )}
       </div>
 
-      {/* Cinematic viewer */}
-      <div
-        className="relative flex-1 min-h-0 flex items-center justify-center select-none overflow-hidden"
-        onTouchStart={onTouchStart}
-        onTouchEnd={onTouchEnd}
-      >
-        <AnimatePresence initial={false} custom={dir} mode="popLayout">
-          <motion.img
-            key={photo.id}
-            src={photo.src}
-            alt={photo.title}
-            custom={dir}
-            initial={{ opacity: 0, x: dir * 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: dir * -40 }}
-            transition={{ duration: 0.35, ease: 'easeOut' }}
-            onClick={() => setZoom(true)}
-            className="max-h-full max-w-[90vw] object-contain cursor-zoom-in"
-            draggable={false}
-          />
-        </AnimatePresence>
-
-        {active > 0 && (
-          <button
-            aria-label="Previous"
-            onClick={() => go(active - 1)}
-            className="hidden md:flex absolute left-4 lg:left-10 top-1/2 -translate-y-1/2 text-white/30 hover:text-brand-yellow text-4xl px-4 py-8 transition-colors"
+      {/* Grid of square thumbnails — 2 cols (phone) / 3 cols (tablet, desktop) */}
+      <div className="max-w-screen-xl mx-auto px-2.5 md:px-6 pb-16 grid grid-cols-2 md:grid-cols-3 gap-2.5 md:gap-3">
+        {photos.map((p, i) => (
+          <motion.button
+            key={p.id}
+            type="button"
+            onClick={() => { setOpen(i); }}
+            aria-label={p.title}
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ duration: 0.55, ease: 'easeOut' }}
+            className="aspect-square block w-full overflow-hidden bg-zinc-900 group"
           >
-            ←
-          </button>
-        )}
-        {active < total - 1 && (
-          <button
-            aria-label="Next"
-            onClick={() => go(active + 1)}
-            className="hidden md:flex absolute right-4 lg:right-10 top-1/2 -translate-y-1/2 text-white/30 hover:text-brand-yellow text-4xl px-4 py-8 transition-colors"
-          >
-            →
-          </button>
-        )}
+            <img
+              src={p.src}
+              alt={p.title}
+              loading="lazy"
+              draggable={false}
+              className="h-full w-full object-cover md:grayscale md:group-hover:grayscale-0 md:transition-all md:duration-500"
+            />
+          </motion.button>
+        ))}
       </div>
 
-      {/* Caption */}
-      <div className="text-center px-6 pt-4">
-        <p className="text-white/60 text-sm font-medium">{photo.title}</p>
-        <p className="text-white/20 text-xs mt-1 tracking-widest">{active + 1} / {total}{metaSuffix ? ` ${metaSuffix}` : ''}</p>
-      </div>
-
-      {/* Thumbnail strip */}
-      <div className="px-4 md:px-10 pb-8 pt-4">
-        <div className="flex gap-2 overflow-x-auto justify-start md:justify-center no-scrollbar">
-          {photos.map((p, i) => (
-            <button
-              key={p.id}
-              ref={el => { thumbRefs.current[i] = el; }}
-              onClick={() => go(i)}
-              aria-label={p.title}
-              className="relative shrink-0 h-14 w-14 md:h-16 md:w-16 overflow-hidden bg-zinc-900 transition-all duration-300"
-            >
-              <img
-                src={p.src}
-                alt={p.title}
-                loading="lazy"
-                className={`h-full w-full object-cover transition-all duration-300 ${
-                  i === active ? 'grayscale-0 opacity-100' : 'grayscale opacity-50 hover:opacity-80'
-                }`}
-              />
-              {i === active && <span className="absolute inset-0 ring-2 ring-brand-yellow ring-inset" />}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Fullscreen viewer */}
+      {/* Full-screen view — tap anywhere to close, swipe/arrows to navigate */}
       <AnimatePresence>
-        {zoom && (
+        {photo && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-50 bg-black flex items-center justify-center cursor-zoom-out"
-            onClick={() => setZoom(false)}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-[60] bg-black flex items-center justify-center"
+            onClick={() => { if (swiped.current) { swiped.current = false; return; } setOpen(null); }}
             onTouchStart={onTouchStart}
             onTouchEnd={onTouchEnd}
           >
-            <button
-              aria-label={t('lightbox.close')}
-              onClick={() => setZoom(false)}
-              className="absolute top-6 right-6 text-white/40 hover:text-white text-xs tracking-widest uppercase z-10"
-            >
-              {t('lightbox.close')}
-            </button>
-
             <AnimatePresence initial={false} custom={dir} mode="popLayout">
               <motion.img
                 key={photo.id}
                 src={photo.src}
                 alt={photo.title}
                 custom={dir}
-                initial={{ opacity: 0, x: dir * 40 }}
+                initial={{ opacity: 0, x: dir * 30 }}
                 animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: dir * -40 }}
-                transition={{ duration: 0.35, ease: 'easeOut' }}
-                onClick={() => setZoom(false)}
-                className="max-h-[92vh] max-w-[94vw] object-contain cursor-zoom-out"
+                exit={{ opacity: 0, x: dir * -30 }}
+                transition={{ duration: 0.3, ease: 'easeOut' }}
+                className="max-h-[88vh] max-w-[92vw] object-contain"
                 draggable={false}
               />
             </AnimatePresence>
 
-            {active > 0 && (
+            {/* Desktop/iPad navigation arrows (click elsewhere still closes) */}
+            {open! > 0 && (
               <button
                 aria-label="Previous"
-                onClick={e => { e.stopPropagation(); go(active - 1); }}
-                className="hidden md:flex absolute left-4 lg:left-10 top-1/2 -translate-y-1/2 text-white/30 hover:text-brand-yellow text-4xl px-4 py-8 transition-colors z-10"
+                onClick={e => { e.stopPropagation(); go(open! - 1); }}
+                className="hidden md:flex absolute left-4 lg:left-10 top-1/2 -translate-y-1/2 text-white/30 hover:text-brand-yellow text-4xl px-4 py-8 transition-colors"
               >
                 ←
               </button>
             )}
-            {active < total - 1 && (
+            {open! < total - 1 && (
               <button
                 aria-label="Next"
-                onClick={e => { e.stopPropagation(); go(active + 1); }}
-                className="hidden md:flex absolute right-4 lg:right-10 top-1/2 -translate-y-1/2 text-white/30 hover:text-brand-yellow text-4xl px-4 py-8 transition-colors z-10"
+                onClick={e => { e.stopPropagation(); go(open! + 1); }}
+                className="hidden md:flex absolute right-4 lg:right-10 top-1/2 -translate-y-1/2 text-white/30 hover:text-brand-yellow text-4xl px-4 py-8 transition-colors"
               >
                 →
               </button>
             )}
 
             <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-center pointer-events-none">
-              <p className="text-white/60 text-sm font-medium">{photo.title}</p>
-              <p className="text-white/20 text-xs mt-1 tracking-widest">{active + 1} / {total}</p>
+              <p className="text-white/50 text-xs font-medium">{photo.title}</p>
+              <p className="text-white/20 text-[10px] mt-1 tracking-widest">
+                {open! + 1} / {total}{metaSuffix ? ` ${metaSuffix}` : ''}
+              </p>
             </div>
           </motion.div>
         )}
