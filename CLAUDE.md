@@ -118,21 +118,12 @@ Definidas en `data/series.ts`. Cada serie tiene:
 
 ## Páginas
 
-### SeriesPage (`/work/:slug`) — ✓ construida (responsive: visor cinematográfico en desktop, grid limpio en móvil)
-`SeriesPage` (y `StudyPage`) renderizan `<PhotoViewer>`, que conmuta por breakpoint con el hook `hooks/useIsMobile.ts` (`max-width: 767px`): `< md` → `<MobileGallery>`; `md+` → visor cinematográfico (`CinematicViewer`, antes el único modo). El desktop NO cambió.
+### SeriesPage (`/work/:slug`) — ✓ construida (galería limpia responsive, inspirada en franklinyeep.com)
+`SeriesPage` (y `StudyPage`) renderizan `<PhotoViewer>` (`components/PhotoViewer.tsx`), un **único componente responsive** para todos los breakpoints (ya NO hay visor cinematográfico ni switch por hook). Página con scroll vertical normal (`min-h-screen`).
 
-**Desktop — visor cinematográfico** (`components/PhotoViewer.tsx`, `CinematicViewer`):
-- Layout `h-screen overflow-hidden`: todo cabe en una pantalla, sin scroll vertical.
-- Encabezado compacto: título (`text-5xl`) + intro + quote (línea amarilla).
-- **Visor centrado**: una foto grande a la vez (`flex-1`, `object-contain`), fondo negro, transición fade/slide con framer-motion (`AnimatePresence`, dir 1/-1). Foto activa a color, thumbnails en grayscale (activo con `ring-brand-yellow`).
-- Navegación: flechas ←/→ (hover regions) + teclado ←/→ + tira de thumbnails (scroll-x, auto-centra la activa).
-- Caption: título + contador `n / total · año`. Click en la foto → pantalla completa (`zoom`, 92vh); cerrar con click al fondo, botón CLOSE o Escape.
-
-**Móvil — galería limpia** (`components/MobileGallery.tsx`, inspirada en franklinyeep.com):
-- Página con scroll vertical normal (`min-h-screen`), NO `h-screen`.
-- **Encabezado compacto**: back link + título pequeño y condensado (`text-xl font-bold uppercase tracking-tight`) + descripción breve y discreta (`text-xs text-white/40`). Sin quote en móvil.
-- **Grid de 2 columnas con thumbnails cuadrados** (`grid grid-cols-2`, `aspect-square` + `object-cover`): parrilla pareja y limpia. Aparecen suavemente al hacer scroll (`whileInView`, `once`, fade + `y`).
-- **Tap en una foto → pantalla completa**: `object-contain` (muestra la foto entera, sin recorte), fondo negro, fade suave (no aparece "de golpe"). Cerrar con **tap en cualquier lado** (sin botón X). Swipe ←/→ navega (umbral 50px; un swipe no cierra), teclado/Escape también. Bloquea el scroll del body mientras está abierta. Caption discreto abajo.
+- **Encabezado compacto**: back link + título condensado (`text-xl md:text-2xl font-bold uppercase tracking-tight`) + descripción breve y discreta (`text-xs md:text-sm text-white/40`, `max-w-2xl`). Sin quote. Centrado en `max-w-screen-xl`.
+- **Grid de thumbnails cuadrados** (`aspect-square` + `object-cover`): **2 columnas en celular, 3 en iPad/desktop** (`grid-cols-2 md:grid-cols-3`). En `md+` los thumbnails van en grayscale y revelan color al hover (`md:grayscale md:group-hover:grayscale-0`). Aparecen suavemente al hacer scroll (`whileInView`, `once`, fade + `y`).
+- **Tap/click en una foto → pantalla completa**: `object-contain` (foto entera, sin recorte), fondo negro, fade suave (no aparece "de golpe"). Cerrar con **tap/click en cualquier lado** (sin botón X). Navegación: swipe ←/→ (umbral 50px; un swipe no cierra), teclado ←/→/Escape, y flechas ←/→ visibles en `md+` (`stopPropagation`, no cierran). Bloquea el scroll del body mientras está abierta. Caption discreto abajo.
 
 ### WorkPage (`/work`) — ✓ construida
 - Grid de las 6 series. Hover: overlay `bg-black/60` + descripción en blanco (legibilidad)
