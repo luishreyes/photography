@@ -29,7 +29,8 @@ data = []
 for r in ranges:
     srcdir = os.path.join(LOOSE, r, SRC_SUB)
     if not os.path.isdir(srcdir): continue
-    files = sorted(f for f in os.listdir(srcdir) if not f.startswith('.') and title_from(f))
+    # newest -> oldest by capture date (YYYYMMDD filename prefix)
+    files = sorted((f for f in os.listdir(srcdir) if not f.startswith('.') and title_from(f)), reverse=True)
     rdir = os.path.join(OUT, r); os.makedirs(rdir, exist_ok=True)
     photos = []
     for i, fn in enumerate(files, 1):
