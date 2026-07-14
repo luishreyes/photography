@@ -137,6 +137,11 @@ export const GEN: Record<string, GenPhoto[]> = {
     { id: 'study-passenger-07', title: 'Amparo', src: '/photography/studies/passenger/07-amparo.webp', width: 1067, height: 1600, date: '20260525' },
     { id: 'study-passenger-08', title: 'Promesa', src: '/photography/studies/passenger/08-promesa.webp', width: 1600, height: 1066, date: '20260525' },
     { id: 'study-passenger-09', title: 'Amulets', src: '/photography/studies/passenger/09-amulets.webp', width: 1600, height: 1066, date: '20260527' },
+    { id: 'study-passenger-10', title: 'Comadreja', src: '/photography/studies/passenger/10-comadreja.webp', width: 1600, height: 1066, date: '20260714' },
+    { id: 'study-passenger-11', title: 'Llámenos', src: '/photography/studies/passenger/11-ll-menos.webp', width: 1600, height: 1066, date: '20260714' },
+    { id: 'study-passenger-12', title: 'Reflex', src: '/photography/studies/passenger/12-reflex.webp', width: 1600, height: 1066, date: '20260714' },
+    { id: 'study-passenger-13', title: 'The Medallion', src: '/photography/studies/passenger/13-the-medallion.webp', width: 1066, height: 1600, date: '20260714' },
+    { id: 'study-passenger-14', title: 'Through Glass', src: '/photography/studies/passenger/14-through-glass.webp', width: 1600, height: 1066, date: '20260714' },
   ],
   'remnant': [
     { id: 'study-remnant-01', title: 'Remains', src: '/photography/studies/remnant/01-remains.webp', width: 1600, height: 1064, date: '20140607' },
