@@ -29,6 +29,10 @@ const ui = {
 
   // Loose
   'loose.title':  { en: 'The Loose', es: 'Las Sueltas' },
+  'loose.kicker': { en: 'Loose', es: 'Sueltas' },
+  'loose.intro':  { en: "Photographs that don't belong to any series. Kept loose, ordered by year.", es: 'Fotografías que no pertenecen a ninguna serie. Sueltas, ordenadas por año.' },
+  'loose.back':   { en: '← Loose', es: '← Sueltas' },
+  'loose.year':   { en: 'Year', es: 'Año' },
 
   // Studies
   'studies.kicker': { en: 'Studies', es: 'Estudios' },

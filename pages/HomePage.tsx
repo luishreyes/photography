@@ -1,8 +1,9 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform, type Variants } from 'framer-motion';
 import { series } from '../data/series';
 import { studies } from '../data/studies';
+import { looseYears } from '../data/loose';
 import { useI18n, type Lang } from '../context/i18n';
 import Footer from '../components/Footer';
 
@@ -99,7 +100,7 @@ export default function HomePage() {
         </motion.div>
       </section>
 
-      {/* ── Index: three monumental doors ── */}
+      {/* ── Index: three monumental doors (click to enter) ── */}
       <section className="py-[clamp(64px,9vh,140px)] px-6 md:px-16">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-baseline justify-between gap-5 border-t border-white/15 pt-4 mb-[clamp(20px,4vw,44px)]">
@@ -107,7 +108,7 @@ export default function HomePage() {
               {lang === 'es' ? 'Índice' : 'Index'}
             </h2>
             <span className="u-label text-white/40 text-[10px] md:text-[11px] text-right">
-              {lang === 'es' ? 'Pasa el cursor o toca para abrir' : 'Hover or tap to open'}
+              {lang === 'es' ? 'Toca para ver cada categoría' : 'Click to open each category'}
             </span>
           </div>
           <IndexDoors />
@@ -119,14 +120,13 @@ export default function HomePage() {
   );
 }
 
-// ── Three-door index (Work / Studies / Loose) ──
+// ── Three-door index (Work / Studies / Loose) — whole row links to the category ──
 interface Door {
   n: string;
   title: string;
   to: string;
   cover?: string;
   meta: { en: string; es: string };
-  subs: { label: string; to: string; meta?: string }[];
 }
 
 function IndexDoors() {
@@ -134,22 +134,15 @@ function IndexDoors() {
   const doors: Door[] = [
     {
       n: '01', title: t('work.title'), to: '/work', cover: series[0]?.coverPhoto,
-      meta: { en: `6 collections · 72 images`, es: `6 colecciones · 72 imágenes` },
-      subs: series.map(s => ({ label: s.title, to: `/work/${s.slug}`, meta: String(s.photos.length) })),
+      meta: { en: `${series.length} collections · 72 images`, es: `${series.length} colecciones · 72 imágenes` },
     },
     {
       n: '02', title: t('studies.title'), to: '/studies', cover: studies.find(s => s.coverPhoto)?.coverPhoto,
       meta: { en: `${studies.length} series · open`, es: `${studies.length} series · abiertas` },
-      subs: studies.map(s => ({ label: s.title, to: `/studies/${s.slug}`, meta: s.photos.length ? String(s.photos.length) : '—' })),
     },
     {
-      n: '03', title: t('loose.title'), to: '/loose', cover: series[2]?.coverPhoto,
-      meta: { en: `loose work · by year`, es: `trabajo suelto · por año` },
-      subs: [
-        { label: '2012–2015', to: '/loose' },
-        { label: '2016–2017', to: '/loose' },
-        { label: '2018–2026', to: '/loose' },
-      ],
+      n: '03', title: t('loose.title'), to: '/loose', cover: looseYears[0]?.coverPhoto,
+      meta: { en: `${looseYears.length} years · 2012–2026`, es: `${looseYears.length} años · 2012–2026` },
     },
   ];
 
@@ -171,53 +164,29 @@ function IndexDoors() {
 }
 
 function DoorRow({ door: d, lang }: { door: Door; lang: Lang }) {
-  const [open, setOpen] = useState(false);
   return (
-    <div className="group border-b border-white/15">
-      {/* Header row */}
-      <div className="relative grid grid-cols-[auto_1fr_auto] items-center gap-4 md:gap-8 py-[clamp(20px,3.4vw,44px)] overflow-hidden">
-        {/* hover cover reveal */}
-        {d.cover && (
-          <div
-            className="pointer-events-none absolute inset-y-0 right-0 w-[min(46%,520px)] opacity-0 group-hover:opacity-50 transition-opacity duration-500"
-            style={{ WebkitMaskImage: 'linear-gradient(90deg,transparent,#000 55%)', maskImage: 'linear-gradient(90deg,transparent,#000 55%)' }}
-          >
-            <img src={d.cover} alt="" className="w-full h-full object-cover grayscale contrast-[1.1] brightness-[0.7]"
-              onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }} />
-          </div>
-        )}
-        <span className="relative z-10 u-label text-white/35 text-[12px] self-start pt-[0.4em]">{d.n}</span>
-        <Link to={d.to} className="relative z-10 justify-self-start">
-          <span className="font-disp font-light uppercase tracking-[0.01em] leading-[0.86] text-[clamp(2.7rem,10vw,7.4rem)] text-white group-hover:text-brand-yellow transition-colors duration-300">
-            {d.title}
-          </span>
-        </Link>
-        <div className="relative z-10 flex items-center gap-4 justify-self-end">
-          <span className="u-label text-white/45 text-[11px] whitespace-nowrap hidden sm:inline">{d.meta[lang]}</span>
-          <button
-            onClick={() => setOpen(o => !o)}
-            aria-label="Toggle"
-            className={`text-brand-yellow text-lg leading-none transition-transform duration-500 ${open ? 'rotate-90' : ''} md:group-hover:rotate-90`}
-          >
-            →
-          </button>
+    <Link
+      to={d.to}
+      className="group relative grid grid-cols-[auto_1fr_auto] items-center gap-4 md:gap-8 py-[clamp(20px,3.4vw,44px)] border-b border-white/15 overflow-hidden"
+    >
+      {/* hover cover reveal */}
+      {d.cover && (
+        <div
+          className="pointer-events-none absolute inset-y-0 right-0 w-[min(46%,520px)] opacity-0 group-hover:opacity-50 transition-opacity duration-500"
+          style={{ WebkitMaskImage: 'linear-gradient(90deg,transparent,#000 55%)', maskImage: 'linear-gradient(90deg,transparent,#000 55%)' }}
+        >
+          <img src={d.cover} alt="" className="w-full h-full object-cover grayscale contrast-[1.1] brightness-[0.7]"
+            onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }} />
         </div>
+      )}
+      <span className="relative z-10 u-label text-white/35 text-[12px] self-start pt-[0.4em]">{d.n}</span>
+      <span className="relative z-10 justify-self-start font-disp font-light uppercase tracking-[0.01em] leading-[0.86] text-[clamp(2.7rem,10vw,7.4rem)] text-white group-hover:text-brand-yellow transition-colors duration-300">
+        {d.title}
+      </span>
+      <div className="relative z-10 flex items-center gap-4 justify-self-end">
+        <span className="u-label text-white/45 text-[11px] whitespace-nowrap hidden sm:inline">{d.meta[lang]}</span>
+        <span aria-hidden className="text-brand-yellow text-lg leading-none transition-transform duration-300 group-hover:translate-x-1.5">→</span>
       </div>
-      {/* Sub-items — hover (desktop) or tap (all) */}
-      <div className={`overflow-hidden transition-[max-height] duration-500 ease-[cubic-bezier(0.2,0.7,0.2,1)] md:group-hover:max-h-[820px] ${open ? 'max-h-[820px]' : 'max-h-0'}`}>
-        <div className="pb-[clamp(14px,2.2vw,28px)]">
-          {d.subs.map((s, i) => (
-            <Link key={s.label + i} to={s.to}
-              className="group/sub grid grid-cols-[auto_1fr_auto] items-center gap-4 md:gap-6 py-[clamp(10px,1.35vw,15px)] border-t border-white/5">
-              <span className="u-label text-white/30 text-[11px] tabular-nums">{String(i + 1).padStart(2, '0')}</span>
-              <span className="font-disp font-normal uppercase tracking-[0.02em] text-[clamp(1.25rem,2.4vw,1.9rem)] leading-none text-brand-cream group-hover/sub:text-brand-yellow group-hover/sub:translate-x-3 transition-all duration-300">
-                {s.label}
-              </span>
-              {s.meta && <span className="u-label text-white/40 text-[10px] text-right hidden sm:inline">{s.meta}</span>}
-            </Link>
-          ))}
-        </div>
-      </div>
-    </div>
+    </Link>
   );
 }

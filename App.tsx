@@ -7,6 +7,8 @@ import WorkPage from './pages/WorkPage';
 import SeriesPage from './pages/SeriesPage';
 import StudiesPage from './pages/StudiesPage';
 import StudyPage from './pages/StudyPage';
+import LoosePage from './pages/LoosePage';
+import LooseYearPage from './pages/LooseYearPage';
 
 // Always start a freshly navigated page at the top — React Router otherwise
 // keeps the previous scroll position, which left long pages (mobile gallery)
@@ -34,7 +36,8 @@ export default function App() {
           <Route path="/work/:slug" element={<SeriesPage />} />
           <Route path="/studies" element={<StudiesPage />} />
           <Route path="/studies/:slug" element={<StudyPage />} />
-          <Route path="/loose" element={<Placeholder label="Loose" />} />
+          <Route path="/loose" element={<LoosePage />} />
+          <Route path="/loose/:year" element={<LooseYearPage />} />
           <Route path="/contact" element={<Placeholder label="Contact" />} />
         </Routes>
       </BrowserRouter>

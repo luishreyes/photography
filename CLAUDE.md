@@ -59,7 +59,11 @@ Dirección **editorial** (amarillo ácido sobre negro):
 
 ## Animación del hero (home)
 
-El hero **es** el landing (sin splash aparte). Entrada con framer-motion: flash de cámara → foto B/N con leve Ken Burns → nombre sube con máscara de línea. Al hacer scroll (`useScroll`/`useTransform`) el bloque sale del frame y la foto hace parallax, estilo Apple. El índice de la home son **tres puertas monumentales** (Work/Studies/Loose) que despliegan sub-ítems en hover (desktop) o tap (móvil).
+El hero **es** el landing (sin splash aparte). Entrada con framer-motion: flash de cámara → foto B/N con leve Ken Burns → nombre sube con máscara de línea. Al hacer scroll (`useScroll`/`useTransform`) el bloque sale del frame y la foto hace parallax, estilo Apple. El índice de la home son **tres puertas monumentales** (Work/Studies/Loose): la fila entera es un link a la categoría — **solo clic, sin desplegar** sub-ítems (hay demasiados trabajos/años). El listado completo vive dentro de cada página de categoría.
+
+## Loose (por año)
+
+`/loose` = `LoosePage` (grid de años, más reciente primero); `/loose/:year` = `LooseYearPage` (galería vía `PhotoViewer`). Datos en **`data/loose.ts`** (auto-generado — NO editar a mano). Fuente de verdad: `<carpeta madre>/Loose/<AAAA>/Web/`. Regenerar imágenes + data con **`scripts/sync-loose.py`** (lee las copias Web del archivo, produce webp ≤2000px en `public/photography/loose/<año>/` y reescribe `data/loose.ts`). Loose en el archivo está organizado **una carpeta por año** con `{HD,Portfolio,Web}`.
 
 ## Idiomas (i18n) — EN / ES
 
@@ -135,9 +139,11 @@ Definidas en `data/series.ts`. Cada serie tiene:
 ### WorkPage (`/work`) — ✓ construida
 - Grid de las 6 series. Hover: overlay `bg-black/60` + descripción en blanco (legibilidad)
 
-### Pendientes (placeholders inline en App.tsx)
-- **StudiesPage, LoosePage, ContactPage** — aún por construir
-- Contact: email + LinkedIn + Instagram (replicar de Adobe Portfolio)
+### Construidas
+- **StudiesPage** (`/studies`, `/studies/:slug`) y **LoosePage** (`/loose`, `/loose/:year`) ✓
+
+### Pendientes (placeholder inline en App.tsx)
+- **ContactPage** — email + LinkedIn + Instagram (replicar de Adobe Portfolio)
 
 ## Convenciones
 
