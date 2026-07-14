@@ -13,7 +13,7 @@ export default {
         'brand-yellow': '#C9C41C',
         'brand-yellow-dark': '#A8A417',
         'brand-dark': '#0A0A0A',
-        'brand-cream': '#EDEBE4',
+        'brand-cream': '#E8E6E1',
         'brand-gray': '#8C887D',
       },
       fontFamily: {
