@@ -115,6 +115,7 @@ export default function PhotoViewer({
               src={p.src}
               alt={p.title}
               loading="lazy"
+              decoding="async"
               draggable={false}
               className="h-full w-full object-cover md:grayscale md:group-hover:grayscale-0 md:transition-all md:duration-500"
             />

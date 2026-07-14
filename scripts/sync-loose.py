@@ -10,7 +10,7 @@ REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MASTER = os.path.abspath(os.path.join(REPO, '..', '..'))
 LOOSE = os.path.join(MASTER, 'Loose')
 OUT = os.path.join(REPO, 'public', 'photography', 'loose')
-MAXEDGE, Q = 2000, 82
+MAXEDGE, Q = 1600, 80   # web-optimized: smaller = faster galleries
 SRC_SUB = 'Portfolio'   # frameless copies (NOT Web = framed social)
 # Hand-picked cover per range (by photo slug). Falls back to first photo.
 COVERS = {'2012-2016': 'sunburst', '2017-2021': 'dominion', '2022-2026': 'lookout'}

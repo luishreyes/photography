@@ -25,6 +25,7 @@ export default function LoosePage() {
                 src={y.coverPhoto}
                 alt={y.year}
                 loading="lazy"
+                decoding="async"
                 className="absolute inset-0 w-full h-full object-cover grayscale transition-all duration-700 group-hover:scale-105"
                 onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
               />
