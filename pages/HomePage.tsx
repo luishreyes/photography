@@ -110,7 +110,7 @@ export default function HomePage() {
               {lang === 'es' ? 'Pasa el cursor o toca para abrir' : 'Hover or tap to open'}
             </span>
           </div>
-          <IndexDoors lang={lang} />
+          <IndexDoors />
         </div>
       </section>
 
@@ -129,20 +129,21 @@ interface Door {
   subs: { label: string; to: string; meta?: string }[];
 }
 
-function IndexDoors({ lang }: { lang: Lang }) {
+function IndexDoors() {
+  const { t, lang } = useI18n();
   const doors: Door[] = [
     {
-      n: '01', title: 'Work', to: '/work', cover: series[0]?.coverPhoto,
+      n: '01', title: t('work.title'), to: '/work', cover: series[0]?.coverPhoto,
       meta: { en: `6 collections · 72 images`, es: `6 colecciones · 72 imágenes` },
       subs: series.map(s => ({ label: s.title, to: `/work/${s.slug}`, meta: String(s.photos.length) })),
     },
     {
-      n: '02', title: 'Studies', to: '/studies', cover: studies.find(s => s.coverPhoto)?.coverPhoto,
+      n: '02', title: t('studies.title'), to: '/studies', cover: studies.find(s => s.coverPhoto)?.coverPhoto,
       meta: { en: `${studies.length} series · open`, es: `${studies.length} series · abiertas` },
       subs: studies.map(s => ({ label: s.title, to: `/studies/${s.slug}`, meta: s.photos.length ? String(s.photos.length) : '—' })),
     },
     {
-      n: '03', title: 'Loose', to: '/loose', cover: series[2]?.coverPhoto,
+      n: '03', title: t('loose.title'), to: '/loose', cover: series[2]?.coverPhoto,
       meta: { en: `loose work · by year`, es: `trabajo suelto · por año` },
       subs: [
         { label: '2012–2015', to: '/loose' },

@@ -18,7 +18,7 @@ const ui = {
 
   // Collections / Work
   'work.kicker':  { en: 'Collections', es: 'Colecciones' },
-  'work.title':   { en: 'The work', es: 'La obra' },
+  'work.title':   { en: 'The Work', es: 'La Obra' },
   'work.intro':   { en: "Six series. They follow an order, but you don't have to. Pick whatever catches your eye, or start at the top and let the sequence do its thing.", es: 'Seis series. Siguen un orden, pero no tienes que seguirlo. Elige la que te llame la atención, o empieza por arriba y deja que la secuencia haga lo suyo.' },
   'work.introShort': { en: "Six series. They follow an order, but you don't have to.", es: 'Seis series. Siguen un orden, pero no tienes que seguirlo.' },
 
@@ -27,9 +27,12 @@ const ui = {
   'series.count': { en: 'photographs', es: 'fotografías' },
   'lightbox.close': { en: 'Close', es: 'Cerrar' },
 
+  // Loose
+  'loose.title':  { en: 'The Loose', es: 'Las Sueltas' },
+
   // Studies
   'studies.kicker': { en: 'Studies', es: 'Estudios' },
-  'studies.title':  { en: 'Studies', es: 'Estudios' },
+  'studies.title':  { en: 'The Studies', es: 'Los Estudios' },
   'studies.intro':  { en: "Collections have rules. Studies work differently. One subject, one inquiry, as many images as the subject demands. The only rule is that each photograph has to say something the others don't.", es: 'Las colecciones tienen reglas. Los estudios funcionan distinto. Un sujeto, una indagación, tantas imágenes como el sujeto demande. La única regla es que cada fotografía diga algo que las demás no dicen.' },
   'studies.ongoing': { en: 'Ongoing', es: 'En progreso' },
   'studies.empty':   { en: 'Coming soon', es: 'Próximamente' },
