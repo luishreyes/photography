@@ -81,19 +81,19 @@ export default function PhotoViewer({
 
   return (
     <main className="min-h-screen bg-brand-dark">
-      {/* Compact header */}
-      <div className="max-w-screen-xl mx-auto pt-24 pb-5 px-5 md:px-6">
+      {/* Editorial header */}
+      <div className="max-w-screen-xl mx-auto pt-28 pb-6 px-5 md:px-6">
         <Link
           to={backHref}
-          className="text-white/30 text-[11px] tracking-[0.25em] uppercase hover:text-brand-yellow transition-colors mb-3 inline-block"
+          className="u-label text-white/40 text-[11px] hover:text-brand-yellow transition-colors mb-3 inline-block"
         >
           {backLabel}
         </Link>
-        <h1 className="text-xl md:text-2xl font-bold uppercase tracking-tight leading-none text-white">
+        <h1 className="font-disp font-light uppercase tracking-[0.01em] leading-[0.86] text-brand-yellow text-[clamp(2.6rem,10vw,7rem)]">
           {title}
         </h1>
         {description && (
-          <p className="mt-2.5 text-white/40 text-xs md:text-sm leading-relaxed max-w-2xl">{description}</p>
+          <p className="mt-3 text-brand-cream/70 text-sm md:text-base leading-relaxed max-w-2xl">{description}</p>
         )}
       </div>
 

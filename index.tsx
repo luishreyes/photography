@@ -1,4 +1,5 @@
-import '@fontsource-variable/manrope';
+import '@fontsource-variable/big-shoulders-display';
+import '@fontsource-variable/archivo';
 import './index.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';

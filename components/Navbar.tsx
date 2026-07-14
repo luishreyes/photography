@@ -13,15 +13,7 @@ const links: { key: UIKey; href: string }[] = [
 function LangToggle({ className = '' }: { className?: string }) {
   const { lang, setLang } = useI18n();
   return (
-    <div className={`flex items-center gap-1 text-xs font-semibold tracking-wide ${className}`}>
-      <button
-        onClick={() => setLang('en')}
-        className={lang === 'en' ? 'text-brand-yellow' : 'text-white/40 hover:text-white transition-colors'}
-        aria-label="English"
-      >
-        EN
-      </button>
-      <span className="text-white/20">/</span>
+    <div className={`flex items-center gap-1.5 text-xs font-semibold tracking-[0.16em] ${className}`}>
       <button
         onClick={() => setLang('es')}
         className={lang === 'es' ? 'text-brand-yellow' : 'text-white/40 hover:text-white transition-colors'}
@@ -29,7 +21,29 @@ function LangToggle({ className = '' }: { className?: string }) {
       >
         ES
       </button>
+      <span className="text-white/20">/</span>
+      <button
+        onClick={() => setLang('en')}
+        className={lang === 'en' ? 'text-brand-yellow' : 'text-white/40 hover:text-white transition-colors'}
+        aria-label="English"
+      >
+        EN
+      </button>
     </div>
+  );
+}
+
+function Wordmark() {
+  const { lang } = useI18n();
+  return (
+    <Link to="/" className="flex items-baseline gap-2 group" aria-label="Luis H. Reyes">
+      <span className="font-disp font-normal uppercase tracking-[0.06em] text-lg leading-none text-white group-hover:text-brand-yellow transition-colors">
+        Luis H. Reyes
+      </span>
+      <span className="u-label text-[8.5px] text-brand-yellow hidden sm:inline">
+        {lang === 'es' ? 'Fotografía' : 'Photography'}
+      </span>
+    </Link>
   );
 }
 
@@ -55,9 +69,7 @@ export default function Navbar() {
         }`}
       >
         <nav className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <Link to="/" className="font-bold text-lg tracking-tight text-white hover:text-brand-yellow transition-colors">
-            LHR
-          </Link>
+          <Wordmark />
 
           {/* Desktop */}
           <div className="hidden lg:flex items-center gap-8">
@@ -66,10 +78,10 @@ export default function Navbar() {
                 <li key={href}>
                   <Link
                     to={href}
-                    className={`text-sm font-medium tracking-wide transition-colors ${
+                    className={`u-label text-[11px] transition-colors ${
                       location.pathname.startsWith(href)
                         ? 'text-brand-yellow'
-                        : 'text-white/60 hover:text-white'
+                        : 'text-white/55 hover:text-white'
                     }`}
                   >
                     {t(key)}
@@ -110,7 +122,7 @@ export default function Navbar() {
               <Link
                 key={href}
                 to={href}
-                className="text-3xl font-bold text-white hover:text-brand-yellow transition-colors"
+                className="font-disp font-light uppercase tracking-wide text-5xl text-white hover:text-brand-yellow transition-colors"
               >
                 {t(key)}
               </Link>

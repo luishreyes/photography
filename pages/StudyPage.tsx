@@ -21,12 +21,12 @@ export default function StudyPage() {
   if (study.photos.length === 0) return (
     <main className="min-h-screen bg-brand-dark pt-28 pb-16 px-6 md:px-16">
       <div className="max-w-2xl mx-auto">
-        <Link to="/studies" className="text-white/30 text-xs tracking-[0.2em] uppercase hover:text-brand-yellow transition-colors mb-6 inline-block">
+        <Link to="/studies" className="u-label text-white/40 text-[11px] hover:text-brand-yellow transition-colors mb-6 inline-block">
           {t('study.back')}
         </Link>
-        <h1 className="text-3xl md:text-5xl font-bold text-white">{study.title}</h1>
-        <p className="mt-4 text-white/50 text-base leading-relaxed">{study.description[lang]}</p>
-        <p className="mt-10 text-brand-yellow/70 text-xs tracking-[0.25em] uppercase">{t('studies.empty')}</p>
+        <h1 className="font-disp font-light uppercase tracking-[0.01em] leading-[0.86] text-brand-yellow text-[clamp(3rem,12vw,8rem)]">{study.title}</h1>
+        <p className="mt-4 text-brand-cream/70 text-base leading-relaxed">{study.description[lang]}</p>
+        <p className="mt-10 u-label text-brand-yellow/70 text-[11px]">{t('studies.empty')}</p>
       </div>
     </main>
   );

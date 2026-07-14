@@ -43,16 +43,23 @@ public/
 
 ## Colores del sistema (Tailwind)
 
-Idénticos al portafolio académico:
-- `brand-dark`: #1A1A1A — fondo principal
-- `brand-yellow`: #FFBF00 — acento principal
-- `brand-yellow-dark`: #E6AC00 — hover de acento
-- `brand-gray`: #555555 — texto secundario
+Dirección **editorial** (amarillo ácido sobre negro):
+- `brand-dark`: #0A0A0A — fondo principal
+- `brand-yellow`: #C9C41C — acento (amarillo ácido)
+- `brand-yellow-dark`: #A8A417 — hover de acento
+- `brand-cream`: #EDEBE4 — texto principal
+- `brand-gray`: #8C887D — texto secundario
 
 ## Tipografía
 
-- **Manrope Variable** (sans) — autoalojada vía `@fontsource-variable/manrope`
-- No usar Google Fonts CDN
+- **Big Shoulders Display Variable** (`font-disp`) — display monumental, condensado, alto contraste. Titulares en `uppercase font-light` (peso ~300). Autoalojada vía `@fontsource-variable/big-shoulders-display`.
+- **Archivo Variable** (`font-sans`, body) — texto y etiquetas. Etiquetas con tracking ancho vía `.u-label`. Autoalojada vía `@fontsource-variable/archivo`.
+- Helpers en `index.css`: `.u-label` (Archivo 700 uppercase tracking .32em) y `.u-disp` (Big Shoulders 300 uppercase).
+- No usar Google Fonts CDN.
+
+## Animación del hero (home)
+
+El hero **es** el landing (sin splash aparte). Entrada con framer-motion: flash de cámara → foto B/N con leve Ken Burns → nombre sube con máscara de línea. Al hacer scroll (`useScroll`/`useTransform`) el bloque sale del frame y la foto hace parallax, estilo Apple. El índice de la home son **tres puertas monumentales** (Work/Studies/Loose) que despliegan sub-ítems en hover (desktop) o tap (móvil).
 
 ## Idiomas (i18n) — EN / ES
 
@@ -121,7 +128,7 @@ Definidas en `data/series.ts`. Cada serie tiene:
 ### SeriesPage (`/work/:slug`) — ✓ construida (galería limpia responsive, inspirada en franklinyeep.com)
 `SeriesPage` (y `StudyPage`) renderizan `<PhotoViewer>` (`components/PhotoViewer.tsx`), un **único componente responsive** para todos los breakpoints (ya NO hay visor cinematográfico ni switch por hook). Página con scroll vertical normal (`min-h-screen`).
 
-- **Encabezado compacto**: back link + título condensado (`text-xl md:text-2xl font-bold uppercase tracking-tight`) + descripción breve y discreta (`text-xs md:text-sm text-white/40`, `max-w-2xl`). Sin quote. Centrado en `max-w-screen-xl`.
+- **Encabezado editorial**: back link (`.u-label`) + título monumental (`font-disp font-light uppercase` en `brand-yellow`, `clamp(2.6rem,10vw,7rem)`) + descripción (`text-brand-cream/70`, `max-w-2xl`). Sin quote. Centrado en `max-w-screen-xl`.
 - **Grid de thumbnails cuadrados** (`aspect-square` + `object-cover`): **2 columnas en celular, 3 en iPad/desktop** (`grid-cols-2 md:grid-cols-3`). En `md+` los thumbnails van en grayscale y revelan color al hover (`md:grayscale md:group-hover:grayscale-0`). Aparecen suavemente al hacer scroll (`whileInView`, `once`, fade + `y`).
 - **Tap/click en una foto → pantalla completa**: `object-contain` (foto entera, sin recorte), fondo negro, fade suave (no aparece "de golpe"). Cerrar con **tap/click en cualquier lado** (sin botón X). Navegación: swipe ←/→ (umbral 50px; un swipe no cierra), teclado ←/→/Escape, y flechas ←/→ visibles en `md+` (`stopPropagation`, no cierran). Bloquea el scroll del body mientras está abierta. Caption discreto abajo.
 
