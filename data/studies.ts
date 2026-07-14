@@ -22,11 +22,11 @@ const BASE = '/photography/studies';
 // secuencia para ordenar las fotos reales de la carpeta; los títulos que ya no
 // estén en la carpeta se omiten y los nuevos se anexan al final.
 const VILLETA_ORDER = [
-  'Abundance', 'Dendrite', 'Cascade', 'Colonnade', 'Vertebrae',
-  'Canopy', 'Constellation', 'Meridian', 'Tightrope', 'Vessel',
-  'The Bloom', 'Aria', 'Tendril', 'Hung', 'Lantern',
-  'Pendant', 'Dispersal', 'Cursive', 'Rainfall', 'Consumed',
-  'Contorsion', 'Stranded', 'Emergence', 'Husk',
+  'Abundance', 'Dendrite', 'Cascade', 'The Cast', 'Conduit',
+  'Colonnade', 'Vertebrae', 'Canopy', 'Constellation', 'Meridian',
+  'Tightrope', 'Vessel', 'The Bloom', 'Aria', 'Tendril',
+  'Hung', 'Lantern', 'Pendant', 'Dispersal', 'Cursive',
+  'Rainfall', 'Consumed', 'Stranded', 'Emergence', 'Husk',
 ];
 
 // Metadata hand-authored; photo lists come from the archive via mergePhotos.

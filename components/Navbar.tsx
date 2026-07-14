@@ -36,11 +36,11 @@ function LangToggle({ className = '' }: { className?: string }) {
 function Wordmark() {
   const { lang } = useI18n();
   return (
-    <Link to="/" className="flex items-baseline gap-2 group" aria-label="Luis H. Reyes">
-      <span className="font-disp font-normal uppercase tracking-[0.06em] text-lg leading-none text-white group-hover:text-brand-yellow transition-colors">
+    <Link to="/" className="flex items-center gap-2.5 group" aria-label="Luis H. Reyes">
+      <span className="font-disp font-normal uppercase tracking-[0.06em] text-xl leading-none text-white group-hover:text-brand-yellow transition-colors">
         Luis H. Reyes
       </span>
-      <span className="u-label text-[8.5px] text-brand-yellow hidden sm:inline">
+      <span className="u-label text-[8.5px] text-brand-cream/70 hidden sm:inline">
         {lang === 'es' ? 'Fotografía' : 'Photography'}
       </span>
     </Link>
