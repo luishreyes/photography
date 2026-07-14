@@ -1,9 +1,11 @@
+import { mergePhotos } from './merge';
+
 export interface Photo {
   id: string;
   title: string;
-  src: string;       // Supabase URL
-  width: number;     // original px width (for aspect ratio in masonry)
-  height: number;    // original px height
+  src: string;       // local /photography/... path
+  width?: number;    // original px width (optional; unused by the flat viewer)
+  height?: number;   // original px height
   year?: number;
 }
 
@@ -19,7 +21,7 @@ export interface Series {
 
 const BASE_LOCAL = '/photography';
 
-export const series: Series[] = [
+const rawSeries: Series[] = [
   {
     slug: 'geometries',
     title: 'Geometries',
@@ -171,3 +173,10 @@ export const series: Series[] = [
     ],
   },
 ];
+
+// Photos come from the archive (data/generated.ts); metadata + curated order
+// stay above. Repo-only photos (not yet in the folders) are preserved.
+export const series: Series[] = rawSeries.map(s => ({
+  ...s,
+  photos: mergePhotos(s.slug, s.photos, 'keep') as Photo[],
+}));

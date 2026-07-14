@@ -61,6 +61,15 @@ Dirección **editorial** (amarillo ácido sobre negro):
 
 El hero **es** el landing (sin splash aparte). Entrada con framer-motion: flash de cámara → foto B/N con leve Ken Burns → nombre sube con máscara de línea. Al hacer scroll (`useScroll`/`useTransform`) el bloque sale del frame y la foto hace parallax, estilo Apple. El índice de la home son **tres puertas monumentales** (Work/Studies/Loose): la fila entera es un link a la categoría — **solo clic, sin desplegar** sub-ítems (hay demasiados trabajos/años). El listado completo vive dentro de cada página de categoría.
 
+## Sync desde el archivo (carpetas → repo)
+
+Las fotos del sitio se derivan del **archivo maestro** (`~/Desktop/Portafolio Fotográfico/{Works,Studies,Loose}`). Siempre desde la copia **`Portfolio/`** (aspecto nativo, sin marco). NUNCA `Web/` (cuadrada + marco = redes sociales).
+
+- **`scripts/sync-photos.py`** → Works + Studies: genera webp en `public/photography/<slug>/` y `.../studies/<slug>/`, crea `cover.webp` si falta (no pisa portadas curadas), y escribe **`data/generated.ts`** (`GEN[slug]`).
+- **`scripts/sync-loose.py`** → Loose por rangos (Portfolio, date-desc).
+- **`data/merge.ts`** (`mergePhotos`): combina `GEN[slug]` sobre el fallback de `series.ts`/`studies.ts`. La **metadata** (statements, quotes, orden) vive en código; las **fotos** vienen de las carpetas. Modos: `keep` (respeta orden curado de Works), `curated` (Villeta, por secuencia), `date-desc` (estudios abiertos y Loose). Lo que NO esté en las carpetas se **conserva** del repo.
+- Estudios: `Passenger` y `Chicago` agregados. `Ground` es repo-only (no está en carpetas todavía). El statement de `Passenger` es provisional (revisar).
+
 ## Loose (por año)
 
 `/loose` = `LoosePage` (grid de años, más reciente primero); `/loose/:year` = `LooseYearPage` (galería vía `PhotoViewer`). Datos en **`data/loose.ts`** (auto-generado — NO editar a mano). Fuente de verdad: `<carpeta madre>/Loose/<AAAA>/Web/`. Regenerar imágenes + data con **`scripts/sync-loose.py`** (lee las copias Web del archivo, produce webp ≤2000px en `public/photography/loose/<año>/` y reescribe `data/loose.ts`). Loose en el archivo está organizado **una carpeta por año** con `{HD,Portfolio,Web}`.
