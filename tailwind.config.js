@@ -9,13 +9,17 @@ export default {
   theme: {
     extend: {
       colors: {
-        'brand-yellow': '#FFBF00',
-        'brand-yellow-dark': '#E6AC00',
-        'brand-dark': '#1A1A1A',
-        'brand-gray': '#555555',
+        // Editorial palette — acid yellow on near-black
+        'brand-yellow': '#C9C41C',
+        'brand-yellow-dark': '#A8A417',
+        'brand-dark': '#0A0A0A',
+        'brand-cream': '#EDEBE4',
+        'brand-gray': '#8C887D',
       },
       fontFamily: {
-        sans: ['"Manrope Variable"', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
+        // Monumental condensed display + clean tracked body
+        disp: ['"Big Shoulders Display Variable"', '"Arial Narrow"', 'system-ui', 'sans-serif'],
+        sans: ['"Archivo Variable"', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
       },
     },
   },
