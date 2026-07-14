@@ -11,7 +11,7 @@ const ui = {
   'nav.contact':  { en: 'Contact',     es: 'Contacto' },
 
   // Hero
-  'hero.kicker':  { en: 'Luis H. Reyes — Black & White Fine Art Photography', es: 'Luis H. Reyes — Fotografía Artística en Blanco y Negro' },
+  'hero.kicker':  { en: 'Black & White Photography', es: 'Fotografía en Blanco y Negro' },
   'hero.title':   { en: "There's a version of every scene that only shows up when you strip the color away.", es: 'Hay una versión de cada escena que solo aparece cuando le quitas el color.' },
   'hero.sub':     { en: "That's the one I'm after.", es: 'Esa es la que busco.' },
   'hero.scroll':  { en: 'Scroll', es: 'Scroll' },

@@ -26,6 +26,8 @@ export default function WorkPage() {
               <img
                 src={s.coverPhoto}
                 alt={s.title}
+                loading="lazy"
+                decoding="async"
                 className="absolute inset-0 w-full h-full object-cover grayscale transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0"
                 onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
               />

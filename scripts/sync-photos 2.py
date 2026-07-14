@@ -20,7 +20,7 @@ from PIL import Image
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MASTER = os.path.abspath(os.path.join(REPO, '..', '..'))
 PUB = os.path.join(REPO, 'public', 'photography')
-MAXEDGE, Q = 1600, 80   # web-optimized: smaller = faster galleries
+MAXEDGE, Q = 2000, 82
 SRC_SUB = 'Portfolio'
 
 def slugify(s): return re.sub(r'(^-|-$)', '', re.sub(r'[^a-z0-9]+', '-', s.lower()))

@@ -85,7 +85,6 @@ const rawSeries: Series[] = [
     photos: [
       { id: 'in-passing-01', title: 'City Canyon',  src: `${BASE_LOCAL}/in-passing/01-city-canyon.webp`,  width: 1330, height: 2000 },
       { id: 'in-passing-02', title: 'Rhythm',        src: `${BASE_LOCAL}/in-passing/02-rhythm.webp`,        width: 2000, height: 1330 },
-      { id: 'in-passing-03', title: 'The Audience',  src: `${BASE_LOCAL}/in-passing/03-the-audience.webp`,  width: 2000, height: 1330 },
       { id: 'in-passing-04', title: 'Companions',    src: `${BASE_LOCAL}/in-passing/04-companions.webp`,    width: 2000, height: 1333 },
       { id: 'in-passing-05', title: 'Compartments',  src: `${BASE_LOCAL}/in-passing/05-compartments.webp`,  width: 2000, height: 1500 },
       { id: 'in-passing-06', title: 'Gentle Giant',  src: `${BASE_LOCAL}/in-passing/06-gentle-giant.webp`,  width: 2000, height: 1445 },
