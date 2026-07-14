@@ -131,6 +131,7 @@ interface Door {
 
 function IndexDoors() {
   const { t, lang } = useI18n();
+  const looseTotal = looseYears.reduce((n, g) => n + g.photos.length, 0);
   const doors: Door[] = [
     {
       n: '01', title: t('work.title'), to: '/work', cover: series[0]?.coverPhoto,
@@ -141,8 +142,8 @@ function IndexDoors() {
       meta: { en: `${studies.length} series · open`, es: `${studies.length} series · abiertas` },
     },
     {
-      n: '03', title: t('loose.title'), to: '/loose', cover: looseYears[0]?.coverPhoto,
-      meta: { en: `${looseYears.length} years · 2012–2026`, es: `${looseYears.length} años · 2012–2026` },
+      n: '03', title: t('loose.title'), to: '/loose', cover: '/photography/loose/2017-2021/20-dominion.webp',
+      meta: { en: `${looseTotal} images · 2012–2026`, es: `${looseTotal} imágenes · 2012–2026` },
     },
   ];
 
