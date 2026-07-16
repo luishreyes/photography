@@ -132,10 +132,11 @@ interface Door {
 function IndexDoors() {
   const { t, lang } = useI18n();
   const looseTotal = looseYears.reduce((n, g) => n + g.photos.length, 0);
+  const workTotal = series.reduce((n, s) => n + s.photos.length, 0);
   const doors: Door[] = [
     {
       n: '01', title: t('work.title'), to: '/work', cover: series[0]?.coverPhoto,
-      meta: { en: `${series.length} collections · 72 images`, es: `${series.length} colecciones · 72 imágenes` },
+      meta: { en: `${series.length} collections · ${workTotal} images`, es: `${series.length} colecciones · ${workTotal} imágenes` },
     },
     {
       n: '02', title: t('studies.title'), to: '/studies', cover: studies.find(s => s.coverPhoto)?.coverPhoto,
