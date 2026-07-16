@@ -134,6 +134,9 @@ def page_photo(num, title, date_str, uri, size):
 </section>"""
 
 
+ROWS_PER_PAGE = 14  # placas por página de colofón (evita que el índice largo se corte)
+
+
 def page_colophon(heading, rows, footer_left):
     items = ''.join(
         f"""<div style="display:flex;justify-content:space-between;align-items:baseline;padding:0.4cm 0;border-bottom:1px solid rgba(232,230,225,0.16);">
@@ -143,13 +146,14 @@ def page_colophon(heading, rows, footer_left):
 </div>
 <span style="font-family:'Archivo';font-weight:400;font-size:9pt;font-variant-numeric:tabular-nums;color:rgba(232,230,225,0.55);">{date_str}</span>
 </div>""" for num, title, date_str in rows)
+    footer = '' if footer_left is None else f"""<div style="margin-top:auto;display:flex;justify-content:space-between;align-items:baseline;">
+<div style="font-family:'Archivo';font-weight:400;font-size:9pt;color:rgba(232,230,225,0.55);">{esc(footer_left)}</div>
+<a href="https://photography.luishreyes.com" style="font-family:'Archivo';font-weight:400;font-size:9pt;color:{CIT};text-decoration:none;">photography.luishreyes.com</a>
+</div>"""
     return f"""<section class="pg" style="background:{DARK};color:{BONE};padding:2.2cm;display:flex;flex-direction:column;">
 <div style="font-family:'Archivo';font-weight:600;font-size:8.5pt;letter-spacing:0.28em;text-transform:uppercase;color:{CIT};">{esc(heading)}</div>
 <div style="margin-top:1cm;display:flex;flex-direction:column;">{items}</div>
-<div style="margin-top:auto;display:flex;justify-content:space-between;align-items:baseline;">
-<div style="font-family:'Archivo';font-weight:400;font-size:9pt;color:rgba(232,230,225,0.55);">{esc(footer_left)}</div>
-<a href="https://photography.luishreyes.com" style="font-family:'Archivo';font-weight:400;font-size:9pt;color:{CIT};text-decoration:none;">photography.luishreyes.com</a>
-</div>
+{footer}
 </section>"""
 
 
@@ -194,7 +198,10 @@ def build_html(book, lang, fonts):
         ds = fmt_date(ymd)
         pages.append(page_photo(i, title, ds, uri, size))
         rows.append((i, title, ds))
-    pages.append(page_colophon(tr['index'], rows, footer_left))
+    chunks = [rows[i:i + ROWS_PER_PAGE] for i in range(0, len(rows), ROWS_PER_PAGE)] or [[]]
+    for ci, chunk in enumerate(chunks):
+        last = ci == len(chunks) - 1
+        pages.append(page_colophon(tr['index'], chunk, footer_left if last else None))
 
     html = f"""<!DOCTYPE html><html><head><meta charset="utf-8"><style>
 @page{{size:25cm 25cm;margin:0;}}
