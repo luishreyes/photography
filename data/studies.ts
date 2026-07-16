@@ -62,6 +62,14 @@ const BETWEEN_ORDER = [
   'Celosía', 'Between',
 ];
 
+// Remnant — lo que queda: del resto más hondo y aislado sobre negro (hueso, hoja,
+// cuerpo) a la huella humana y la marca inscrita, luego al muro sellado y por fin
+// a la escala urbana, la gárgola que vigila la ciudad que se disuelve.
+const REMNANT_ORDER = [
+  'Remains', 'Filigree', 'The Binding', 'Worn', 'Inscription',
+  'Gnomon', 'Sealed', 'Still Buried', 'Overhang',
+];
+
 // Metadata hand-authored; photo lists come from the archive via mergePhotos.
 const rawStudies: Study[] = [
   {
@@ -139,6 +147,7 @@ const CURATED_ORDERS: Record<string, string[]> = {
   dosel: DOSEL_ORDER,
   containment: CONTAINMENT_ORDER,
   between: BETWEEN_ORDER,
+  remnant: REMNANT_ORDER,
 };
 
 export const studies: Study[] = rawStudies.map(s => {
