@@ -32,10 +32,10 @@ const VILLETA_ORDER = [
 // Passenger — orden de Adobe Portfolio (17 fotos). Las que aún no están en la
 // carpeta (Noventa, Talisman, Onlookers) se omiten hasta identificarlas.
 const PASSENGER_ORDER = [
-  'La Consigna', 'Llámenos', 'Reflex', 'Comadreja', 'Santa Bárbara',
-  'Noventa', 'Carmen', 'Amulets', 'El Escudo', 'Talisman',
-  'Promesa', 'Guadalupe', 'Onlookers', 'Idol', 'Through Glass',
-  'Amparo', 'The Medallion',
+  'La Consigna', 'Llámenos', 'Reflex', 'De Reojo', 'Comadreja',
+  'Santa Bárbara', 'Noventa', 'Carmen', 'Amulets', 'El Escudo',
+  'Talisman', 'Promesa', 'Guadalupe', 'Onlookers', 'Idol',
+  'Through Glass', 'Amparo', 'The Medallion',
 ];
 
 // Metadata hand-authored; photo lists come from the archive via mergePhotos.
