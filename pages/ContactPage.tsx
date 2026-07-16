@@ -3,7 +3,7 @@ import { useI18n } from '../context/i18n';
 import Footer from '../components/Footer';
 import SocialLinks from '../components/SocialLinks';
 
-const EMAIL = 'lh.reyes@uniandes.edu.co';
+const EMAIL = 'luishreyesbarrios@gmail.com';
 
 export default function ContactPage() {
   const { t } = useI18n();

@@ -3,7 +3,7 @@
 
 const IG = 'https://www.instagram.com/luish_photography/';
 const LI = 'https://www.linkedin.com/in/luishreyes/';
-const MAIL = 'mailto:lh.reyes@uniandes.edu.co';
+const MAIL = 'mailto:luishreyesbarrios@gmail.com';
 
 const S = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.6, strokeLinecap: 'round', strokeLinejoin: 'round' } as const;
 
