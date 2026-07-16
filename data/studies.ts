@@ -38,6 +38,30 @@ const PASSENGER_ORDER = [
   'Idol', 'Through Glass', 'Amparo', 'The Medallion',
 ];
 
+// Dosel — la mirada que sube: de la espesura cerrada a la copa que se abre,
+// luego a la silueta pura contra el cielo, y por fin a la vida y el fruto.
+const DOSEL_ORDER = [
+  'Breach', 'Oculus', 'Crown', 'Plumage', 'Vigía', 'Fruition',
+];
+
+// Containment — despoblación y escalada: de la contención colectiva a la figura
+// única aplastada por la arquitectura, y por fin al recinto sin nadie.
+const CONTAINMENT_ORDER = [
+  'Waiting', 'Still Water', 'Into the Dark', 'Framed', 'Held',
+  'Sanctuary', 'The Terrace', 'Sanctum', 'The Pavilion', 'The Landing',
+  'The Pause', 'Orbit', 'Fuelle', 'Enclosure',
+];
+
+// Between — el instante justo antes de cruzar, cinco movimientos del umbral
+// más físico al más disuelto: puerta, vidrio/reflejo, luz, geometría/cielo, velo.
+const BETWEEN_ORDER = [
+  'Estancia', 'Interior, Exterior', 'Recess', 'Cargada', 'Salida',
+  'Through', 'Through Glass', 'Into the Wall',
+  'Screenlight', 'Illumination', 'Bias',
+  'Facing', 'Skew', 'Eaves', 'Between Bells',
+  'Celosía', 'Between',
+];
+
 // Metadata hand-authored; photo lists come from the archive via mergePhotos.
 const rawStudies: Study[] = [
   {
@@ -106,15 +130,25 @@ const rawStudies: Study[] = [
   },
 ];
 
-// Photos from the archive (data/generated.ts). Villeta keeps its curatorial
-// sequence; the other open studies order newest→oldest by capture date.
-export const studies: Study[] = rawStudies.map(s => ({
-  ...s,
-  photos: (
-    s.slug === 'villeta'
-      ? mergePhotos('villeta', VILLETA_ORDER.map((t): MPhoto => ({ id: '', title: t, src: '' })), 'curated')
-      : s.slug === 'passenger'
-        ? mergePhotos('passenger', PASSENGER_ORDER.map((t): MPhoto => ({ id: '', title: t, src: '' })), 'curated')
+// Photos from the archive (data/generated.ts). Studies with a curatorial
+// sequence below follow it (mode 'curated'); any without one order
+// newest→oldest by capture date.
+const CURATED_ORDERS: Record<string, string[]> = {
+  villeta: VILLETA_ORDER,
+  passenger: PASSENGER_ORDER,
+  dosel: DOSEL_ORDER,
+  containment: CONTAINMENT_ORDER,
+  between: BETWEEN_ORDER,
+};
+
+export const studies: Study[] = rawStudies.map(s => {
+  const order = CURATED_ORDERS[s.slug];
+  return {
+    ...s,
+    photos: (
+      order
+        ? mergePhotos(s.slug, order.map((t): MPhoto => ({ id: '', title: t, src: '' })), 'curated')
         : mergePhotos(s.slug, s.photos, 'date-desc')
-  ) as StudyPhoto[],
-}));
+    ) as StudyPhoto[],
+  };
+});
