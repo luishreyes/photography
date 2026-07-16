@@ -160,7 +160,7 @@ const rawSeries: Series[] = [
       { id: 'close-01', title: 'Curiosity',       src: `${BASE_LOCAL}/close/01-curiosity.webp`,       width: 2000, height: 1333 },
       { id: 'close-02', title: 'Together',         src: `${BASE_LOCAL}/close/02-together.webp`,         width: 1333, height: 2000 },
       { id: 'close-03', title: 'Radiance',         src: `${BASE_LOCAL}/close/03-radiance.webp`,         width: 1333, height: 2000 },
-      { id: 'close-04', title: 'Slumber',          src: `${BASE_LOCAL}/close/04-slumber.webp`,          width: 2000, height: 1124 },
+      { id: 'close-04', title: 'Second Face',      src: `${BASE_LOCAL}/close/04-second-face.webp`,      width: 2000, height: 1333 },
       { id: 'close-05', title: 'Shelter',          src: `${BASE_LOCAL}/close/05-shelter.webp`,          width: 2000, height: 1333 },
       { id: 'close-06', title: 'The Spotlight',    src: `${BASE_LOCAL}/close/06-the-spotlight.webp`,    width: 2000, height: 1353 },
       { id: 'close-07', title: 'At the Oven',      src: `${BASE_LOCAL}/close/07-at-the-oven.webp`,      width: 1330, height: 2000 },
