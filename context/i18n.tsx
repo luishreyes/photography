@@ -42,6 +42,14 @@ const ui = {
   'studies.empty':   { en: 'Coming soon', es: 'Próximamente' },
   'study.back':      { en: '← Studies', es: '← Estudios' },
 
+  // Contact
+  'contact.kicker': { en: 'Get in touch', es: 'Hablemos' },
+  'contact.title':  { en: 'Contact', es: 'Contacto' },
+  'contact.intro':  { en: 'For commissions, prints, or just to say hello — write me. I read everything.', es: 'Para comisiones, impresiones o simplemente para saludar, escríbeme. Leo todo.' },
+  'contact.cta':    { en: 'Write me', es: 'Escríbeme' },
+  'contact.based':  { en: 'Based in Bogotá, Colombia', es: 'En Bogotá, Colombia' },
+  'contact.back':   { en: '← Home', es: '← Inicio' },
+
   // Placeholders
   'soon': { en: 'coming soon', es: 'próximamente' },
 } as const;

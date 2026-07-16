@@ -1,5 +1,6 @@
 import { useI18n } from '../context/i18n';
 import LogoMark from './LogoMark';
+import SocialLinks from './SocialLinks';
 
 export default function Footer() {
   const { lang } = useI18n();
@@ -22,11 +23,7 @@ export default function Footer() {
               ? 'Ver con mi propio ojo un mundo que ya tiene demasiados ojos encima.'
               : 'Seeing with my own eye a world that already has too many eyes on it.'}
           </p>
-          <div className="u-label text-white/45 text-[11px] leading-[2.3] md:text-right">
-            <a href="https://instagram.com/" target="_blank" rel="noopener noreferrer" className="block hover:text-brand-yellow transition-colors">Instagram</a>
-            <a href="https://linkedin.com/" target="_blank" rel="noopener noreferrer" className="block hover:text-brand-yellow transition-colors">LinkedIn</a>
-            <a href="mailto:lh.reyes@uniandes.edu.co" className="block hover:text-brand-yellow transition-colors">Email</a>
-          </div>
+          <SocialLinks size={24} className="md:justify-end" />
         </div>
         <div className="u-label text-white/25 text-[10px] text-center mt-[clamp(40px,7vh,90px)] py-10 border-t border-white/5">
           {lang === 'es'
