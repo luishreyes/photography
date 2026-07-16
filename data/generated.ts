@@ -33,8 +33,9 @@ export const GEN: Record<string, GenPhoto[]> = {
     { id: 'study-between-12', title: 'Skew', src: '/photography/studies/between/12-skew.webp', width: 1066, height: 1600, date: '20260505' },
     { id: 'study-between-13', title: 'Bias', src: '/photography/studies/between/13-bias.webp', width: 1066, height: 1600, date: '20260514' },
     { id: 'study-between-14', title: 'Facing', src: '/photography/studies/between/14-facing.webp', width: 1066, height: 1600, date: '20260526' },
-    { id: 'study-between-15', title: 'Celosía', src: '/photography/studies/between/15-celos-a.webp', width: 1066, height: 1600, date: '20260625' },
-    { id: 'study-between-16', title: 'Salida', src: '/photography/studies/between/16-salida.webp', width: 1600, height: 1066, date: '20260625' },
+    { id: 'study-between-15', title: 'Cargada', src: '/photography/studies/between/15-cargada.webp', width: 1066, height: 1600, date: '20260605' },
+    { id: 'study-between-16', title: 'Celosía', src: '/photography/studies/between/16-celos-a.webp', width: 1066, height: 1600, date: '20260625' },
+    { id: 'study-between-17', title: 'Salida', src: '/photography/studies/between/17-salida.webp', width: 1600, height: 1066, date: '20260625' },
   ],
   'close': [
     { id: 'close-01', title: 'At the Oven', src: '/photography/close/01-at-the-oven.webp', width: 1064, height: 1600, date: '20150628' },
