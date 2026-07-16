@@ -5,7 +5,7 @@ export interface LoosePhoto { id: string; title: string; src: string; }
 export interface LooseGroup { year: string; coverPhoto: string; photos: LoosePhoto[]; }
 
 export const looseYears: LooseGroup[] = [
-  { year: '2022-2026', coverPhoto: '/photography/loose/2022-2026/14-lookout.webp', photos: [
+  { year: '2022-2026', coverPhoto: '/photography/loose/2022-2026/15-lookout.webp', photos: [
     { id: 'loose-2022-2026-01', title: 'Sweep', src: '/photography/loose/2022-2026/01-sweep.webp' },
     { id: 'loose-2022-2026-02', title: 'Stave', src: '/photography/loose/2022-2026/02-stave.webp' },
     { id: 'loose-2022-2026-03', title: 'Ripple', src: '/photography/loose/2022-2026/03-ripple.webp' },
@@ -18,17 +18,18 @@ export const looseYears: LooseGroup[] = [
     { id: 'loose-2022-2026-10', title: 'Generations', src: '/photography/loose/2022-2026/10-generations.webp' },
     { id: 'loose-2022-2026-11', title: 'Respite', src: '/photography/loose/2022-2026/11-respite.webp' },
     { id: 'loose-2022-2026-12', title: 'Wedge', src: '/photography/loose/2022-2026/12-wedge.webp' },
-    { id: 'loose-2022-2026-13', title: 'Sovereign', src: '/photography/loose/2022-2026/13-sovereign.webp' },
-    { id: 'loose-2022-2026-14', title: 'Lookout', src: '/photography/loose/2022-2026/14-lookout.webp' },
-    { id: 'loose-2022-2026-15', title: 'Nestled', src: '/photography/loose/2022-2026/15-nestled.webp' },
-    { id: 'loose-2022-2026-16', title: 'Common Ground', src: '/photography/loose/2022-2026/16-common-ground.webp' },
-    { id: 'loose-2022-2026-17', title: 'Grounds', src: '/photography/loose/2022-2026/17-grounds.webp' },
-    { id: 'loose-2022-2026-18', title: 'Un Mundo Distinto', src: '/photography/loose/2022-2026/18-un-mundo-distinto.webp' },
-    { id: 'loose-2022-2026-19', title: 'Work', src: '/photography/loose/2022-2026/19-work.webp' },
-    { id: 'loose-2022-2026-20', title: 'Claim', src: '/photography/loose/2022-2026/20-claim.webp' },
-    { id: 'loose-2022-2026-21', title: 'The Wish', src: '/photography/loose/2022-2026/21-the-wish.webp' },
-    { id: 'loose-2022-2026-22', title: 'At Ease', src: '/photography/loose/2022-2026/22-at-ease.webp' },
-    { id: 'loose-2022-2026-23', title: 'Threshold Keepers', src: '/photography/loose/2022-2026/23-threshold-keepers.webp' },
+    { id: 'loose-2022-2026-13', title: 'Grip', src: '/photography/loose/2022-2026/13-grip.webp' },
+    { id: 'loose-2022-2026-14', title: 'Sovereign', src: '/photography/loose/2022-2026/14-sovereign.webp' },
+    { id: 'loose-2022-2026-15', title: 'Lookout', src: '/photography/loose/2022-2026/15-lookout.webp' },
+    { id: 'loose-2022-2026-16', title: 'Nestled', src: '/photography/loose/2022-2026/16-nestled.webp' },
+    { id: 'loose-2022-2026-17', title: 'Common Ground', src: '/photography/loose/2022-2026/17-common-ground.webp' },
+    { id: 'loose-2022-2026-18', title: 'Grounds', src: '/photography/loose/2022-2026/18-grounds.webp' },
+    { id: 'loose-2022-2026-19', title: 'Un Mundo Distinto', src: '/photography/loose/2022-2026/19-un-mundo-distinto.webp' },
+    { id: 'loose-2022-2026-20', title: 'Work', src: '/photography/loose/2022-2026/20-work.webp' },
+    { id: 'loose-2022-2026-21', title: 'Claim', src: '/photography/loose/2022-2026/21-claim.webp' },
+    { id: 'loose-2022-2026-22', title: 'The Wish', src: '/photography/loose/2022-2026/22-the-wish.webp' },
+    { id: 'loose-2022-2026-23', title: 'At Ease', src: '/photography/loose/2022-2026/23-at-ease.webp' },
+    { id: 'loose-2022-2026-24', title: 'Threshold Keepers', src: '/photography/loose/2022-2026/24-threshold-keepers.webp' },
   ] },
   { year: '2017-2021', coverPhoto: '/photography/loose/2017-2021/01-dominion.webp', photos: [
     { id: 'loose-2017-2021-01', title: 'Dominion', src: '/photography/loose/2017-2021/01-dominion.webp' },
