@@ -28,8 +28,8 @@ LABELS = {
     'loose': {'es': 'Sueltas', 'en': 'Loose'},
 }
 T = {
-    'es': {'sub': 'Fotografía en blanco y negro', 'plates': 'placas', 'index': 'Índice de placas', 'loose': 'Sueltas'},
-    'en': {'sub': 'Black & white photography',     'plates': 'plates', 'index': 'Index of plates',   'loose': 'Loose'},
+    'es': {'sub': 'Fotografía en blanco y negro', 'plates': 'placas', 'index': 'Índice de placas', 'loose': 'Sueltas', 'photog': 'Fotografía'},
+    'en': {'sub': 'Black & white photography',     'plates': 'plates', 'index': 'Index of plates',   'loose': 'Loose',   'photog': 'Photography'},
 }
 
 
@@ -91,14 +91,14 @@ def year_span(dates):
 
 # ---------- páginas ----------
 
-def page_cover(display_title, subline):
+def page_cover(display_title, subline, brand_word):
     corner = lambda pos, bw: f'<div style="position:absolute;{pos};width:0.85cm;height:0.85cm;border-style:solid;border-width:{bw};border-color:{CIT};"></div>'
     return f"""<section class="pg" style="background:{DARK};padding:2.2cm;display:flex;flex-direction:column;justify-content:space-between;">
 {corner('top:1.5cm;left:1.5cm', '2px 0 0 2px')}
 {corner('top:1.5cm;right:1.5cm', '2px 2px 0 0')}
 {corner('bottom:1.5cm;left:1.5cm', '0 0 2px 2px')}
 {corner('bottom:1.5cm;right:1.5cm', '0 2px 2px 0')}
-<div style="position:relative;font-family:'Archivo';font-weight:500;font-size:8.5pt;letter-spacing:0.28em;text-transform:uppercase;color:rgba(232,230,225,0.65);">Luis H. Reyes · Fotografía</div>
+<div style="position:relative;font-family:'Archivo';font-weight:500;font-size:8.5pt;letter-spacing:0.28em;text-transform:uppercase;color:rgba(232,230,225,0.65);">Luis H. Reyes · {esc(brand_word)}</div>
 <div style="position:relative;">
 <h1 style="margin:0;font-family:'Big Shoulders Display';font-weight:300;font-size:96pt;line-height:0.95;letter-spacing:0.01em;text-transform:uppercase;color:{BONE};">{esc(display_title)}</h1>
 <div style="margin-top:0.5cm;font-family:'Archivo';font-weight:400;font-size:9pt;letter-spacing:0.28em;text-transform:uppercase;color:rgba(232,230,225,0.55);">{esc(subline)}</div>
@@ -191,7 +191,7 @@ def build_html(book, lang, fonts):
     count_line = f"{n} {tr['plates']} · {span}"
     footer_left = f"{display_title} — Luis H. Reyes · 25 × 25 cm"
 
-    pages = [page_cover(display_title, subline),
+    pages = [page_cover(display_title, subline, tr['photog']),
              page_title(kicker, display_title, book['statement'][lang], count_line)]
     rows = []
     for i, (title, ymd, uri, size) in enumerate(resolved, 1):
