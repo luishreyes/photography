@@ -6,6 +6,7 @@ export interface ViewerPhoto {
   id: string;
   title: string;
   src: string;
+  thumb?: string; // small square webp for the grid; lightbox always loads src
   width?: number;
   height?: number;
 }
@@ -112,7 +113,7 @@ export default function PhotoViewer({
             className="relative aspect-square block w-full overflow-hidden bg-zinc-900 group"
           >
             <img
-              src={p.src}
+              src={p.thumb ?? p.src}
               alt={p.title}
               loading="lazy"
               decoding="async"

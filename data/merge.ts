@@ -5,13 +5,14 @@ export interface MPhoto {
   id: string;
   title: string;
   src: string;
+  thumb?: string;
   width?: number;
   height?: number;
   year?: number;
 }
 
 const genToPhoto = (g: GenPhoto): MPhoto => ({
-  id: g.id, title: g.title, src: g.src, width: g.width, height: g.height,
+  id: g.id, title: g.title, src: g.src, thumb: g.thumb, width: g.width, height: g.height,
 });
 
 const norm = (s: string) => s.trim().toLowerCase();
@@ -64,7 +65,7 @@ export function mergePhotos(slug: string, fallback: MPhoto[], mode: 'keep' | 'da
   // mode 'keep'
   for (const f of fallback) {
     const g = genByTitle.get(norm(f.title));
-    if (g) { used.add(norm(g.title)); out.push({ ...f, src: g.src, width: g.width, height: g.height }); }
+    if (g) { used.add(norm(g.title)); out.push({ ...f, src: g.src, thumb: g.thumb, width: g.width, height: g.height }); }
     else out.push(f); // repo-only, kept
   }
   for (const g of [...gen].sort((a, b) => a.date.localeCompare(b.date))) {
