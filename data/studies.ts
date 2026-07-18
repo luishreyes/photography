@@ -49,7 +49,7 @@ const DOSEL_ORDER = [
 const CONTAINMENT_ORDER = [
   'Waiting', 'Still Water', 'Into the Dark', 'Framed', 'Held',
   'Sanctuary', 'The Terrace', 'Sanctum', 'The Pavilion', 'The Landing',
-  'The Pause', 'Orbit', 'Fuelle', 'Enclosure',
+  'Estratos', 'The Pause', 'Orbit', 'Fuelle', 'Enclosure',
 ];
 
 // Between — el instante justo antes de cruzar, cinco movimientos del umbral
