@@ -56,7 +56,7 @@ const CONTAINMENT_ORDER = [
 // Between — el instante justo antes de cruzar, cinco movimientos del umbral
 // más físico al más disuelto: puerta, vidrio/reflejo, luz, geometría/cielo, velo.
 const BETWEEN_ORDER = [
-  'Estancia', 'Interior, Exterior', 'Recess', 'Cargada', 'Salida',
+  'Estancia', 'Interior, Exterior', 'Iris', 'Recess', 'Cargada', 'Salida',
   'Through', 'Through Glass', 'Into the Wall',
   'Screenlight', 'Illumination', 'Bias',
   'Facing', 'Skew', 'Eaves', 'Between Bells',
