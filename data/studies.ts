@@ -12,6 +12,7 @@ export interface Study {
   year?: number;
   status: 'finished' | 'ongoing';
   description: { en: string; es: string };
+  quote?: { text: string; author: string }; // queda en inglés (original)
   coverPhoto?: string;
   photos: StudyPhoto[];
 }
@@ -78,6 +79,7 @@ const rawStudies: Study[] = [
       en: "A country house in the warm lands near Bogotá, and a camera that refused to look at the garden as a garden. These are photographs about tropical vegetation as pure form: the leaf, the vine, the seed, the way light moves through something alive. Not landscape. Structure.",
       es: "Una casa de campo en las tierras cálidas cerca de Bogotá, y una cámara que se negó a mirar el jardín como jardín. Estas son fotografías sobre la vegetación tropical como forma pura: la hoja, la enredadera, la semilla, la manera en que la luz atraviesa algo vivo. No es paisaje. Es estructura.",
     },
+    quote: { text: "The plant must be valued as a totally artistic and architectural structure.", author: "Karl Blossfeldt" },
     coverPhoto: `${BASE}/villeta/cover.webp`, photos: [],
   },
   {
@@ -86,22 +88,25 @@ const rawStudies: Study[] = [
       en: "Look up. Always up. Through leaves, branches, canopy. The sky broken into fragments by whatever grows between you and it. This study is about the ceiling that trees make, the light they filter, and the feeling of standing beneath something alive and enormous. No horizons here. Just the weight of green above.",
       es: "Mira hacia arriba. Siempre hacia arriba. A través de hojas, ramas, dosel. El cielo roto en fragmentos por todo lo que crece entre tú y él. Este estudio trata del techo que hacen los árboles, la luz que filtran, y la sensación de estar parado bajo algo vivo y enorme. Aquí no hay horizontes. Solo el peso del verde por encima.",
     },
+    quote: { text: "One should not only photograph things for what they are but for what else they are.", author: "Minor White" },
     coverPhoto: `${BASE}/dosel/cover.webp`, photos: [],
   },
   {
     slug: 'containment', title: 'Containment', status: 'ongoing',
     description: {
-      en: "People held by spaces. A woman behind bars in a colonial window. Miners swallowed by a tunnel. A couple framed inside a crumbling pavilion. The architecture does the holding, and the question is always the same: is the space protecting them, or trapping them? I keep finding this ambiguity everywhere, and I haven't decided which answer I prefer.",
-      es: "Personas contenidas por el espacio. Una mujer tras las rejas de una ventana colonial. Mineros tragados por un túnel. Una pareja enmarcada dentro de un pabellón en ruinas. La arquitectura es la que contiene, y la pregunta es siempre la misma: ¿el espacio los protege o los atrapa? Sigo encontrando esta ambigüedad en todas partes, y no he decidido qué respuesta prefiero.",
+      en: "People held by spaces. The architecture does the holding, and the question is always the same: is the space protecting them, or trapping them? I keep finding this ambiguity everywhere, and I haven't decided which answer I prefer.",
+      es: "Personas contenidas por el espacio. La arquitectura es la que contiene, y la pregunta es siempre la misma: ¿el espacio protege o atrapa? Sigo encontrando esta ambigüedad en todas partes, y no he decidido qué respuesta prefiero.",
     },
+    quote: { text: "A photograph is a secret about a secret. The more it tells you the less you know.", author: "Diane Arbus" },
     coverPhoto: `${BASE}/containment/cover.webp`, photos: [],
   },
   {
     slug: 'between', title: 'Between', status: 'ongoing',
     description: {
-      en: "Thresholds. The edge between inside and outside, between light and dark, between one state and the next. A man standing in a doorway. A bust glimpsed between the heads of museum visitors. A classroom where the window is the only exit. These photographs live in the moment just before crossing.",
-      es: "Umbrales. El borde entre dentro y fuera, entre luz y sombra, entre un estado y el siguiente. Un hombre parado en una puerta. Un busto entrevisto entre las cabezas de los visitantes de un museo. Un salón de clases donde la ventana es la única salida. Estas fotografías viven en el instante justo antes de cruzar.",
+      en: "Thresholds. The edge between inside and outside, between light and dark, between one state and the next. Anything can be an edge if you stand on it. These photographs live in the moment just before crossing.",
+      es: "Umbrales. El borde entre dentro y fuera, entre luz y sombra, entre un estado y el siguiente. Cualquier cosa puede ser un borde si uno se para en él. Estas fotografías viven en el instante justo antes de cruzar.",
     },
+    quote: { text: "I like it when one is not certain what one sees.", author: "Saul Leiter" },
     coverPhoto: `${BASE}/between/cover.webp`, photos: [],
   },
   {
@@ -110,14 +115,16 @@ const rawStudies: Study[] = [
       en: "Photographs made from the back seat, in motion. The window is a frame that never holds still: a city sliding past, reflections on the glass, strangers caught for the length of a red light. Being carried somewhere, and photographing whatever the ride hands you.",
       es: "Fotografías hechas desde el asiento de atrás, en movimiento. La ventana es un marco que nunca se queda quieto: una ciudad que se desliza, reflejos en el vidrio, desconocidos atrapados lo que dura un semáforo. Dejarse llevar y fotografiar lo que el trayecto va entregando.",
     },
+    quote: { text: "For me cities are enormous bodies of people's desires.", author: "Daido Moriyama" },
     coverPhoto: `${BASE}/passenger/cover.webp`, photos: [],
   },
   {
     slug: 'remnant', title: 'Remnant', status: 'ongoing',
     description: {
-      en: "What stays after something leaves. Peeling walls, worn sandals on old wood, a mummy's binding unraveling across millennia, a gargoyle watching a city that has changed beyond recognition. This is about the quiet erosion of the everyday, the texture that time leaves on things when no one is paying attention.",
-      es: "Lo que queda después de que algo se va. Paredes descascaradas, sandalias gastadas sobre madera vieja, el vendaje de una momia deshilachándose a través de los milenios, una gárgola observando una ciudad que ha cambiado más allá de todo reconocimiento. Esto trata de la erosión silenciosa de lo cotidiano, la textura que el tiempo deja en las cosas cuando nadie está prestando atención.",
+      en: "What stays after something leaves. The quiet erosion of the everyday, the texture that time leaves on things when no one is paying attention.",
+      es: "Lo que queda después de que algo se va. La erosión silenciosa de lo cotidiano, la textura que el tiempo deja en las cosas cuando nadie está prestando atención.",
     },
+    quote: { text: "Everything around us, dead or alive, in the eyes of a crazy photographer mysteriously takes on many variations, so that a seemingly dead object comes to life through light or by its surroundings.", author: "Josef Sudek" },
     coverPhoto: `${BASE}/remnant/cover.webp`, photos: [],
   },
   {

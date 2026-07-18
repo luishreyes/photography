@@ -27,7 +27,7 @@ export interface PhotoViewerProps {
 // they scroll into view. Tapping a photo opens it full-screen at full size; a
 // tap anywhere (no close button) dismisses it, swipe/arrows navigate.
 export default function PhotoViewer({
-  backHref, backLabel, title, description, metaSuffix, photos, resetKey,
+  backHref, backLabel, title, description, quote, metaSuffix, photos, resetKey,
 }: PhotoViewerProps) {
   const [open, setOpen] = useState<number | null>(null);
   const [dir, setDir] = useState(1); // 1 = next, -1 = prev
@@ -95,6 +95,14 @@ export default function PhotoViewer({
         </h1>
         {description && (
           <p className="mt-3 text-brand-cream/70 text-sm md:text-base leading-relaxed max-w-2xl">{description}</p>
+        )}
+        {quote && (
+          <figure className="mt-5 max-w-2xl border-l-2 border-brand-yellow/60 pl-4">
+            <blockquote className="text-brand-cream/50 text-sm md:text-[15px] leading-relaxed italic">
+              “{quote.text}”
+            </blockquote>
+            <figcaption className="u-label text-brand-yellow/80 text-[10px] mt-2">{quote.author}</figcaption>
+          </figure>
         )}
       </div>
 

@@ -37,6 +37,7 @@ export default function StudyPage() {
       backLabel={t('study.back')}
       title={study.title}
       description={study.description[lang]}
+      quote={study.quote}
       metaSuffix={study.year ? `· ${study.year}` : undefined}
       photos={study.photos}
       resetKey={study.slug}

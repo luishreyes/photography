@@ -13,7 +13,7 @@ OUT = os.path.join(REPO, 'public', 'photography', 'loose')
 MAXEDGE, Q = 1600, 80   # web-optimized: smaller = faster galleries
 SRC_SUB = 'Portfolio'   # frameless copies (NOT Web = framed social)
 # Hand-picked cover per range (by photo slug). Falls back to first photo.
-COVERS = {'2012-2016': 'sunburst', '2017-2021': 'dominion', '2022-2026': 'lookout'}
+COVERS = {'2012-2016': 'sunburst', '2017-2021': 'dominion', '2022-2026': 'cerraz-n'}
 
 def slugify(s): return re.sub(r'(^-|-$)', '', re.sub(r'[^a-z0-9]+', '-', s.lower()))
 def title_from(fn):

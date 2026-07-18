@@ -139,7 +139,7 @@ function IndexDoors() {
       meta: { en: `${series.length} collections · ${workTotal} images`, es: `${series.length} colecciones · ${workTotal} imágenes` },
     },
     {
-      n: '02', title: t('studies.title'), to: '/studies', cover: studies.find(s => s.coverPhoto)?.coverPhoto,
+      n: '02', title: t('studies.title'), to: '/studies', cover: studies.find(s => s.slug === 'containment')?.coverPhoto ?? studies.find(s => s.coverPhoto)?.coverPhoto,
       meta: { en: `${studies.length} series · open`, es: `${studies.length} series · abiertas` },
     },
     {

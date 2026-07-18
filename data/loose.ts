@@ -5,7 +5,7 @@ export interface LoosePhoto { id: string; title: string; src: string; thumb?: st
 export interface LooseGroup { year: string; coverPhoto: string; photos: LoosePhoto[]; }
 
 export const looseYears: LooseGroup[] = [
-  { year: '2022-2026', coverPhoto: '/photography/loose/2022-2026/21-lookout.webp', photos: [
+  { year: '2022-2026', coverPhoto: '/photography/loose/2022-2026/25-cerraz-n.webp', photos: [
     { id: 'loose-2022-2026-01', title: 'Den', src: '/photography/loose/2022-2026/01-den.webp', thumb: '/photography/loose/2022-2026/thumbs/01-den.webp' },
     { id: 'loose-2022-2026-02', title: 'Sweep', src: '/photography/loose/2022-2026/02-sweep.webp', thumb: '/photography/loose/2022-2026/thumbs/02-sweep.webp' },
     { id: 'loose-2022-2026-03', title: 'Stave', src: '/photography/loose/2022-2026/03-stave.webp', thumb: '/photography/loose/2022-2026/thumbs/03-stave.webp' },
