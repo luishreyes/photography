@@ -106,12 +106,18 @@ def page_cover(display_title, subline, brand_word):
 </section>"""
 
 
-def page_title(kicker, display_title, statement, count_line):
+def page_title(kicker, display_title, statement, count_line, quote=None):
+    qhtml = ''
+    if quote:
+        qhtml = ("<div style=\"margin-top:0.9cm;padding-left:0.5cm;border-left:2px solid %s;max-width:14cm;\">"
+                 "<div style=\"font-family:'Archivo';font-style:italic;font-weight:400;font-size:10.5pt;line-height:1.5;color:rgba(18,18,18,0.6);\">&ldquo;%s&rdquo;</div>"
+                 "<div style=\"margin-top:0.25cm;font-family:'Archivo';font-weight:600;font-size:8pt;letter-spacing:0.28em;text-transform:uppercase;color:%s;\">%s</div>"
+                 "</div>") % (CIT, esc(quote['text']), CIT, esc(quote['author']))
     return f"""<section class="pg" style="background:{BONE};color:{INK};padding:2.2cm;display:flex;flex-direction:column;justify-content:center;">
 <div style="font-family:'Archivo';font-weight:600;font-size:8.5pt;letter-spacing:0.28em;text-transform:uppercase;color:{CIT};">{esc(kicker)}</div>
 <h2 style="margin:0.4cm 0 0 0;font-family:'Big Shoulders Display';font-weight:300;font-size:44pt;line-height:1;text-transform:uppercase;color:{INK};">{esc(display_title)}</h2>
 <div style="width:2.4cm;height:1px;background:rgba(18,18,18,0.25);margin:0.9cm 0;"></div>
-<p style="margin:0;max-width:15cm;font-family:'Archivo';font-weight:400;font-size:12pt;line-height:1.55;color:rgba(18,18,18,0.86);">{esc(statement)}</p>
+<p style="margin:0;max-width:15cm;font-family:'Archivo';font-weight:400;font-size:12pt;line-height:1.55;color:rgba(18,18,18,0.86);">{esc(statement)}</p>{qhtml}
 <div style="margin-top:1.1cm;font-family:'Archivo';font-weight:400;font-size:11pt;color:{INK};">Luis H. Reyes</div>
 <div style="margin-top:0.25cm;font-family:'Archivo';font-weight:400;font-size:9pt;letter-spacing:0.28em;text-transform:uppercase;color:rgba(18,18,18,0.55);">{esc(count_line)}</div>
 </section>"""
@@ -192,7 +198,7 @@ def build_html(book, lang, fonts):
     footer_left = f"{display_title} — Luis H. Reyes · 25 × 25 cm"
 
     pages = [page_cover(display_title, subline, tr['photog']),
-             page_title(kicker, display_title, book['statement'][lang], count_line)]
+             page_title(kicker, display_title, book['statement'][lang], count_line, book.get('quote'))]
     rows = []
     for i, (title, ymd, uri, size) in enumerate(resolved, 1):
         ds = fmt_date(ymd)

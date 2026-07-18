@@ -19,6 +19,7 @@ interface Book {
   folder: string; // relativo al master
   yearLabel: string;
   statement: { en: string; es: string };
+  quote?: { text: string; author: string };
   photos: { title: string; webp: string }[]; // en orden; webp = fallback si falta el Portfolio jpg
 }
 
@@ -31,6 +32,7 @@ for (const s of series) {
     folder: `Works/${s.title}`,
     yearLabel: s.year ? String(s.year) : '',
     statement: s.description,
+    quote: s.quote,
     photos: s.photos.map(p => ({ title: p.title, webp: p.src })),
   });
 }
@@ -42,6 +44,7 @@ for (const s of studies) {
     folder: `Studies/${s.title}`,
     yearLabel: s.year ? String(s.year) : '',
     statement: s.description,
+    quote: s.quote,
     photos: s.photos.map(p => ({ title: p.title, webp: p.src })),
   });
 }
