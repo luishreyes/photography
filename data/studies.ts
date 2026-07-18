@@ -35,7 +35,7 @@ const VILLETA_ORDER = [
 const PASSENGER_ORDER = [
   'La Consigna', 'Llámenos', 'Reflex', 'De Reojo', 'Comadreja',
   'Santa Bárbara', 'Noventa', 'Carmen', 'Muffled', 'Amulets',
-  'El Escudo', 'Talisman', 'Promesa', 'Guadalupe', 'Onlookers',
+  'El Escudo', 'Talisman', 'Promesa', 'Guadalupe', 'Salvoconducto', 'Onlookers',
   'Idol', 'Through Glass', 'Amparo', 'The Medallion',
 ];
 

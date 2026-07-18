@@ -146,6 +146,7 @@ export const GEN: Record<string, GenPhoto[]> = {
     { id: 'study-passenger-14', title: 'Reflex', src: '/photography/studies/passenger/14-reflex.webp', thumb: '/photography/studies/passenger/thumbs/14-reflex.webp', width: 1600, height: 1066, date: '20260714' },
     { id: 'study-passenger-15', title: 'The Medallion', src: '/photography/studies/passenger/15-the-medallion.webp', thumb: '/photography/studies/passenger/thumbs/15-the-medallion.webp', width: 1066, height: 1600, date: '20260714' },
     { id: 'study-passenger-16', title: 'Through Glass', src: '/photography/studies/passenger/16-through-glass.webp', thumb: '/photography/studies/passenger/thumbs/16-through-glass.webp', width: 1600, height: 1066, date: '20260714' },
+    { id: 'study-passenger-17', title: 'Salvoconducto', src: '/photography/studies/passenger/17-salvoconducto.webp', thumb: '/photography/studies/passenger/thumbs/17-salvoconducto.webp', width: 1600, height: 1200, date: '20260718' },
   ],
   'remnant': [
     { id: 'study-remnant-01', title: 'Remains', src: '/photography/studies/remnant/01-remains.webp', thumb: '/photography/studies/remnant/thumbs/01-remains.webp', width: 1600, height: 1064, date: '20140607' },
