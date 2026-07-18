@@ -67,6 +67,7 @@ export const GEN: Record<string, GenPhoto[]> = {
     { id: 'study-containment-13', title: 'The Landing', src: '/photography/studies/containment/13-the-landing.webp', thumb: '/photography/studies/containment/thumbs/13-the-landing.webp', width: 1200, height: 1600, date: '20260511' },
     { id: 'study-containment-14', title: 'Fuelle', src: '/photography/studies/containment/14-fuelle.webp', thumb: '/photography/studies/containment/thumbs/14-fuelle.webp', width: 1200, height: 1600, date: '20260520' },
     { id: 'study-containment-15', title: 'Orbit', src: '/photography/studies/containment/15-orbit.webp', thumb: '/photography/studies/containment/thumbs/15-orbit.webp', width: 1600, height: 1066, date: '20260522' },
+    { id: 'study-containment-16', title: 'Desembocadura', src: '/photography/studies/containment/16-desembocadura.webp', thumb: '/photography/studies/containment/thumbs/16-desembocadura.webp', width: 1200, height: 1600, date: '20260718' },
   ],
   'dosel': [
     { id: 'study-dosel-01', title: 'Breach', src: '/photography/studies/dosel/01-breach.webp', thumb: '/photography/studies/dosel/thumbs/01-breach.webp', width: 1066, height: 1600, date: '20260411' },
