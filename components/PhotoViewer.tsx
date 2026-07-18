@@ -109,7 +109,7 @@ export default function PhotoViewer({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.15 }}
             transition={{ duration: 0.55, ease: 'easeOut' }}
-            className="aspect-square block w-full overflow-hidden bg-zinc-900 group"
+            className="relative aspect-square block w-full overflow-hidden bg-zinc-900 group"
           >
             <img
               src={p.src}
@@ -119,6 +119,15 @@ export default function PhotoViewer({
               draggable={false}
               className="h-full w-full object-cover md:grayscale md:group-hover:grayscale-0 md:transition-all md:duration-500"
             />
+            {/* Editorial caption — fotolibro language, revealed on hover (md+) */}
+            <span className="pointer-events-none absolute inset-x-0 bottom-0 hidden md:flex items-end justify-between gap-3 px-4 pb-3 pt-14 bg-gradient-to-t from-black/75 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <span className="font-disp font-light uppercase text-brand-cream text-xl leading-none tracking-[0.03em] text-left">
+                {p.title}
+              </span>
+              <span className="u-label text-brand-yellow text-[10px] leading-none mb-[3px]">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+            </span>
           </motion.button>
         ))}
       </div>
@@ -171,10 +180,13 @@ export default function PhotoViewer({
               </button>
             )}
 
-            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-center pointer-events-none">
-              <p className="text-white/50 text-xs font-medium">{photo.title}</p>
-              <p className="text-white/20 text-[10px] mt-1 tracking-widest">
-                {open! + 1} / {total}{metaSuffix ? ` ${metaSuffix}` : ''}
+            {/* Editorial caption — fotolibro language: citron index + Big Shoulders title */}
+            <div className="absolute inset-x-0 bottom-0 pointer-events-none bg-gradient-to-t from-black/70 via-black/25 to-transparent px-5 pb-5 pt-16 md:px-10 md:pb-7">
+              <p className="u-label text-brand-yellow text-[10px] mb-1.5">
+                {String(open! + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}{metaSuffix ? ` ${metaSuffix}` : ''}
+              </p>
+              <p className="font-disp font-light uppercase text-brand-cream leading-[0.95] tracking-[0.02em] text-[clamp(1.6rem,4.5vw,2.8rem)]">
+                {photo.title}
               </p>
             </div>
           </motion.div>
