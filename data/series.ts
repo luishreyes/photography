@@ -143,7 +143,7 @@ const rawSeries: Series[] = [
       { id: 'organic-08', title: 'Cruciform',      src: `${BASE_LOCAL}/organic/08-cruciform.webp`,      width: 2000, height: 2000 },
       { id: 'organic-09', title: 'Armor',          src: `${BASE_LOCAL}/organic/09-armor.webp`,          width: 2000, height: 1330 },
       { id: 'organic-10', title: 'Sentinel',       src: `${BASE_LOCAL}/organic/10-sentinel.webp`,       width: 1333, height: 2000 },
-      { id: 'organic-11', title: 'Petal Study',    src: `${BASE_LOCAL}/organic/11-petal-study.webp`,    width: 2000, height: 2000 },
+      { id: 'organic-11', title: 'Voluta',         src: `${BASE_LOCAL}/organic/12-voluta.webp`,         width: 1333, height: 2000 },
       { id: 'organic-12', title: 'The Transition', src: `${BASE_LOCAL}/organic/12-the-transition.webp`, width: 2000, height: 1330 },
     ],
   },
