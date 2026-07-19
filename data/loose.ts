@@ -42,6 +42,7 @@ export const looseYears: LooseGroup[] = [
     { id: 'loose-2022-2026-34', title: 'Epicentro', src: '/photography/loose/2022-2026/34-epicentro.webp', thumb: '/photography/loose/2022-2026/thumbs/34-epicentro.webp' },
     { id: 'loose-2022-2026-35', title: 'Cómplices', src: '/photography/loose/2022-2026/35-c-mplices.webp', thumb: '/photography/loose/2022-2026/thumbs/35-c-mplices.webp' },
     { id: 'loose-2022-2026-36', title: 'Threshold Keepers', src: '/photography/loose/2022-2026/36-threshold-keepers.webp', thumb: '/photography/loose/2022-2026/thumbs/36-threshold-keepers.webp' },
+    { id: 'loose-2022-2026-37', title: 'La Otra', src: '/photography/loose/2022-2026/37-la-otra.webp', thumb: '/photography/loose/2022-2026/thumbs/37-la-otra.webp' },
   ] },
   { year: '2017-2021', coverPhoto: '/photography/loose/2017-2021/01-dominion.webp', photos: [
     { id: 'loose-2017-2021-01', title: 'Dominion', src: '/photography/loose/2017-2021/01-dominion.webp', thumb: '/photography/loose/2017-2021/thumbs/01-dominion.webp' },
