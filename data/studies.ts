@@ -34,7 +34,7 @@ const VILLETA_ORDER = [
 // carpeta (Noventa, Talisman, Onlookers) se omiten hasta identificarlas.
 const PASSENGER_ORDER = [
   'La Consigna', 'Llámenos', 'Reflex', 'De Reojo', 'Comadreja',
-  'Santa Bárbara', 'Noventa', 'Carmen', 'Muffled', 'Amulets',
+  'Santa Bárbara', 'Noventa', 'Carmen', 'Muffled', 'Amulets', 'Matrioska',
   'El Escudo', 'Talisman', 'Promesa', 'Guadalupe', 'Salvoconducto', 'Onlookers',
   'Idol', 'Through Glass', 'Amparo', 'The Medallion',
 ];
