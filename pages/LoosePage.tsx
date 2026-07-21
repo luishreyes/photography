@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { looseYears } from '../data/loose';
 import { useI18n } from '../context/i18n';
 import Footer from '../components/Footer';
+import SmartImg from '../components/SmartImg';
 
 export default function LoosePage() {
   const { t, lang } = useI18n();
@@ -21,13 +22,11 @@ export default function LoosePage() {
               to={`/loose/${y.year}`}
               className="group relative block aspect-[4/5] overflow-hidden bg-zinc-900"
             >
-              <img
+              <SmartImg
                 src={y.coverPhoto}
                 alt={y.year}
                 loading="lazy"
-                decoding="async"
                 className="absolute inset-0 w-full h-full object-cover grayscale transition-all duration-700 group-hover:scale-105"
-                onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/5 to-transparent" />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-all duration-300" />

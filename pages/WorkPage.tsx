@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { series } from '../data/series';
 import { useI18n } from '../context/i18n';
 import Footer from '../components/Footer';
+import SmartImg from '../components/SmartImg';
 
 export default function WorkPage() {
   const { t, lang } = useI18n();
@@ -23,13 +24,11 @@ export default function WorkPage() {
               to={`/work/${s.slug}`}
               className="group relative block aspect-[4/5] overflow-hidden bg-zinc-900"
             >
-              <img
+              <SmartImg
                 src={s.coverPhoto}
                 alt={s.title}
                 loading="lazy"
-                decoding="async"
                 className="absolute inset-0 w-full h-full object-cover grayscale transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0"
-                onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
               />
               {/* Gradient base: año + título siempre legibles */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />

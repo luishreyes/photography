@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
+import SmartImg from './SmartImg';
 
 export interface ViewerPhoto {
   id: string;
@@ -120,11 +121,10 @@ export default function PhotoViewer({
             transition={{ duration: 0.55, ease: 'easeOut' }}
             className="relative aspect-square block w-full overflow-hidden bg-zinc-900 group"
           >
-            <img
+            <SmartImg
               src={p.thumb ?? p.src}
               alt={p.title}
               loading="lazy"
-              decoding="async"
               draggable={false}
               className="h-full w-full object-cover md:grayscale md:group-hover:grayscale-0 md:transition-all md:duration-500"
             />

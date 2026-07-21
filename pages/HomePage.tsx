@@ -6,6 +6,7 @@ import { studies } from '../data/studies';
 import { looseYears } from '../data/loose';
 import { useI18n, type Lang } from '../context/i18n';
 import Footer from '../components/Footer';
+import SmartImg from '../components/SmartImg';
 
 const HERO_IMAGE = '/hero.webp';
 
@@ -177,8 +178,7 @@ function DoorRow({ door: d, lang }: { door: Door; lang: Lang }) {
           className="pointer-events-none absolute inset-y-0 right-0 w-[min(46%,520px)] opacity-0 group-hover:opacity-50 transition-opacity duration-500"
           style={{ WebkitMaskImage: 'linear-gradient(90deg,transparent,#000 55%)', maskImage: 'linear-gradient(90deg,transparent,#000 55%)' }}
         >
-          <img src={d.cover} alt="" className="w-full h-full object-cover grayscale contrast-[1.1] brightness-[0.7]"
-            onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }} />
+          <SmartImg src={d.cover} alt="" loading="lazy" className="w-full h-full object-cover grayscale contrast-[1.1] brightness-[0.7]" />
         </div>
       )}
       <span className="relative z-10 u-label text-white/35 text-[12px] self-start pt-[0.4em]">{d.n}</span>
