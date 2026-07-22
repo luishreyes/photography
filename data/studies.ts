@@ -42,7 +42,7 @@ const PASSENGER_ORDER = [
 // Dosel — la mirada que sube: de la espesura cerrada a la copa que se abre,
 // luego a la silueta pura contra el cielo, y por fin a la vida y el fruto.
 const DOSEL_ORDER = [
-  'Breach', 'Oculus', 'Crown', 'Plumage', 'Vigía', 'Fruition',
+  'Breach', 'Oculus', 'Crown', 'Surtidor', 'Plumage', 'Vigía', 'Fruition',
 ];
 
 // Containment — despoblación y escalada: de la contención colectiva a la figura
