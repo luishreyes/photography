@@ -1,0 +1,776 @@
+// data/generated.ts
+var GEN = {
+  "abstractions": [
+    { id: "abstractions-01", title: "Vapor", src: "/photography/abstractions/01-vapor.webp", thumb: "/photography/abstractions/thumbs/01-vapor.webp", width: 1600, height: 1067, date: "20130410" },
+    { id: "abstractions-02", title: "Focus", src: "/photography/abstractions/02-focus.webp", thumb: "/photography/abstractions/thumbs/02-focus.webp", width: 1600, height: 1143, date: "20140911" },
+    { id: "abstractions-03", title: "Intervals", src: "/photography/abstractions/03-intervals.webp", thumb: "/photography/abstractions/thumbs/03-intervals.webp", width: 1064, height: 1600, date: "20140911" },
+    { id: "abstractions-04", title: "The Vortex", src: "/photography/abstractions/04-the-vortex.webp", thumb: "/photography/abstractions/thumbs/04-the-vortex.webp", width: 1600, height: 1391, date: "20140911" },
+    { id: "abstractions-05", title: "Urban Distortion", src: "/photography/abstractions/05-urban-distortion.webp", thumb: "/photography/abstractions/thumbs/05-urban-distortion.webp", width: 1600, height: 1600, date: "20140913" },
+    { id: "abstractions-06", title: "Descent", src: "/photography/abstractions/06-descent.webp", thumb: "/photography/abstractions/thumbs/06-descent.webp", width: 1600, height: 1600, date: "20140920" },
+    { id: "abstractions-07", title: "Immersion", src: "/photography/abstractions/07-immersion.webp", thumb: "/photography/abstractions/thumbs/07-immersion.webp", width: 1600, height: 1064, date: "20140921" },
+    { id: "abstractions-08", title: "Undertow", src: "/photography/abstractions/08-undertow.webp", thumb: "/photography/abstractions/thumbs/08-undertow.webp", width: 1600, height: 1600, date: "20150305" },
+    { id: "abstractions-09", title: "Energy", src: "/photography/abstractions/09-energy.webp", thumb: "/photography/abstractions/thumbs/09-energy.webp", width: 1600, height: 1064, date: "20151011" },
+    { id: "abstractions-10", title: "The Rush", src: "/photography/abstractions/10-the-rush.webp", thumb: "/photography/abstractions/thumbs/10-the-rush.webp", width: 1600, height: 1064, date: "20160409" },
+    { id: "abstractions-11", title: "Faultline", src: "/photography/abstractions/11-faultline.webp", thumb: "/photography/abstractions/thumbs/11-faultline.webp", width: 1600, height: 1066, date: "20170415" },
+    { id: "abstractions-12", title: "Unfold", src: "/photography/abstractions/12-unfold.webp", thumb: "/photography/abstractions/thumbs/12-unfold.webp", width: 1066, height: 1600, date: "20190720" }
+  ],
+  "between": [
+    { id: "study-between-01", title: "Estancia", src: "/photography/studies/between/01-estancia.webp", thumb: "/photography/studies/between/thumbs/01-estancia.webp", width: 1600, height: 1064, date: "20150627" },
+    { id: "study-between-02", title: "Between Bells", src: "/photography/studies/between/02-between-bells.webp", thumb: "/photography/studies/between/thumbs/02-between-bells.webp", width: 1067, height: 1600, date: "20170415" },
+    { id: "study-between-03", title: "Between", src: "/photography/studies/between/03-between.webp", thumb: "/photography/studies/between/thumbs/03-between.webp", width: 1600, height: 1066, date: "20171220" },
+    { id: "study-between-04", title: "Illumination", src: "/photography/studies/between/04-illumination.webp", thumb: "/photography/studies/between/thumbs/04-illumination.webp", width: 1066, height: 1600, date: "20171222" },
+    { id: "study-between-05", title: "Interior, Exterior", src: "/photography/studies/between/05-interior-exterior.webp", thumb: "/photography/studies/between/thumbs/05-interior-exterior.webp", width: 1067, height: 1600, date: "20180901" },
+    { id: "study-between-06", title: "Through", src: "/photography/studies/between/06-through.webp", thumb: "/photography/studies/between/thumbs/06-through.webp", width: 1067, height: 1600, date: "20260301" },
+    { id: "study-between-07", title: "Into the Wall", src: "/photography/studies/between/07-into-the-wall.webp", thumb: "/photography/studies/between/thumbs/07-into-the-wall.webp", width: 1085, height: 1600, date: "20260319" },
+    { id: "study-between-08", title: "Recess", src: "/photography/studies/between/08-recess.webp", thumb: "/photography/studies/between/thumbs/08-recess.webp", width: 1066, height: 1600, date: "20260319" },
+    { id: "study-between-09", title: "Palimpsesto", src: "/photography/studies/between/09-palimpsesto.webp", thumb: "/photography/studies/between/thumbs/09-palimpsesto.webp", width: 1066, height: 1600, date: "20260412" },
+    { id: "study-between-10", title: "Screenlight", src: "/photography/studies/between/10-screenlight.webp", thumb: "/photography/studies/between/thumbs/10-screenlight.webp", width: 1600, height: 1066, date: "20260414" },
+    { id: "study-between-11", title: "Eaves", src: "/photography/studies/between/11-eaves.webp", thumb: "/photography/studies/between/thumbs/11-eaves.webp", width: 1200, height: 1600, date: "20260417" },
+    { id: "study-between-12", title: "Skew", src: "/photography/studies/between/12-skew.webp", thumb: "/photography/studies/between/thumbs/12-skew.webp", width: 1066, height: 1600, date: "20260505" },
+    { id: "study-between-13", title: "Vado", src: "/photography/studies/between/13-vado.webp", thumb: "/photography/studies/between/thumbs/13-vado.webp", width: 1066, height: 1600, date: "20260508" },
+    { id: "study-between-14", title: "Bias", src: "/photography/studies/between/14-bias.webp", thumb: "/photography/studies/between/thumbs/14-bias.webp", width: 1066, height: 1600, date: "20260514" },
+    { id: "study-between-15", title: "Iris", src: "/photography/studies/between/15-iris.webp", thumb: "/photography/studies/between/thumbs/15-iris.webp", width: 1600, height: 1066, date: "20260517" },
+    { id: "study-between-16", title: "Facing", src: "/photography/studies/between/16-facing.webp", thumb: "/photography/studies/between/thumbs/16-facing.webp", width: 1066, height: 1600, date: "20260526" },
+    { id: "study-between-17", title: "Cargada", src: "/photography/studies/between/17-cargada.webp", thumb: "/photography/studies/between/thumbs/17-cargada.webp", width: 1066, height: 1600, date: "20260605" },
+    { id: "study-between-18", title: "Celos\xEDa", src: "/photography/studies/between/18-celos-a.webp", thumb: "/photography/studies/between/thumbs/18-celos-a.webp", width: 1066, height: 1600, date: "20260625" },
+    { id: "study-between-19", title: "Salida", src: "/photography/studies/between/19-salida.webp", thumb: "/photography/studies/between/thumbs/19-salida.webp", width: 1600, height: 1066, date: "20260625" }
+  ],
+  "close": [
+    { id: "close-01", title: "At the Oven", src: "/photography/close/01-at-the-oven.webp", thumb: "/photography/close/thumbs/01-at-the-oven.webp", width: 1064, height: 1600, date: "20150628" },
+    { id: "close-02", title: "Shelter", src: "/photography/close/02-shelter.webp", thumb: "/photography/close/thumbs/02-shelter.webp", width: 1600, height: 1066, date: "20170806" },
+    { id: "close-03", title: "Inheritance", src: "/photography/close/03-inheritance.webp", thumb: "/photography/close/thumbs/03-inheritance.webp", width: 1067, height: 1600, date: "20221111" },
+    { id: "close-04", title: "Double Presence", src: "/photography/close/04-double-presence.webp", thumb: "/photography/close/thumbs/04-double-presence.webp", width: 1600, height: 1066, date: "20241224" },
+    { id: "close-05", title: "The Spotlight", src: "/photography/close/05-the-spotlight.webp", thumb: "/photography/close/thumbs/05-the-spotlight.webp", width: 1600, height: 1083, date: "20260225" },
+    { id: "close-06", title: "Curiosity", src: "/photography/close/06-curiosity.webp", thumb: "/photography/close/thumbs/06-curiosity.webp", width: 1600, height: 1066, date: "20260227" },
+    { id: "close-07", title: "Radiance", src: "/photography/close/07-radiance.webp", thumb: "/photography/close/thumbs/07-radiance.webp", width: 1066, height: 1600, date: "20260227" },
+    { id: "close-08", title: "Together", src: "/photography/close/08-together.webp", thumb: "/photography/close/thumbs/08-together.webp", width: 1066, height: 1600, date: "20260228" },
+    { id: "close-09", title: "Wonder", src: "/photography/close/09-wonder.webp", thumb: "/photography/close/thumbs/09-wonder.webp", width: 1066, height: 1600, date: "20260301" },
+    { id: "close-10", title: "Cradle", src: "/photography/close/10-cradle.webp", thumb: "/photography/close/thumbs/10-cradle.webp", width: 1600, height: 1066, date: "20260309" },
+    { id: "close-11", title: "Witness", src: "/photography/close/11-witness.webp", thumb: "/photography/close/thumbs/11-witness.webp", width: 1066, height: 1600, date: "20260314" },
+    { id: "close-12", title: "Second Face", src: "/photography/close/12-second-face.webp", thumb: "/photography/close/thumbs/12-second-face.webp", width: 1600, height: 1066, date: "20260401" }
+  ],
+  "containment": [
+    { id: "study-containment-01", title: "Waiting", src: "/photography/studies/containment/01-waiting.webp", thumb: "/photography/studies/containment/thumbs/01-waiting.webp", width: 1600, height: 1064, date: "20140913" },
+    { id: "study-containment-02", title: "Still Water", src: "/photography/studies/containment/02-still-water.webp", thumb: "/photography/studies/containment/thumbs/02-still-water.webp", width: 1600, height: 1064, date: "20150412" },
+    { id: "study-containment-03", title: "Framed", src: "/photography/studies/containment/03-framed.webp", thumb: "/photography/studies/containment/thumbs/03-framed.webp", width: 1600, height: 1064, date: "20150807" },
+    { id: "study-containment-04", title: "Plomada", src: "/photography/studies/containment/04-plomada.webp", thumb: "/photography/studies/containment/thumbs/04-plomada.webp", width: 1600, height: 1600, date: "20151021" },
+    { id: "study-containment-05", title: "Sanctuary", src: "/photography/studies/containment/05-sanctuary.webp", thumb: "/photography/studies/containment/thumbs/05-sanctuary.webp", width: 1066, height: 1600, date: "20170413" },
+    { id: "study-containment-06", title: "Into the Dark", src: "/photography/studies/containment/06-into-the-dark.webp", thumb: "/photography/studies/containment/thumbs/06-into-the-dark.webp", width: 1600, height: 1067, date: "20170730" },
+    { id: "study-containment-07", title: "The Terrace", src: "/photography/studies/containment/07-the-terrace.webp", thumb: "/photography/studies/containment/thumbs/07-the-terrace.webp", width: 1600, height: 1066, date: "20171222" },
+    { id: "study-containment-08", title: "The Pavilion", src: "/photography/studies/containment/08-the-pavilion.webp", thumb: "/photography/studies/containment/thumbs/08-the-pavilion.webp", width: 1066, height: 1600, date: "20171228" },
+    { id: "study-containment-09", title: "Sanctum", src: "/photography/studies/containment/09-sanctum.webp", thumb: "/photography/studies/containment/thumbs/09-sanctum.webp", width: 1600, height: 1066, date: "20180224" },
+    { id: "study-containment-10", title: "Held", src: "/photography/studies/containment/10-held.webp", thumb: "/photography/studies/containment/thumbs/10-held.webp", width: 1200, height: 1600, date: "20260316" },
+    { id: "study-containment-11", title: "Enclosure", src: "/photography/studies/containment/11-enclosure.webp", thumb: "/photography/studies/containment/thumbs/11-enclosure.webp", width: 1600, height: 1200, date: "20260325" },
+    { id: "study-containment-12", title: "Estratos", src: "/photography/studies/containment/12-estratos.webp", thumb: "/photography/studies/containment/thumbs/12-estratos.webp", width: 1200, height: 1600, date: "20260426" },
+    { id: "study-containment-13", title: "The Pause", src: "/photography/studies/containment/13-the-pause.webp", thumb: "/photography/studies/containment/thumbs/13-the-pause.webp", width: 1200, height: 1600, date: "20260506" },
+    { id: "study-containment-14", title: "The Landing", src: "/photography/studies/containment/14-the-landing.webp", thumb: "/photography/studies/containment/thumbs/14-the-landing.webp", width: 1200, height: 1600, date: "20260511" },
+    { id: "study-containment-15", title: "Fuelle", src: "/photography/studies/containment/15-fuelle.webp", thumb: "/photography/studies/containment/thumbs/15-fuelle.webp", width: 1200, height: 1600, date: "20260520" },
+    { id: "study-containment-16", title: "Orbit", src: "/photography/studies/containment/16-orbit.webp", thumb: "/photography/studies/containment/thumbs/16-orbit.webp", width: 1600, height: 1066, date: "20260522" },
+    { id: "study-containment-17", title: "Desembocadura", src: "/photography/studies/containment/17-desembocadura.webp", thumb: "/photography/studies/containment/thumbs/17-desembocadura.webp", width: 1200, height: 1600, date: "20260718" }
+  ],
+  "dosel": [
+    { id: "study-dosel-01", title: "Breach", src: "/photography/studies/dosel/01-breach.webp", thumb: "/photography/studies/dosel/thumbs/01-breach.webp", width: 1066, height: 1600, date: "20260411" },
+    { id: "study-dosel-02", title: "Crown", src: "/photography/studies/dosel/02-crown.webp", thumb: "/photography/studies/dosel/thumbs/02-crown.webp", width: 1600, height: 1066, date: "20260411" },
+    { id: "study-dosel-03", title: "Oculus", src: "/photography/studies/dosel/03-oculus.webp", thumb: "/photography/studies/dosel/thumbs/03-oculus.webp", width: 1600, height: 1067, date: "20260412" },
+    { id: "study-dosel-04", title: "Fruition", src: "/photography/studies/dosel/04-fruition.webp", thumb: "/photography/studies/dosel/thumbs/04-fruition.webp", width: 1200, height: 1600, date: "20260418" },
+    { id: "study-dosel-05", title: "Plumage", src: "/photography/studies/dosel/05-plumage.webp", thumb: "/photography/studies/dosel/thumbs/05-plumage.webp", width: 1066, height: 1600, date: "20260517" },
+    { id: "study-dosel-06", title: "Surtidor", src: "/photography/studies/dosel/06-surtidor.webp", thumb: "/photography/studies/dosel/thumbs/06-surtidor.webp", width: 1600, height: 1066, date: "20260627" },
+    { id: "study-dosel-07", title: "Vig\xEDa", src: "/photography/studies/dosel/07-vig-a.webp", thumb: "/photography/studies/dosel/thumbs/07-vig-a.webp", width: 1066, height: 1600, date: "20260711" }
+  ],
+  "elsewhere": [
+    { id: "elsewhere-01", title: "Vigil", src: "/photography/elsewhere/01-vigil.webp", thumb: "/photography/elsewhere/thumbs/01-vigil.webp", width: 1064, height: 1600, date: "20160917" },
+    { id: "elsewhere-02", title: "Warp", src: "/photography/elsewhere/02-warp.webp", thumb: "/photography/elsewhere/thumbs/02-warp.webp", width: 1600, height: 1064, date: "20160919" },
+    { id: "elsewhere-03", title: "The Watcher", src: "/photography/elsewhere/03-the-watcher.webp", thumb: "/photography/elsewhere/thumbs/03-the-watcher.webp", width: 1064, height: 1600, date: "20160920" },
+    { id: "elsewhere-04", title: "Petition", src: "/photography/elsewhere/04-petition.webp", thumb: "/photography/elsewhere/thumbs/04-petition.webp", width: 1066, height: 1600, date: "20170413" },
+    { id: "elsewhere-05", title: "Capirote", src: "/photography/elsewhere/05-capirote.webp", thumb: "/photography/elsewhere/thumbs/05-capirote.webp", width: 1600, height: 1066, date: "20170414" },
+    { id: "elsewhere-06", title: "Veil", src: "/photography/elsewhere/06-veil.webp", thumb: "/photography/elsewhere/thumbs/06-veil.webp", width: 1066, height: 1600, date: "20171219" },
+    { id: "elsewhere-07", title: "Encircled", src: "/photography/elsewhere/07-encircled.webp", thumb: "/photography/elsewhere/thumbs/07-encircled.webp", width: 1066, height: 1600, date: "20171222" },
+    { id: "elsewhere-08", title: "Weight", src: "/photography/elsewhere/08-weight.webp", thumb: "/photography/elsewhere/thumbs/08-weight.webp", width: 1066, height: 1600, date: "20171224" },
+    { id: "elsewhere-09", title: "Span", src: "/photography/elsewhere/09-span.webp", thumb: "/photography/elsewhere/thumbs/09-span.webp", width: 1067, height: 1600, date: "20171225" },
+    { id: "elsewhere-10", title: "The Myth", src: "/photography/elsewhere/10-the-myth.webp", thumb: "/photography/elsewhere/thumbs/10-the-myth.webp", width: 1600, height: 1066, date: "20171225" },
+    { id: "elsewhere-11", title: "Echoes", src: "/photography/elsewhere/11-echoes.webp", thumb: "/photography/elsewhere/thumbs/11-echoes.webp", width: 1066, height: 1600, date: "20171226" }
+  ],
+  "geometries": [
+    { id: "geometries-01", title: "The Spiral", src: "/photography/geometries/01-the-spiral.webp", thumb: "/photography/geometries/thumbs/01-the-spiral.webp", width: 1600, height: 1066, date: "20120420" },
+    { id: "geometries-02", title: "Repetition", src: "/photography/geometries/02-repetition.webp", thumb: "/photography/geometries/thumbs/02-repetition.webp", width: 1064, height: 1600, date: "20140911" },
+    { id: "geometries-03", title: "Suspension", src: "/photography/geometries/03-suspension.webp", thumb: "/photography/geometries/thumbs/03-suspension.webp", width: 1600, height: 1064, date: "20140913" },
+    { id: "geometries-04", title: "Atrium Vortex", src: "/photography/geometries/04-atrium-vortex.webp", thumb: "/photography/geometries/thumbs/04-atrium-vortex.webp", width: 1066, height: 1600, date: "20150307" },
+    { id: "geometries-05", title: "The Crossing", src: "/photography/geometries/05-the-crossing.webp", thumb: "/photography/geometries/thumbs/05-the-crossing.webp", width: 1066, height: 1600, date: "20170413" },
+    { id: "geometries-06", title: "Ascent", src: "/photography/geometries/06-ascent.webp", thumb: "/photography/geometries/thumbs/06-ascent.webp", width: 1066, height: 1600, date: "20171220" },
+    { id: "geometries-07", title: "Rosace", src: "/photography/geometries/07-rosace.webp", thumb: "/photography/geometries/thumbs/07-rosace.webp", width: 1066, height: 1600, date: "20171221" },
+    { id: "geometries-08", title: "Science Faculty", src: "/photography/geometries/08-science-faculty.webp", thumb: "/photography/geometries/thumbs/08-science-faculty.webp", width: 1600, height: 1066, date: "20171221" },
+    { id: "geometries-09", title: "Divide", src: "/photography/geometries/09-divide.webp", thumb: "/photography/geometries/thumbs/09-divide.webp", width: 1600, height: 1600, date: "20201206" },
+    { id: "geometries-10", title: "Urban Grid", src: "/photography/geometries/10-urban-grid.webp", thumb: "/photography/geometries/thumbs/10-urban-grid.webp", width: 1200, height: 1600, date: "20260226" },
+    { id: "geometries-11", title: "Facet", src: "/photography/geometries/11-facet.webp", thumb: "/photography/geometries/thumbs/11-facet.webp", width: 1600, height: 1600, date: "20260301" },
+    { id: "geometries-12", title: "Lattice", src: "/photography/geometries/12-lattice.webp", thumb: "/photography/geometries/thumbs/12-lattice.webp", width: 1066, height: 1600, date: "20260301" }
+  ],
+  "in-passing": [
+    { id: "in-passing-01", title: "Confinement", src: "/photography/in-passing/01-confinement.webp", thumb: "/photography/in-passing/thumbs/01-confinement.webp", width: 1600, height: 1066, date: "20140510" },
+    { id: "in-passing-02", title: "City Canyon", src: "/photography/in-passing/02-city-canyon.webp", thumb: "/photography/in-passing/thumbs/02-city-canyon.webp", width: 1064, height: 1600, date: "20140911" },
+    { id: "in-passing-03", title: "Rhythm", src: "/photography/in-passing/03-rhythm.webp", thumb: "/photography/in-passing/thumbs/03-rhythm.webp", width: 1600, height: 1064, date: "20150627" },
+    { id: "in-passing-04", title: "Companions", src: "/photography/in-passing/04-companions.webp", thumb: "/photography/in-passing/thumbs/04-companions.webp", width: 1600, height: 1066, date: "20171219" },
+    { id: "in-passing-05", title: "Bearing", src: "/photography/in-passing/05-bearing.webp", thumb: "/photography/in-passing/thumbs/05-bearing.webp", width: 1066, height: 1600, date: "20181124" },
+    { id: "in-passing-06", title: "Parqueadero", src: "/photography/in-passing/06-parqueadero.webp", thumb: "/photography/in-passing/thumbs/06-parqueadero.webp", width: 1600, height: 1066, date: "20190109" },
+    { id: "in-passing-07", title: "Downpour", src: "/photography/in-passing/07-downpour.webp", thumb: "/photography/in-passing/thumbs/07-downpour.webp", width: 1067, height: 1600, date: "20260227" },
+    { id: "in-passing-08", title: "Refuge", src: "/photography/in-passing/08-refuge.webp", thumb: "/photography/in-passing/thumbs/08-refuge.webp", width: 1200, height: 1600, date: "20260312" },
+    { id: "in-passing-09", title: "Compartments", src: "/photography/in-passing/09-compartments.webp", thumb: "/photography/in-passing/thumbs/09-compartments.webp", width: 1600, height: 1200, date: "20260327" },
+    { id: "in-passing-10", title: "Salutation", src: "/photography/in-passing/10-salutation.webp", thumb: "/photography/in-passing/thumbs/10-salutation.webp", width: 1600, height: 1066, date: "20260509" },
+    { id: "in-passing-11", title: "Cadence", src: "/photography/in-passing/11-cadence.webp", thumb: "/photography/in-passing/thumbs/11-cadence.webp", width: 1600, height: 1066, date: "20260711" }
+  ],
+  "organic": [
+    { id: "organic-01", title: "Sentinel", src: "/photography/organic/01-sentinel.webp", thumb: "/photography/organic/thumbs/01-sentinel.webp", width: 1066, height: 1600, date: "20131214" },
+    { id: "organic-02", title: "The Transition", src: "/photography/organic/02-the-transition.webp", thumb: "/photography/organic/thumbs/02-the-transition.webp", width: 1600, height: 1064, date: "20140607" },
+    { id: "organic-03", title: "Ancient Eyes", src: "/photography/organic/03-ancient-eyes.webp", thumb: "/photography/organic/thumbs/03-ancient-eyes.webp", width: 1600, height: 1064, date: "20140706" },
+    { id: "organic-04", title: "Armor", src: "/photography/organic/04-armor.webp", thumb: "/photography/organic/thumbs/04-armor.webp", width: 1600, height: 1064, date: "20140706" },
+    { id: "organic-05", title: "Devotion", src: "/photography/organic/05-devotion.webp", thumb: "/photography/organic/thumbs/05-devotion.webp", width: 1064, height: 1600, date: "20140706" },
+    { id: "organic-06", title: "The Mantle", src: "/photography/organic/06-the-mantle.webp", thumb: "/photography/organic/thumbs/06-the-mantle.webp", width: 1600, height: 1064, date: "20140706" },
+    { id: "organic-07", title: "The Map", src: "/photography/organic/07-the-map.webp", thumb: "/photography/organic/thumbs/07-the-map.webp", width: 1600, height: 1066, date: "20200412" },
+    { id: "organic-08", title: "Threshold", src: "/photography/organic/08-threshold.webp", thumb: "/photography/organic/thumbs/08-threshold.webp", width: 1600, height: 1600, date: "20201227" },
+    { id: "organic-09", title: "Armature", src: "/photography/organic/09-armature.webp", thumb: "/photography/organic/thumbs/09-armature.webp", width: 1067, height: 1600, date: "20220918" },
+    { id: "organic-10", title: "Cruciform", src: "/photography/organic/10-cruciform.webp", thumb: "/photography/organic/thumbs/10-cruciform.webp", width: 1600, height: 1600, date: "20251223" },
+    { id: "organic-11", title: "Voluta", src: "/photography/organic/11-voluta.webp", thumb: "/photography/organic/thumbs/11-voluta.webp", width: 1066, height: 1600, date: "20260627" },
+    { id: "organic-12", title: "Acecho", src: "/photography/organic/12-acecho.webp", thumb: "/photography/organic/thumbs/12-acecho.webp", width: 1600, height: 1066, date: "20260722" }
+  ],
+  "passenger": [
+    { id: "study-passenger-01", title: "Carmen", src: "/photography/studies/passenger/01-carmen.webp", thumb: "/photography/studies/passenger/thumbs/01-carmen.webp", width: 1600, height: 1200, date: "20260505" },
+    { id: "study-passenger-02", title: "Guadalupe", src: "/photography/studies/passenger/02-guadalupe.webp", thumb: "/photography/studies/passenger/thumbs/02-guadalupe.webp", width: 1600, height: 1066, date: "20260506" },
+    { id: "study-passenger-03", title: "Idol", src: "/photography/studies/passenger/03-idol.webp", thumb: "/photography/studies/passenger/thumbs/03-idol.webp", width: 1066, height: 1600, date: "20260506" },
+    { id: "study-passenger-04", title: "Through Glass", src: "/photography/studies/passenger/04-through-glass.webp", thumb: "/photography/studies/passenger/thumbs/04-through-glass.webp", width: 1600, height: 1066, date: "20260507" },
+    { id: "study-passenger-05", title: "Noventa", src: "/photography/studies/passenger/05-noventa.webp", thumb: "/photography/studies/passenger/thumbs/05-noventa.webp", width: 1600, height: 1066, date: "20260508" },
+    { id: "study-passenger-06", title: "Comadreja", src: "/photography/studies/passenger/06-comadreja.webp", thumb: "/photography/studies/passenger/thumbs/06-comadreja.webp", width: 1600, height: 1066, date: "20260509" },
+    { id: "study-passenger-07", title: "Onlookers", src: "/photography/studies/passenger/07-onlookers.webp", thumb: "/photography/studies/passenger/thumbs/07-onlookers.webp", width: 1600, height: 1066, date: "20260509" },
+    { id: "study-passenger-08", title: "Talisman", src: "/photography/studies/passenger/08-talisman.webp", thumb: "/photography/studies/passenger/thumbs/08-talisman.webp", width: 1600, height: 1066, date: "20260509" },
+    { id: "study-passenger-09", title: "Santa B\xE1rbara", src: "/photography/studies/passenger/09-santa-b-rbara.webp", thumb: "/photography/studies/passenger/thumbs/09-santa-b-rbara.webp", width: 1600, height: 1066, date: "20260519" },
+    { id: "study-passenger-10", title: "El Escudo", src: "/photography/studies/passenger/10-el-escudo.webp", thumb: "/photography/studies/passenger/thumbs/10-el-escudo.webp", width: 1066, height: 1600, date: "20260521" },
+    { id: "study-passenger-11", title: "La Consigna", src: "/photography/studies/passenger/11-la-consigna.webp", thumb: "/photography/studies/passenger/thumbs/11-la-consigna.webp", width: 1066, height: 1600, date: "20260521" },
+    { id: "study-passenger-12", title: "Amparo", src: "/photography/studies/passenger/12-amparo.webp", thumb: "/photography/studies/passenger/thumbs/12-amparo.webp", width: 1067, height: 1600, date: "20260525" },
+    { id: "study-passenger-13", title: "Promesa", src: "/photography/studies/passenger/13-promesa.webp", thumb: "/photography/studies/passenger/thumbs/13-promesa.webp", width: 1600, height: 1066, date: "20260525" },
+    { id: "study-passenger-14", title: "Amulets", src: "/photography/studies/passenger/14-amulets.webp", thumb: "/photography/studies/passenger/thumbs/14-amulets.webp", width: 1600, height: 1066, date: "20260527" },
+    { id: "study-passenger-15", title: "Muffled", src: "/photography/studies/passenger/15-muffled.webp", thumb: "/photography/studies/passenger/thumbs/15-muffled.webp", width: 1600, height: 1066, date: "20260529" },
+    { id: "study-passenger-16", title: "De Reojo", src: "/photography/studies/passenger/16-de-reojo.webp", thumb: "/photography/studies/passenger/thumbs/16-de-reojo.webp", width: 1066, height: 1600, date: "20260613" },
+    { id: "study-passenger-17", title: "Ll\xE1menos", src: "/photography/studies/passenger/17-ll-menos.webp", thumb: "/photography/studies/passenger/thumbs/17-ll-menos.webp", width: 1600, height: 1066, date: "20260714" },
+    { id: "study-passenger-18", title: "Reflex", src: "/photography/studies/passenger/18-reflex.webp", thumb: "/photography/studies/passenger/thumbs/18-reflex.webp", width: 1600, height: 1066, date: "20260714" },
+    { id: "study-passenger-19", title: "The Medallion", src: "/photography/studies/passenger/19-the-medallion.webp", thumb: "/photography/studies/passenger/thumbs/19-the-medallion.webp", width: 1066, height: 1600, date: "20260714" },
+    { id: "study-passenger-20", title: "Salvoconducto", src: "/photography/studies/passenger/20-salvoconducto.webp", thumb: "/photography/studies/passenger/thumbs/20-salvoconducto.webp", width: 1600, height: 1200, date: "20260718" },
+    { id: "study-passenger-21", title: "Matrioska", src: "/photography/studies/passenger/21-matrioska.webp", thumb: "/photography/studies/passenger/thumbs/21-matrioska.webp", width: 1200, height: 1600, date: "20260721" }
+  ],
+  "remnant": [
+    { id: "study-remnant-01", title: "Remains", src: "/photography/studies/remnant/01-remains.webp", thumb: "/photography/studies/remnant/thumbs/01-remains.webp", width: 1600, height: 1064, date: "20140607" },
+    { id: "study-remnant-02", title: "Still Buried", src: "/photography/studies/remnant/02-still-buried.webp", thumb: "/photography/studies/remnant/thumbs/02-still-buried.webp", width: 1064, height: 1600, date: "20160917" },
+    { id: "study-remnant-03", title: "Gnomon", src: "/photography/studies/remnant/03-gnomon.webp", thumb: "/photography/studies/remnant/thumbs/03-gnomon.webp", width: 1066, height: 1600, date: "20171219" },
+    { id: "study-remnant-04", title: "The Binding", src: "/photography/studies/remnant/04-the-binding.webp", thumb: "/photography/studies/remnant/thumbs/04-the-binding.webp", width: 1600, height: 1066, date: "20171220" },
+    { id: "study-remnant-05", title: "Inscription", src: "/photography/studies/remnant/05-inscription.webp", thumb: "/photography/studies/remnant/thumbs/05-inscription.webp", width: 1600, height: 1066, date: "20171221" },
+    { id: "study-remnant-06", title: "Overhang", src: "/photography/studies/remnant/06-overhang.webp", thumb: "/photography/studies/remnant/thumbs/06-overhang.webp", width: 1600, height: 1066, date: "20171221" },
+    { id: "study-remnant-07", title: "Sealed", src: "/photography/studies/remnant/07-sealed.webp", thumb: "/photography/studies/remnant/thumbs/07-sealed.webp", width: 1066, height: 1600, date: "20171225" },
+    { id: "study-remnant-08", title: "Worn", src: "/photography/studies/remnant/08-worn.webp", thumb: "/photography/studies/remnant/thumbs/08-worn.webp", width: 1600, height: 1066, date: "20180224" },
+    { id: "study-remnant-09", title: "Filigree", src: "/photography/studies/remnant/09-filigree.webp", thumb: "/photography/studies/remnant/thumbs/09-filigree.webp", width: 1600, height: 1066, date: "20180902" }
+  ],
+  "villeta": [
+    { id: "study-villeta-01", title: "Canopy", src: "/photography/studies/villeta/01-canopy.webp", thumb: "/photography/studies/villeta/thumbs/01-canopy.webp", width: 1067, height: 1600, date: "20260402" },
+    { id: "study-villeta-02", title: "Colonnade", src: "/photography/studies/villeta/02-colonnade.webp", thumb: "/photography/studies/villeta/thumbs/02-colonnade.webp", width: 1067, height: 1600, date: "20260402" },
+    { id: "study-villeta-03", title: "Constellation", src: "/photography/studies/villeta/03-constellation.webp", thumb: "/photography/studies/villeta/thumbs/03-constellation.webp", width: 1067, height: 1600, date: "20260402" },
+    { id: "study-villeta-04", title: "Consumed", src: "/photography/studies/villeta/04-consumed.webp", thumb: "/photography/studies/villeta/thumbs/04-consumed.webp", width: 1067, height: 1600, date: "20260402" },
+    { id: "study-villeta-05", title: "Cursive", src: "/photography/studies/villeta/05-cursive.webp", thumb: "/photography/studies/villeta/thumbs/05-cursive.webp", width: 1067, height: 1600, date: "20260402" },
+    { id: "study-villeta-06", title: "Meridian", src: "/photography/studies/villeta/06-meridian.webp", thumb: "/photography/studies/villeta/thumbs/06-meridian.webp", width: 1600, height: 1067, date: "20260402" },
+    { id: "study-villeta-07", title: "Pendant", src: "/photography/studies/villeta/07-pendant.webp", thumb: "/photography/studies/villeta/thumbs/07-pendant.webp", width: 1067, height: 1600, date: "20260402" },
+    { id: "study-villeta-08", title: "Stranded", src: "/photography/studies/villeta/08-stranded.webp", thumb: "/photography/studies/villeta/thumbs/08-stranded.webp", width: 1067, height: 1600, date: "20260402" },
+    { id: "study-villeta-09", title: "The Bloom", src: "/photography/studies/villeta/09-the-bloom.webp", thumb: "/photography/studies/villeta/thumbs/09-the-bloom.webp", width: 1067, height: 1600, date: "20260402" },
+    { id: "study-villeta-10", title: "Vertebrae", src: "/photography/studies/villeta/10-vertebrae.webp", thumb: "/photography/studies/villeta/thumbs/10-vertebrae.webp", width: 1600, height: 1067, date: "20260402" },
+    { id: "study-villeta-11", title: "Abundance", src: "/photography/studies/villeta/11-abundance.webp", thumb: "/photography/studies/villeta/thumbs/11-abundance.webp", width: 1600, height: 1067, date: "20260403" },
+    { id: "study-villeta-12", title: "Dendrite", src: "/photography/studies/villeta/12-dendrite.webp", thumb: "/photography/studies/villeta/thumbs/12-dendrite.webp", width: 1067, height: 1600, date: "20260403" },
+    { id: "study-villeta-13", title: "Dispersal", src: "/photography/studies/villeta/13-dispersal.webp", thumb: "/photography/studies/villeta/thumbs/13-dispersal.webp", width: 1600, height: 1066, date: "20260403" },
+    { id: "study-villeta-14", title: "Emergence", src: "/photography/studies/villeta/14-emergence.webp", thumb: "/photography/studies/villeta/thumbs/14-emergence.webp", width: 1067, height: 1600, date: "20260403" },
+    { id: "study-villeta-15", title: "Husk", src: "/photography/studies/villeta/15-husk.webp", thumb: "/photography/studies/villeta/thumbs/15-husk.webp", width: 1067, height: 1600, date: "20260403" },
+    { id: "study-villeta-16", title: "Rainfall", src: "/photography/studies/villeta/16-rainfall.webp", thumb: "/photography/studies/villeta/thumbs/16-rainfall.webp", width: 1600, height: 1067, date: "20260403" },
+    { id: "study-villeta-17", title: "Tendril", src: "/photography/studies/villeta/17-tendril.webp", thumb: "/photography/studies/villeta/thumbs/17-tendril.webp", width: 1600, height: 1067, date: "20260403" },
+    { id: "study-villeta-18", title: "Tightrope", src: "/photography/studies/villeta/18-tightrope.webp", thumb: "/photography/studies/villeta/thumbs/18-tightrope.webp", width: 1600, height: 1067, date: "20260403" },
+    { id: "study-villeta-19", title: "Vessel", src: "/photography/studies/villeta/19-vessel.webp", thumb: "/photography/studies/villeta/thumbs/19-vessel.webp", width: 1067, height: 1600, date: "20260403" },
+    { id: "study-villeta-20", title: "Aria", src: "/photography/studies/villeta/20-aria.webp", thumb: "/photography/studies/villeta/thumbs/20-aria.webp", width: 1600, height: 1067, date: "20260404" },
+    { id: "study-villeta-21", title: "Cascade", src: "/photography/studies/villeta/21-cascade.webp", thumb: "/photography/studies/villeta/thumbs/21-cascade.webp", width: 1067, height: 1600, date: "20260404" },
+    { id: "study-villeta-22", title: "Conduit", src: "/photography/studies/villeta/22-conduit.webp", thumb: "/photography/studies/villeta/thumbs/22-conduit.webp", width: 1600, height: 1067, date: "20260404" },
+    { id: "study-villeta-23", title: "Hung", src: "/photography/studies/villeta/23-hung.webp", thumb: "/photography/studies/villeta/thumbs/23-hung.webp", width: 1067, height: 1600, date: "20260404" },
+    { id: "study-villeta-24", title: "Lantern", src: "/photography/studies/villeta/24-lantern.webp", thumb: "/photography/studies/villeta/thumbs/24-lantern.webp", width: 1067, height: 1600, date: "20260404" },
+    { id: "study-villeta-25", title: "The Cast", src: "/photography/studies/villeta/25-the-cast.webp", thumb: "/photography/studies/villeta/thumbs/25-the-cast.webp", width: 1600, height: 1067, date: "20260404" }
+  ]
+};
+
+// data/merge.ts
+var genToPhoto = (g) => ({
+  id: g.id,
+  title: g.title,
+  src: g.src,
+  thumb: g.thumb,
+  width: g.width,
+  height: g.height
+});
+var norm = (s) => s.trim().toLowerCase();
+function mergePhotos(slug, fallback, mode = "keep") {
+  const gen = GEN[slug] || [];
+  if (gen.length === 0) return fallback;
+  const genByTitle = new Map(gen.map((g) => [norm(g.title), g]));
+  const out2 = [];
+  const used = /* @__PURE__ */ new Set();
+  if (mode === "curated") {
+    for (const f of fallback) {
+      const g = genByTitle.get(norm(f.title));
+      if (g && !used.has(norm(g.title))) {
+        used.add(norm(g.title));
+        out2.push(genToPhoto(g));
+      }
+    }
+    for (const g of [...gen].sort((a, b) => a.date.localeCompare(b.date))) {
+      if (!used.has(norm(g.title))) out2.push(genToPhoto(g));
+    }
+    return out2;
+  }
+  if (mode === "date-desc") {
+    for (const g of [...gen].sort((a, b) => b.date.localeCompare(a.date))) {
+      used.add(norm(g.title));
+      out2.push(genToPhoto(g));
+    }
+    for (const f of fallback) if (!used.has(norm(f.title))) out2.push(f);
+    return out2;
+  }
+  for (const f of fallback) {
+    const g = genByTitle.get(norm(f.title));
+    if (g) {
+      used.add(norm(g.title));
+      out2.push({ ...f, src: g.src, thumb: g.thumb, width: g.width, height: g.height });
+    } else out2.push(f);
+  }
+  for (const g of [...gen].sort((a, b) => a.date.localeCompare(b.date))) {
+    if (!used.has(norm(g.title))) out2.push(genToPhoto(g));
+  }
+  return out2;
+}
+
+// data/series.ts
+var BASE_LOCAL = "/photography";
+var rawSeries = [
+  {
+    slug: "geometries",
+    title: "Geometries",
+    year: 2026,
+    description: {
+      en: "I keep finding myself looking at buildings the way other people look at faces. Lines, curves, repetition. There's something in the way a structure holds space that feels almost alive. These photographs are about that feeling: the moment when architecture stops being a backdrop and starts being the subject.",
+      es: "Me descubro mirando los edificios como otros miran los rostros. L\xEDneas, curvas, repetici\xF3n. Hay algo en la forma en que una estructura sostiene el espacio que se siente casi vivo. Estas fotograf\xEDas tratan de esa sensaci\xF3n: el momento en que la arquitectura deja de ser un tel\xF3n de fondo y empieza a ser el tema."
+    },
+    quote: { text: "A good photograph is knowing where to stand.", author: "Ansel Adams" },
+    coverPhoto: `${BASE_LOCAL}/geometries/cover.webp`,
+    photos: [
+      { id: "geometries-01", title: "Atrium Vortex", src: `${BASE_LOCAL}/geometries/01-atrium-vortex.webp`, width: 3962, height: 5943 },
+      { id: "geometries-02", title: "Repetition", src: `${BASE_LOCAL}/geometries/02-repetition.webp`, width: 4251, height: 6393 },
+      { id: "geometries-03", title: "Rosace", src: `${BASE_LOCAL}/geometries/03-rosace.webp`, width: 5026, height: 7539 },
+      { id: "geometries-04", title: "The Spiral", src: `${BASE_LOCAL}/geometries/04-the-spiral.webp`, width: 7897, height: 5265 },
+      { id: "geometries-05", title: "Divide", src: `${BASE_LOCAL}/geometries/05-divide.webp`, width: 4096, height: 4096 },
+      { id: "geometries-06", title: "Suspension", src: `${BASE_LOCAL}/geometries/06-suspension.webp`, width: 10875, height: 7231 },
+      { id: "geometries-07", title: "Science Faculty", src: `${BASE_LOCAL}/geometries/07-science-faculty.webp`, width: 10465, height: 6977 },
+      { id: "geometries-08", title: "Lattice", src: `${BASE_LOCAL}/geometries/08-lattice.webp`, width: 3993, height: 5989 },
+      { id: "geometries-09", title: "Facet", src: `${BASE_LOCAL}/geometries/09-facet.webp`, width: 3890, height: 3890 },
+      { id: "geometries-10", title: "Urban Grid", src: `${BASE_LOCAL}/geometries/10-urban-grid.webp`, width: 3981, height: 5308 },
+      { id: "geometries-11", title: "The Crossing", src: `${BASE_LOCAL}/geometries/11-the-crossing.webp`, width: 5456, height: 8184 },
+      { id: "geometries-12", title: "Ascent", src: `${BASE_LOCAL}/geometries/12-ascent.webp`, width: 5333, height: 8e3 }
+    ]
+  },
+  {
+    slug: "abstractions",
+    title: "Abstractions",
+    year: 2026,
+    description: {
+      en: "Everything here started as something recognizable. But movement, blur, or light got in the way, and the original thing dissolved into something else. That's not an accident I chose to keep: it's the point. I'm less interested in what you see and more interested in what you feel before you figure out what you're looking at.",
+      es: "Todo aqu\xED empez\xF3 siendo algo reconocible. Pero el movimiento, el desenfoque o la luz se interpusieron, y lo original se disolvi\xF3 en otra cosa. No es un accidente que decid\xED conservar: es el punto. Me interesa menos lo que ves y m\xE1s lo que sientes antes de descifrar qu\xE9 est\xE1s mirando."
+    },
+    quote: { text: "The camera sees more than the eye, so why not make use of it?", author: "Edward Weston" },
+    coverPhoto: `${BASE_LOCAL}/abstractions/cover.webp`,
+    photos: [
+      { id: "abstractions-01", title: "Energy", src: `${BASE_LOCAL}/abstractions/01-energy.webp`, width: 2e3, height: 1330 },
+      { id: "abstractions-02", title: "The Vortex", src: `${BASE_LOCAL}/abstractions/02-the-vortex.webp`, width: 2e3, height: 1740 },
+      { id: "abstractions-03", title: "The Rush", src: `${BASE_LOCAL}/abstractions/03-the-rush.webp`, width: 2e3, height: 1330 },
+      { id: "abstractions-04", title: "Unfold", src: `${BASE_LOCAL}/abstractions/04-unfold.webp`, width: 1333, height: 2e3 },
+      { id: "abstractions-05", title: "Vapor", src: `${BASE_LOCAL}/abstractions/05-vapor.webp`, width: 2e3, height: 1334 },
+      { id: "abstractions-06", title: "Faultline", src: `${BASE_LOCAL}/abstractions/06-faultline.webp`, width: 2e3, height: 1333 },
+      { id: "abstractions-07", title: "Focus", src: `${BASE_LOCAL}/abstractions/07-focus.webp`, width: 2e3, height: 1429 },
+      { id: "abstractions-08", title: "Urban Distortion", src: `${BASE_LOCAL}/abstractions/08-urban-distortion.webp`, width: 2e3, height: 2e3 },
+      { id: "abstractions-09", title: "Intervals", src: `${BASE_LOCAL}/abstractions/09-intervals.webp`, width: 1330, height: 2e3 },
+      { id: "abstractions-10", title: "Descent", src: `${BASE_LOCAL}/abstractions/10-descent.webp`, width: 2e3, height: 2e3 },
+      { id: "abstractions-11", title: "Immersion", src: `${BASE_LOCAL}/abstractions/11-immersion.webp`, width: 2e3, height: 1330 },
+      { id: "abstractions-12", title: "Undertow", src: `${BASE_LOCAL}/abstractions/12-undertow.webp`, width: 2e3, height: 2e3 }
+    ]
+  },
+  {
+    slug: "in-passing",
+    title: "In Passing",
+    year: 2026,
+    description: {
+      en: "Street life moves fast and most of it disappears. Every now and then something shows up for barely a second, and if the camera is ready, it stays. These are the ones I managed to catch. Some are funny, some are heavy, and a few are both at the same time.",
+      es: "La vida en la calle va r\xE1pido y casi todo desaparece. De vez en cuando algo se asoma apenas un segundo, y si la c\xE1mara est\xE1 lista, se queda. Estas son las que alcanc\xE9 a atrapar. Algunas son graciosas, otras pesan, y unas pocas son ambas cosas a la vez."
+    },
+    quote: { text: "The eye should learn to listen before it looks.", author: "Robert Frank" },
+    coverPhoto: `${BASE_LOCAL}/in-passing/cover.webp`,
+    photos: [
+      { id: "in-passing-01", title: "City Canyon", src: `${BASE_LOCAL}/in-passing/01-city-canyon.webp`, width: 1330, height: 2e3 },
+      { id: "in-passing-02", title: "Rhythm", src: `${BASE_LOCAL}/in-passing/02-rhythm.webp`, width: 2e3, height: 1330 },
+      { id: "in-passing-03", title: "Cadence", src: `${BASE_LOCAL}/in-passing/10-cadence.webp`, width: 1600, height: 1066 },
+      { id: "in-passing-04", title: "Companions", src: `${BASE_LOCAL}/in-passing/04-companions.webp`, width: 2e3, height: 1333 },
+      { id: "in-passing-05", title: "Compartments", src: `${BASE_LOCAL}/in-passing/05-compartments.webp`, width: 2e3, height: 1500 },
+      { id: "in-passing-06", title: "Gentle Giant", src: `${BASE_LOCAL}/in-passing/06-gentle-giant.webp`, width: 2e3, height: 1445 },
+      { id: "in-passing-07", title: "Downpour", src: `${BASE_LOCAL}/in-passing/07-downpour.webp`, width: 1333, height: 2e3 },
+      { id: "in-passing-08", title: "Salutation", src: `${BASE_LOCAL}/in-passing/08-salutation.webp`, width: 2e3, height: 1333 },
+      { id: "in-passing-09", title: "Refuge", src: `${BASE_LOCAL}/in-passing/09-refuge.webp`, width: 1500, height: 2e3 },
+      { id: "in-passing-10", title: "Confinement", src: `${BASE_LOCAL}/in-passing/10-confinement.webp`, width: 2e3, height: 1333 },
+      { id: "in-passing-11", title: "Bearing", src: `${BASE_LOCAL}/in-passing/11-bearing.webp`, width: 1333, height: 2e3 },
+      { id: "in-passing-12", title: "Parqueadero", src: `${BASE_LOCAL}/in-passing/12-parqueadero.webp`, width: 2e3, height: 1333 }
+    ]
+  },
+  {
+    slug: "elsewhere",
+    title: "Elsewhere",
+    year: 2026,
+    description: {
+      en: "These aren't travel photos. They were taken in other places, yes, but that's not the point. The point is that some places stick with you long after you leave, and not always the ones you'd expect. This is my collection of places I couldn't shake off.",
+      es: "Estas no son fotos de viaje. Fueron tomadas en otros lugares, s\xED, pero ese no es el punto. El punto es que algunos lugares se quedan contigo mucho despu\xE9s de irte, y no siempre los que uno esperar\xEDa. Esta es mi colecci\xF3n de lugares que no pude quitarme de encima."
+    },
+    quote: { text: "Landscape pictures can offer us, I think, three verities: geography, autobiography, and metaphor.", author: "Robert Adams" },
+    coverPhoto: `${BASE_LOCAL}/elsewhere/cover.webp`,
+    photos: [
+      { id: "elsewhere-01", title: "Span", src: `${BASE_LOCAL}/elsewhere/01-span.webp`, width: 1334, height: 2e3 },
+      { id: "elsewhere-02", title: "Endurance", src: `${BASE_LOCAL}/elsewhere/02-endurance.webp`, width: 1333, height: 2e3 },
+      { id: "elsewhere-03", title: "Echoes", src: `${BASE_LOCAL}/elsewhere/03-echoes.webp`, width: 1333, height: 2e3 },
+      { id: "elsewhere-04", title: "The Myth", src: `${BASE_LOCAL}/elsewhere/04-the-myth.webp`, width: 2e3, height: 1333 },
+      { id: "elsewhere-05", title: "Encircled", src: `${BASE_LOCAL}/elsewhere/05-encircled.webp`, width: 1333, height: 2e3 },
+      { id: "elsewhere-06", title: "Capirote", src: `${BASE_LOCAL}/elsewhere/06-capirote.webp`, width: 2e3, height: 1333 },
+      { id: "elsewhere-07", title: "Warp", src: `${BASE_LOCAL}/elsewhere/07-warp.webp`, width: 2e3, height: 1330 },
+      { id: "elsewhere-08", title: "Weight", src: `${BASE_LOCAL}/elsewhere/08-weight.webp`, width: 1333, height: 2e3 },
+      { id: "elsewhere-09", title: "Petition", src: `${BASE_LOCAL}/elsewhere/09-petition.webp`, width: 1333, height: 2e3 },
+      { id: "elsewhere-10", title: "Veil", src: `${BASE_LOCAL}/elsewhere/10-veil.webp`, width: 1333, height: 2e3 },
+      { id: "elsewhere-11", title: "The Watcher", src: `${BASE_LOCAL}/elsewhere/11-the-watcher.webp`, width: 1330, height: 2e3 },
+      { id: "elsewhere-12", title: "Vigil", src: `${BASE_LOCAL}/elsewhere/12-vigil.webp`, width: 1330, height: 2e3 }
+    ]
+  },
+  {
+    slug: "organic",
+    title: "Organic",
+    year: 2026,
+    description: {
+      en: "Animals, plants, insects, feathers. Living things have this way of being incredibly delicate and ridiculously strong at the same time. Up close, each one reveals an architecture of its own, an intelligence that doesn't need to explain itself. This section is about looking long enough to see it.",
+      es: "Animales, plantas, insectos, plumas. Los seres vivos tienen esa manera de ser incre\xEDblemente delicados y rid\xEDculamente fuertes al mismo tiempo. De cerca, cada uno revela una arquitectura propia, una inteligencia que no necesita explicarse. Esta secci\xF3n trata de quedarse mirando el tiempo suficiente para verla."
+    },
+    quote: { text: "The mystery isn't in the technique, it's in each of us.", author: "Harry Callahan" },
+    coverPhoto: `${BASE_LOCAL}/organic/cover.webp`,
+    photos: [
+      { id: "organic-01", title: "Threshold", src: `${BASE_LOCAL}/organic/01-threshold.webp`, width: 2e3, height: 2e3 },
+      { id: "organic-02", title: "Ancient Eyes", src: `${BASE_LOCAL}/organic/02-ancient-eyes.webp`, width: 2e3, height: 1330 },
+      { id: "organic-03", title: "Armature", src: `${BASE_LOCAL}/organic/03-armature.webp`, width: 1334, height: 2e3 },
+      { id: "organic-04", title: "The Map", src: `${BASE_LOCAL}/organic/04-the-map.webp`, width: 2e3, height: 1333 },
+      { id: "organic-05", title: "Acecho", src: `${BASE_LOCAL}/organic/05-acecho.webp`, width: 2e3, height: 1333 },
+      { id: "organic-06", title: "The Mantle", src: `${BASE_LOCAL}/organic/06-the-mantle.webp`, width: 2e3, height: 1330 },
+      { id: "organic-07", title: "Devotion", src: `${BASE_LOCAL}/organic/07-devotion.webp`, width: 1330, height: 2e3 },
+      { id: "organic-08", title: "Cruciform", src: `${BASE_LOCAL}/organic/08-cruciform.webp`, width: 2e3, height: 2e3 },
+      { id: "organic-09", title: "Armor", src: `${BASE_LOCAL}/organic/09-armor.webp`, width: 2e3, height: 1330 },
+      { id: "organic-10", title: "Sentinel", src: `${BASE_LOCAL}/organic/10-sentinel.webp`, width: 1333, height: 2e3 },
+      { id: "organic-11", title: "Voluta", src: `${BASE_LOCAL}/organic/12-voluta.webp`, width: 1333, height: 2e3 },
+      { id: "organic-12", title: "The Transition", src: `${BASE_LOCAL}/organic/12-the-transition.webp`, width: 2e3, height: 1330 }
+    ]
+  },
+  {
+    slug: "close",
+    title: "Close",
+    year: 2026,
+    description: {
+      en: "This is the personal stuff. The camera gets quieter here, closer. These are the people I love, photographed the way I see them: in ordinary light, doing ordinary things, being everything.",
+      es: "Esto es lo personal. Aqu\xED la c\xE1mara se hace m\xE1s callada, m\xE1s cercana. Estas son las personas que amo, fotografiadas como las veo: en luz ordinaria, haciendo cosas ordinarias, si\xE9ndolo todo."
+    },
+    quote: { text: "A portrait is not made in the camera but on either side of it.", author: "Edward Steichen" },
+    coverPhoto: `${BASE_LOCAL}/close/cover.webp`,
+    photos: [
+      { id: "close-01", title: "Curiosity", src: `${BASE_LOCAL}/close/01-curiosity.webp`, width: 2e3, height: 1333 },
+      { id: "close-02", title: "Together", src: `${BASE_LOCAL}/close/02-together.webp`, width: 1333, height: 2e3 },
+      { id: "close-03", title: "Radiance", src: `${BASE_LOCAL}/close/03-radiance.webp`, width: 1333, height: 2e3 },
+      { id: "close-04", title: "Second Face", src: `${BASE_LOCAL}/close/04-second-face.webp`, width: 2e3, height: 1333 },
+      { id: "close-05", title: "Shelter", src: `${BASE_LOCAL}/close/05-shelter.webp`, width: 2e3, height: 1333 },
+      { id: "close-06", title: "The Spotlight", src: `${BASE_LOCAL}/close/06-the-spotlight.webp`, width: 2e3, height: 1353 },
+      { id: "close-07", title: "At the Oven", src: `${BASE_LOCAL}/close/07-at-the-oven.webp`, width: 1330, height: 2e3 },
+      { id: "close-08", title: "Double Presence", src: `${BASE_LOCAL}/close/08-double-presence.webp`, width: 2e3, height: 1333 },
+      { id: "close-09", title: "Inheritance", src: `${BASE_LOCAL}/close/09-inheritance.webp`, width: 1334, height: 2e3 },
+      { id: "close-10", title: "Wonder", src: `${BASE_LOCAL}/close/10-wonder.webp`, width: 1333, height: 2e3 },
+      { id: "close-11", title: "Cradle", src: `${BASE_LOCAL}/close/11-cradle.webp`, width: 2e3, height: 1333 },
+      { id: "close-12", title: "Witness", src: `${BASE_LOCAL}/close/12-witness.webp`, width: 1333, height: 2e3 }
+    ]
+  }
+];
+var series = rawSeries.map((s) => ({
+  ...s,
+  photos: mergePhotos(s.slug, s.photos, "keep")
+}));
+
+// data/studies.ts
+var BASE = "/photography/studies";
+var VILLETA_ORDER = [
+  "Abundance",
+  "Dendrite",
+  "Cascade",
+  "The Cast",
+  "Conduit",
+  "Colonnade",
+  "Vertebrae",
+  "Canopy",
+  "Constellation",
+  "Meridian",
+  "Tightrope",
+  "Vessel",
+  "The Bloom",
+  "Aria",
+  "Tendril",
+  "Hung",
+  "Lantern",
+  "Pendant",
+  "Dispersal",
+  "Cursive",
+  "Rainfall",
+  "Consumed",
+  "Stranded",
+  "Emergence",
+  "Husk"
+];
+var PASSENGER_ORDER = [
+  "La Consigna",
+  "Ll\xE1menos",
+  "Reflex",
+  "De Reojo",
+  "Comadreja",
+  "Santa B\xE1rbara",
+  "Noventa",
+  "Carmen",
+  "Muffled",
+  "Amulets",
+  "Matrioska",
+  "El Escudo",
+  "Talisman",
+  "Promesa",
+  "Guadalupe",
+  "Salvoconducto",
+  "Onlookers",
+  "Idol",
+  "Through Glass",
+  "Amparo",
+  "The Medallion"
+];
+var DOSEL_ORDER = [
+  "Breach",
+  "Oculus",
+  "Crown",
+  "Surtidor",
+  "Plumage",
+  "Vig\xEDa",
+  "Fruition"
+];
+var CONTAINMENT_ORDER = [
+  "Waiting",
+  "Still Water",
+  "Into the Dark",
+  "Framed",
+  "Held",
+  "Sanctuary",
+  "The Terrace",
+  "Sanctum",
+  "The Pavilion",
+  "The Landing",
+  "Estratos",
+  "The Pause",
+  "Plomada",
+  "Orbit",
+  "Desembocadura",
+  "Fuelle",
+  "Enclosure"
+];
+var BETWEEN_ORDER = [
+  "Estancia",
+  "Interior, Exterior",
+  "Iris",
+  "Recess",
+  "Cargada",
+  "Salida",
+  "Through",
+  "Palimpsesto",
+  "Into the Wall",
+  "Screenlight",
+  "Illumination",
+  "Bias",
+  "Vado",
+  "Facing",
+  "Skew",
+  "Eaves",
+  "Between Bells",
+  "Celos\xEDa",
+  "Between"
+];
+var REMNANT_ORDER = [
+  "Remains",
+  "Filigree",
+  "The Binding",
+  "Worn",
+  "Inscription",
+  "Gnomon",
+  "Sealed",
+  "Still Buried",
+  "Overhang"
+];
+var rawStudies = [
+  {
+    slug: "villeta",
+    title: "Villeta",
+    year: 2026,
+    status: "finished",
+    description: {
+      en: "A country house in the warm lands near Bogot\xE1, and a camera that refused to look at the garden as a garden. These are photographs about tropical vegetation as pure form: the leaf, the vine, the seed, the way light moves through something alive. Not landscape. Structure.",
+      es: "Una casa de campo en las tierras c\xE1lidas cerca de Bogot\xE1, y una c\xE1mara que se neg\xF3 a mirar el jard\xEDn como jard\xEDn. Estas son fotograf\xEDas sobre la vegetaci\xF3n tropical como forma pura: la hoja, la enredadera, la semilla, la manera en que la luz atraviesa algo vivo. No es paisaje. Es estructura."
+    },
+    quote: { text: "The plant must be valued as a totally artistic and architectural structure.", author: "Karl Blossfeldt" },
+    coverPhoto: `${BASE}/villeta/cover.webp`,
+    photos: []
+  },
+  {
+    slug: "dosel",
+    title: "Dosel",
+    status: "ongoing",
+    description: {
+      en: "Look up. Always up. Through leaves, branches, canopy. The sky broken into fragments by whatever grows between you and it. This study is about the ceiling that trees make, the light they filter, and the feeling of standing beneath something alive and enormous. No horizons here. Just the weight of green above.",
+      es: "Mira hacia arriba. Siempre hacia arriba. A trav\xE9s de hojas, ramas, dosel. El cielo roto en fragmentos por todo lo que crece entre t\xFA y \xE9l. Este estudio trata del techo que hacen los \xE1rboles, la luz que filtran, y la sensaci\xF3n de estar parado bajo algo vivo y enorme. Aqu\xED no hay horizontes. Solo el peso del verde por encima."
+    },
+    quote: { text: "One should not only photograph things for what they are but for what else they are.", author: "Minor White" },
+    coverPhoto: `${BASE}/dosel/cover.webp`,
+    photos: []
+  },
+  {
+    slug: "containment",
+    title: "Containment",
+    status: "ongoing",
+    description: {
+      en: "People held by spaces. The architecture does the holding, and the question is always the same: is the space protecting them, or trapping them? I keep finding this ambiguity everywhere, and I haven't decided which answer I prefer.",
+      es: "Personas contenidas por el espacio. La arquitectura es la que contiene, y la pregunta es siempre la misma: \xBFel espacio protege o atrapa? Sigo encontrando esta ambig\xFCedad en todas partes, y no he decidido qu\xE9 respuesta prefiero."
+    },
+    quote: { text: "A photograph is a secret about a secret. The more it tells you the less you know.", author: "Diane Arbus" },
+    coverPhoto: `${BASE}/containment/cover.webp`,
+    photos: []
+  },
+  {
+    slug: "between",
+    title: "Between",
+    status: "ongoing",
+    description: {
+      en: "Thresholds. The edge between inside and outside, between light and dark, between one state and the next. Anything can be an edge if you stand on it. These photographs live in the moment just before crossing.",
+      es: "Umbrales. El borde entre dentro y fuera, entre luz y sombra, entre un estado y el siguiente. Cualquier cosa puede ser un borde si uno se para en \xE9l. Estas fotograf\xEDas viven en el instante justo antes de cruzar."
+    },
+    quote: { text: "I like it when one is not certain what one sees.", author: "Saul Leiter" },
+    coverPhoto: `${BASE}/between/cover.webp`,
+    photos: []
+  },
+  {
+    slug: "passenger",
+    title: "Passenger",
+    status: "ongoing",
+    description: {
+      en: "Photographs made from the back seat, in motion. The window is a frame that never holds still: a city sliding past, reflections on the glass, strangers caught for the length of a red light. Being carried somewhere, and photographing whatever the ride hands you.",
+      es: "Fotograf\xEDas hechas desde el asiento de atr\xE1s, en movimiento. La ventana es un marco que nunca se queda quieto: una ciudad que se desliza, reflejos en el vidrio, desconocidos atrapados lo que dura un sem\xE1foro. Dejarse llevar y fotografiar lo que el trayecto va entregando."
+    },
+    quote: { text: "For me cities are enormous bodies of people's desires.", author: "Daido Moriyama" },
+    coverPhoto: `${BASE}/passenger/cover.webp`,
+    photos: []
+  },
+  {
+    slug: "remnant",
+    title: "Remnant",
+    status: "ongoing",
+    description: {
+      en: "What stays after something leaves. The quiet erosion of the everyday, the texture that time leaves on things when no one is paying attention.",
+      es: "Lo que queda despu\xE9s de que algo se va. La erosi\xF3n silenciosa de lo cotidiano, la textura que el tiempo deja en las cosas cuando nadie est\xE1 prestando atenci\xF3n."
+    },
+    quote: { text: "Everything around us, dead or alive, in the eyes of a crazy photographer mysteriously takes on many variations, so that a seemingly dead object comes to life through light or by its surroundings.", author: "Josef Sudek" },
+    coverPhoto: `${BASE}/remnant/cover.webp`,
+    photos: []
+  },
+  {
+    slug: "ground",
+    title: "Ground",
+    status: "ongoing",
+    description: {
+      en: "The counterpoint to Dosel. Look down. Always down. The textures underfoot, the shadows cast on pavement, the things people step on without seeing. Wet cobblestones, cracked earth, tree roots breaking through concrete. No horizon, ever. Just what's beneath you.",
+      es: "El contrapunto de Dosel. Mira hacia abajo. Siempre hacia abajo. Las texturas bajo los pies, las sombras proyectadas sobre el pavimento, lo que la gente pisa sin ver. Adoquines mojados, tierra agrietada, ra\xEDces que rompen el concreto. Sin horizonte, nunca. Solo lo que tienes debajo."
+    },
+    photos: []
+  },
+  {
+    slug: "chicago",
+    title: "Chicago",
+    status: "ongoing",
+    description: {
+      en: "A project in pre-production. Chicago \u2014 its architecture, its light, its impossible scale \u2014 photographed on an upcoming trip. Nothing here yet: this is the space held open for a body of work that doesn't exist so far.",
+      es: "Un proyecto en pre-producci\xF3n. Chicago \u2014su arquitectura, su luz, su escala imposible\u2014 fotografiada en un viaje pr\xF3ximo. A\xFAn no hay nada: este es el lugar reservado para un cuerpo de trabajo que todav\xEDa no existe."
+    },
+    photos: []
+  }
+];
+var CURATED_ORDERS = {
+  villeta: VILLETA_ORDER,
+  passenger: PASSENGER_ORDER,
+  dosel: DOSEL_ORDER,
+  containment: CONTAINMENT_ORDER,
+  between: BETWEEN_ORDER,
+  remnant: REMNANT_ORDER
+};
+var studies = rawStudies.map((s) => {
+  const order = CURATED_ORDERS[s.slug];
+  return {
+    ...s,
+    photos: order ? mergePhotos(s.slug, order.map((t) => ({ id: "", title: t, src: "" })), "curated") : mergePhotos(s.slug, s.photos, "date-desc")
+  };
+});
+
+// data/loose.ts
+var looseYears = [
+  { year: "2022-2026", coverPhoto: "/photography/loose/2022-2026/33-cerraz-n.webp", photos: [
+    { id: "loose-2022-2026-01", title: "Luceros", src: "/photography/loose/2022-2026/01-luceros.webp", thumb: "/photography/loose/2022-2026/thumbs/01-luceros.webp" },
+    { id: "loose-2022-2026-02", title: "Duna", src: "/photography/loose/2022-2026/02-duna.webp", thumb: "/photography/loose/2022-2026/thumbs/02-duna.webp" },
+    { id: "loose-2022-2026-03", title: "Den", src: "/photography/loose/2022-2026/03-den.webp", thumb: "/photography/loose/2022-2026/thumbs/03-den.webp" },
+    { id: "loose-2022-2026-04", title: "Camuflaje", src: "/photography/loose/2022-2026/04-camuflaje.webp", thumb: "/photography/loose/2022-2026/thumbs/04-camuflaje.webp" },
+    { id: "loose-2022-2026-05", title: "Sweep", src: "/photography/loose/2022-2026/05-sweep.webp", thumb: "/photography/loose/2022-2026/thumbs/05-sweep.webp" },
+    { id: "loose-2022-2026-06", title: "Stave", src: "/photography/loose/2022-2026/06-stave.webp", thumb: "/photography/loose/2022-2026/thumbs/06-stave.webp" },
+    { id: "loose-2022-2026-07", title: "Ripple", src: "/photography/loose/2022-2026/07-ripple.webp", thumb: "/photography/loose/2022-2026/thumbs/07-ripple.webp" },
+    { id: "loose-2022-2026-08", title: "Nesting", src: "/photography/loose/2022-2026/08-nesting.webp", thumb: "/photography/loose/2022-2026/thumbs/08-nesting.webp" },
+    { id: "loose-2022-2026-09", title: "Contratiempo", src: "/photography/loose/2022-2026/09-contratiempo.webp", thumb: "/photography/loose/2022-2026/thumbs/09-contratiempo.webp" },
+    { id: "loose-2022-2026-10", title: "Vilano", src: "/photography/loose/2022-2026/10-vilano.webp", thumb: "/photography/loose/2022-2026/thumbs/10-vilano.webp" },
+    { id: "loose-2022-2026-11", title: "Medusa", src: "/photography/loose/2022-2026/11-medusa.webp", thumb: "/photography/loose/2022-2026/thumbs/11-medusa.webp" },
+    { id: "loose-2022-2026-12", title: "Leap", src: "/photography/loose/2022-2026/12-leap.webp", thumb: "/photography/loose/2022-2026/thumbs/12-leap.webp" },
+    { id: "loose-2022-2026-13", title: "Azogue", src: "/photography/loose/2022-2026/13-azogue.webp", thumb: "/photography/loose/2022-2026/thumbs/13-azogue.webp" },
+    { id: "loose-2022-2026-14", title: "Sawtooth", src: "/photography/loose/2022-2026/14-sawtooth.webp", thumb: "/photography/loose/2022-2026/thumbs/14-sawtooth.webp" },
+    { id: "loose-2022-2026-15", title: "Rodada", src: "/photography/loose/2022-2026/15-rodada.webp", thumb: "/photography/loose/2022-2026/thumbs/15-rodada.webp" },
+    { id: "loose-2022-2026-16", title: "Monolito", src: "/photography/loose/2022-2026/16-monolito.webp", thumb: "/photography/loose/2022-2026/thumbs/16-monolito.webp" },
+    { id: "loose-2022-2026-17", title: "Rasgadura", src: "/photography/loose/2022-2026/17-rasgadura.webp", thumb: "/photography/loose/2022-2026/thumbs/17-rasgadura.webp" },
+    { id: "loose-2022-2026-18", title: "Ensimismado", src: "/photography/loose/2022-2026/18-ensimismado.webp", thumb: "/photography/loose/2022-2026/thumbs/18-ensimismado.webp" },
+    { id: "loose-2022-2026-19", title: "Tacto", src: "/photography/loose/2022-2026/19-tacto.webp", thumb: "/photography/loose/2022-2026/thumbs/19-tacto.webp" },
+    { id: "loose-2022-2026-20", title: "Standby", src: "/photography/loose/2022-2026/20-standby.webp", thumb: "/photography/loose/2022-2026/thumbs/20-standby.webp" },
+    { id: "loose-2022-2026-21", title: "Convocation", src: "/photography/loose/2022-2026/21-convocation.webp", thumb: "/photography/loose/2022-2026/thumbs/21-convocation.webp" },
+    { id: "loose-2022-2026-22", title: "Cant", src: "/photography/loose/2022-2026/22-cant.webp", thumb: "/photography/loose/2022-2026/thumbs/22-cant.webp" },
+    { id: "loose-2022-2026-23", title: "Generations", src: "/photography/loose/2022-2026/23-generations.webp", thumb: "/photography/loose/2022-2026/thumbs/23-generations.webp" },
+    { id: "loose-2022-2026-24", title: "Murallas", src: "/photography/loose/2022-2026/24-murallas.webp", thumb: "/photography/loose/2022-2026/thumbs/24-murallas.webp" },
+    { id: "loose-2022-2026-25", title: "Respite", src: "/photography/loose/2022-2026/25-respite.webp", thumb: "/photography/loose/2022-2026/thumbs/25-respite.webp" },
+    { id: "loose-2022-2026-26", title: "Wedge", src: "/photography/loose/2022-2026/26-wedge.webp", thumb: "/photography/loose/2022-2026/thumbs/26-wedge.webp" },
+    { id: "loose-2022-2026-27", title: "Grip", src: "/photography/loose/2022-2026/27-grip.webp", thumb: "/photography/loose/2022-2026/thumbs/27-grip.webp" },
+    { id: "loose-2022-2026-28", title: "Sovereign", src: "/photography/loose/2022-2026/28-sovereign.webp", thumb: "/photography/loose/2022-2026/thumbs/28-sovereign.webp" },
+    { id: "loose-2022-2026-29", title: "Lookout", src: "/photography/loose/2022-2026/29-lookout.webp", thumb: "/photography/loose/2022-2026/thumbs/29-lookout.webp" },
+    { id: "loose-2022-2026-30", title: "Nestled", src: "/photography/loose/2022-2026/30-nestled.webp", thumb: "/photography/loose/2022-2026/thumbs/30-nestled.webp" },
+    { id: "loose-2022-2026-31", title: "Levity", src: "/photography/loose/2022-2026/31-levity.webp", thumb: "/photography/loose/2022-2026/thumbs/31-levity.webp" },
+    { id: "loose-2022-2026-32", title: "Common Ground", src: "/photography/loose/2022-2026/32-common-ground.webp", thumb: "/photography/loose/2022-2026/thumbs/32-common-ground.webp" },
+    { id: "loose-2022-2026-33", title: "Cerraz\xF3n", src: "/photography/loose/2022-2026/33-cerraz-n.webp", thumb: "/photography/loose/2022-2026/thumbs/33-cerraz-n.webp" },
+    { id: "loose-2022-2026-34", title: "Grounds", src: "/photography/loose/2022-2026/34-grounds.webp", thumb: "/photography/loose/2022-2026/thumbs/34-grounds.webp" },
+    { id: "loose-2022-2026-35", title: "Un Mundo Distinto", src: "/photography/loose/2022-2026/35-un-mundo-distinto.webp", thumb: "/photography/loose/2022-2026/thumbs/35-un-mundo-distinto.webp" },
+    { id: "loose-2022-2026-36", title: "\xCDngrimo", src: "/photography/loose/2022-2026/36-ngrimo.webp", thumb: "/photography/loose/2022-2026/thumbs/36-ngrimo.webp" },
+    { id: "loose-2022-2026-37", title: "Work", src: "/photography/loose/2022-2026/37-work.webp", thumb: "/photography/loose/2022-2026/thumbs/37-work.webp" },
+    { id: "loose-2022-2026-38", title: "Claim", src: "/photography/loose/2022-2026/38-claim.webp", thumb: "/photography/loose/2022-2026/thumbs/38-claim.webp" },
+    { id: "loose-2022-2026-39", title: "The Wish", src: "/photography/loose/2022-2026/39-the-wish.webp", thumb: "/photography/loose/2022-2026/thumbs/39-the-wish.webp" },
+    { id: "loose-2022-2026-40", title: "At Ease", src: "/photography/loose/2022-2026/40-at-ease.webp", thumb: "/photography/loose/2022-2026/thumbs/40-at-ease.webp" },
+    { id: "loose-2022-2026-41", title: "Slumber", src: "/photography/loose/2022-2026/41-slumber.webp", thumb: "/photography/loose/2022-2026/thumbs/41-slumber.webp" },
+    { id: "loose-2022-2026-42", title: "Epicentro", src: "/photography/loose/2022-2026/42-epicentro.webp", thumb: "/photography/loose/2022-2026/thumbs/42-epicentro.webp" },
+    { id: "loose-2022-2026-43", title: "C\xF3mplices", src: "/photography/loose/2022-2026/43-c-mplices.webp", thumb: "/photography/loose/2022-2026/thumbs/43-c-mplices.webp" },
+    { id: "loose-2022-2026-44", title: "Threshold Keepers", src: "/photography/loose/2022-2026/44-threshold-keepers.webp", thumb: "/photography/loose/2022-2026/thumbs/44-threshold-keepers.webp" },
+    { id: "loose-2022-2026-45", title: "La Otra", src: "/photography/loose/2022-2026/45-la-otra.webp", thumb: "/photography/loose/2022-2026/thumbs/45-la-otra.webp" }
+  ] },
+  { year: "2017-2021", coverPhoto: "/photography/loose/2017-2021/01-dominion.webp", photos: [
+    { id: "loose-2017-2021-01", title: "Dominion", src: "/photography/loose/2017-2021/01-dominion.webp", thumb: "/photography/loose/2017-2021/thumbs/01-dominion.webp" },
+    { id: "loose-2017-2021-02", title: "The Hollow", src: "/photography/loose/2017-2021/02-the-hollow.webp", thumb: "/photography/loose/2017-2021/thumbs/02-the-hollow.webp" },
+    { id: "loose-2017-2021-03", title: "Corceles", src: "/photography/loose/2017-2021/03-corceles.webp", thumb: "/photography/loose/2017-2021/thumbs/03-corceles.webp" },
+    { id: "loose-2017-2021-04", title: "Scatter", src: "/photography/loose/2017-2021/04-scatter.webp", thumb: "/photography/loose/2017-2021/thumbs/04-scatter.webp" },
+    { id: "loose-2017-2021-05", title: "Burden", src: "/photography/loose/2017-2021/05-burden.webp", thumb: "/photography/loose/2017-2021/thumbs/05-burden.webp" },
+    { id: "loose-2017-2021-06", title: "Migration", src: "/photography/loose/2017-2021/06-migration.webp", thumb: "/photography/loose/2017-2021/thumbs/06-migration.webp" },
+    { id: "loose-2017-2021-07", title: "Three Crowns", src: "/photography/loose/2017-2021/07-three-crowns.webp", thumb: "/photography/loose/2017-2021/thumbs/07-three-crowns.webp" },
+    { id: "loose-2017-2021-08", title: "Thicket", src: "/photography/loose/2017-2021/08-thicket.webp", thumb: "/photography/loose/2017-2021/thumbs/08-thicket.webp" },
+    { id: "loose-2017-2021-09", title: "Across", src: "/photography/loose/2017-2021/09-across.webp", thumb: "/photography/loose/2017-2021/thumbs/09-across.webp" },
+    { id: "loose-2017-2021-10", title: "Usurpation", src: "/photography/loose/2017-2021/10-usurpation.webp", thumb: "/photography/loose/2017-2021/thumbs/10-usurpation.webp" },
+    { id: "loose-2017-2021-11", title: "Borrowed Face", src: "/photography/loose/2017-2021/11-borrowed-face.webp", thumb: "/photography/loose/2017-2021/thumbs/11-borrowed-face.webp" },
+    { id: "loose-2017-2021-12", title: "The Leaning", src: "/photography/loose/2017-2021/12-the-leaning.webp", thumb: "/photography/loose/2017-2021/thumbs/12-the-leaning.webp" },
+    { id: "loose-2017-2021-13", title: "Mandate", src: "/photography/loose/2017-2021/13-mandate.webp", thumb: "/photography/loose/2017-2021/thumbs/13-mandate.webp" },
+    { id: "loose-2017-2021-14", title: "Surveyor", src: "/photography/loose/2017-2021/14-surveyor.webp", thumb: "/photography/loose/2017-2021/thumbs/14-surveyor.webp" },
+    { id: "loose-2017-2021-15", title: "Upheaval", src: "/photography/loose/2017-2021/15-upheaval.webp", thumb: "/photography/loose/2017-2021/thumbs/15-upheaval.webp" },
+    { id: "loose-2017-2021-16", title: "Pinnacle", src: "/photography/loose/2017-2021/16-pinnacle.webp", thumb: "/photography/loose/2017-2021/thumbs/16-pinnacle.webp" },
+    { id: "loose-2017-2021-17", title: "Dominions", src: "/photography/loose/2017-2021/17-dominions.webp", thumb: "/photography/loose/2017-2021/thumbs/17-dominions.webp" },
+    { id: "loose-2017-2021-18", title: "Apostle", src: "/photography/loose/2017-2021/18-apostle.webp", thumb: "/photography/loose/2017-2021/thumbs/18-apostle.webp" },
+    { id: "loose-2017-2021-19", title: "Rampant", src: "/photography/loose/2017-2021/19-rampant.webp", thumb: "/photography/loose/2017-2021/thumbs/19-rampant.webp" },
+    { id: "loose-2017-2021-20", title: "Supplication", src: "/photography/loose/2017-2021/20-supplication.webp", thumb: "/photography/loose/2017-2021/thumbs/20-supplication.webp" },
+    { id: "loose-2017-2021-21", title: "Guardian", src: "/photography/loose/2017-2021/21-guardian.webp", thumb: "/photography/loose/2017-2021/thumbs/21-guardian.webp" },
+    { id: "loose-2017-2021-22", title: "Relay", src: "/photography/loose/2017-2021/22-relay.webp", thumb: "/photography/loose/2017-2021/thumbs/22-relay.webp" }
+  ] },
+  { year: "2012-2016", coverPhoto: "/photography/loose/2012-2016/21-sunburst.webp", photos: [
+    { id: "loose-2012-2016-01", title: "The Gallery", src: "/photography/loose/2012-2016/01-the-gallery.webp", thumb: "/photography/loose/2012-2016/thumbs/01-the-gallery.webp" },
+    { id: "loose-2012-2016-02", title: "Inventory", src: "/photography/loose/2012-2016/02-inventory.webp", thumb: "/photography/loose/2012-2016/thumbs/02-inventory.webp" },
+    { id: "loose-2012-2016-03", title: "Wiphala", src: "/photography/loose/2012-2016/03-wiphala.webp", thumb: "/photography/loose/2012-2016/thumbs/03-wiphala.webp" },
+    { id: "loose-2012-2016-04", title: "Velitas", src: "/photography/loose/2012-2016/04-velitas.webp", thumb: "/photography/loose/2012-2016/thumbs/04-velitas.webp" },
+    { id: "loose-2012-2016-05", title: "Arachne", src: "/photography/loose/2012-2016/05-arachne.webp", thumb: "/photography/loose/2012-2016/thumbs/05-arachne.webp" },
+    { id: "loose-2012-2016-06", title: "The Coil", src: "/photography/loose/2012-2016/06-the-coil.webp", thumb: "/photography/loose/2012-2016/thumbs/06-the-coil.webp" },
+    { id: "loose-2012-2016-07", title: "Goat", src: "/photography/loose/2012-2016/07-goat.webp", thumb: "/photography/loose/2012-2016/thumbs/07-goat.webp" },
+    { id: "loose-2012-2016-08", title: "Indifference", src: "/photography/loose/2012-2016/08-indifference.webp", thumb: "/photography/loose/2012-2016/thumbs/08-indifference.webp" },
+    { id: "loose-2012-2016-09", title: "The Audience", src: "/photography/loose/2012-2016/09-the-audience.webp", thumb: "/photography/loose/2012-2016/thumbs/09-the-audience.webp" },
+    { id: "loose-2012-2016-10", title: "Petal Study", src: "/photography/loose/2012-2016/10-petal-study.webp", thumb: "/photography/loose/2012-2016/thumbs/10-petal-study.webp" },
+    { id: "loose-2012-2016-11", title: "Filaments", src: "/photography/loose/2012-2016/11-filaments.webp", thumb: "/photography/loose/2012-2016/thumbs/11-filaments.webp" },
+    { id: "loose-2012-2016-12", title: "The Rock", src: "/photography/loose/2012-2016/12-the-rock.webp", thumb: "/photography/loose/2012-2016/thumbs/12-the-rock.webp" },
+    { id: "loose-2012-2016-13", title: "The Passage", src: "/photography/loose/2012-2016/13-the-passage.webp", thumb: "/photography/loose/2012-2016/thumbs/13-the-passage.webp" },
+    { id: "loose-2012-2016-14", title: "Web and Thorns", src: "/photography/loose/2012-2016/14-web-and-thorns.webp", thumb: "/photography/loose/2012-2016/thumbs/14-web-and-thorns.webp" },
+    { id: "loose-2012-2016-15", title: "Passerby", src: "/photography/loose/2012-2016/15-passerby.webp", thumb: "/photography/loose/2012-2016/thumbs/15-passerby.webp" },
+    { id: "loose-2012-2016-16", title: "Chilling", src: "/photography/loose/2012-2016/16-chilling.webp", thumb: "/photography/loose/2012-2016/thumbs/16-chilling.webp" },
+    { id: "loose-2012-2016-17", title: "Patterns", src: "/photography/loose/2012-2016/17-patterns.webp", thumb: "/photography/loose/2012-2016/thumbs/17-patterns.webp" },
+    { id: "loose-2012-2016-18", title: "Luminance", src: "/photography/loose/2012-2016/18-luminance.webp", thumb: "/photography/loose/2012-2016/thumbs/18-luminance.webp" },
+    { id: "loose-2012-2016-19", title: "Tower and Fountains", src: "/photography/loose/2012-2016/19-tower-and-fountains.webp", thumb: "/photography/loose/2012-2016/thumbs/19-tower-and-fountains.webp" },
+    { id: "loose-2012-2016-20", title: "The Observer", src: "/photography/loose/2012-2016/20-the-observer.webp", thumb: "/photography/loose/2012-2016/thumbs/20-the-observer.webp" },
+    { id: "loose-2012-2016-21", title: "Sunburst", src: "/photography/loose/2012-2016/21-sunburst.webp", thumb: "/photography/loose/2012-2016/thumbs/21-sunburst.webp" },
+    { id: "loose-2012-2016-22", title: "Flight", src: "/photography/loose/2012-2016/22-flight.webp", thumb: "/photography/loose/2012-2016/thumbs/22-flight.webp" }
+  ] }
+];
+
+// scripts/export-books-manifest.ts
+import { writeFileSync } from "node:fs";
+var LOOSE_STATEMENT = {
+  en: "Photographs that don't belong to any series. Kept loose, ordered by year.",
+  es: "Fotograf\xEDas que no pertenecen a ninguna serie. Sueltas, ordenadas por a\xF1o."
+};
+var books = [];
+for (const s of series) {
+  if (!s.photos.length) continue;
+  books.push({
+    kind: "work",
+    slug: s.slug,
+    title: s.title,
+    folder: `Works/${s.title}`,
+    yearLabel: s.year ? String(s.year) : "",
+    statement: s.description,
+    quote: s.quote,
+    photos: s.photos.map((p) => ({ title: p.title, webp: p.src }))
+  });
+}
+for (const s of studies) {
+  if (!s.photos.length) continue;
+  books.push({
+    kind: "study",
+    slug: s.slug,
+    title: s.title,
+    folder: `Studies/${s.title}`,
+    yearLabel: s.year ? String(s.year) : "",
+    statement: s.description,
+    quote: s.quote,
+    photos: s.photos.map((p) => ({ title: p.title, webp: p.src }))
+  });
+}
+for (const g of looseYears) {
+  if (!g.photos.length) continue;
+  books.push({
+    kind: "loose",
+    slug: `loose-${g.year}`,
+    title: g.year,
+    folder: `Loose/${g.year}`,
+    yearLabel: g.year.replace("-", "\u2013"),
+    statement: LOOSE_STATEMENT,
+    photos: g.photos.map((p) => ({ title: p.title, webp: p.src }))
+  });
+}
+var out = new URL("./books-manifest.json", import.meta.url);
+writeFileSync(out, JSON.stringify(books, null, 2));
+console.log(`books: ${books.length}  (works+studies+loose)`);
+for (const b of books) console.log(`  ${b.kind.padEnd(5)} ${b.title.padEnd(16)} ${b.photos.length} fotos -> ${b.folder}`);
