@@ -2,9 +2,7 @@
 // Única fuente de verdad: series.ts / studies.ts / loose.ts (mismo orden que el sitio).
 // El renderer (make-photobooks.py) resuelve foto y fecha desde los Portfolio/ del archivo.
 // Correr: esbuild bundle -> node (ver make-books wrapper).
-import { series } from '../data/series';
-import { studies } from '../data/studies';
-import { looseYears } from '../data/loose';
+import { series, studies, looseYears } from '../data/catalog-data';
 import { writeFileSync } from 'node:fs';
 
 const LOOSE_STATEMENT = {
