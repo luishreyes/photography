@@ -57,8 +57,8 @@ const CONTAINMENT_ORDER = [
 // más físico al más disuelto: puerta, vidrio/reflejo, luz, geometría/cielo, velo.
 const BETWEEN_ORDER = [
   'Estancia', 'Interior, Exterior', 'Iris', 'Recess', 'Cargada', 'Salida',
-  'Through', 'Through Glass', 'Into the Wall',
-  'Screenlight', 'Illumination', 'Bias',
+  'Through', 'Palimpsesto', 'Into the Wall',
+  'Screenlight', 'Illumination', 'Bias', 'Vado',
   'Facing', 'Skew', 'Eaves', 'Between Bells',
   'Celosía', 'Between',
 ];
