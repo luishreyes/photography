@@ -1,9 +1,7 @@
 import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform, type Variants } from 'framer-motion';
-import { series } from '../data/series';
-import { studies } from '../data/studies';
-import { looseYears } from '../data/loose';
+import { series, studies, looseYears } from '../data/catalog-data';
 import { useI18n, type Lang } from '../context/i18n';
 import Footer from '../components/Footer';
 import SmartImg from '../components/SmartImg';

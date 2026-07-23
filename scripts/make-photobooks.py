@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Genera fotolibros PDF (EN + ES) por colección, guardados en la carpeta del
 archivo maestro. Plantilla = Fotolibro Elsewhere (25x25 cm). Fuente de orden y
-statements: books-manifest.json (exportado del sitio). Fotos: Portfolio/ de alta.
+statements: catalog.json (vía catalog_lib). Fotos: files.portfolio de cada foto.
 
 Uso:
   python3 scripts/make-photobooks.py            # todos los libros
@@ -9,14 +9,17 @@ Uso:
 
 Requiere Google Chrome (headless --print-to-pdf) y PIL.
 """
-import os, sys, json, base64, subprocess, tempfile, io, re
+import os, sys, base64, subprocess, tempfile, io
 from PIL import Image
 Image.MAX_IMAGE_PIXELS = None
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MASTER = os.path.abspath(os.path.join(REPO, '..', '..'))
-MANIFEST = os.path.join(REPO, 'scripts', 'books-manifest.json')
 FONT_DIR = os.path.join(REPO, 'node_modules', '@fontsource-variable')
+
+import sys as _sys
+_sys.path.insert(0, os.path.join(MASTER, '_scripts', 'catalog'))
+import catalog_lib as _cl
 CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
 MAXEDGE, Q = 2000, 88   # imagen embebida para impresión
 
@@ -61,21 +64,6 @@ def img_data_uri(path):
 
 def esc(s):
     return (s or '').replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
-
-
-def portfolio_index(folder_abs):
-    """{title_casefold: (path, YYYYMMDD)} desde <folder>/Portfolio/*.jpg"""
-    d = os.path.join(folder_abs, 'Portfolio')
-    out = {}
-    if not os.path.isdir(d):
-        return out
-    for fn in os.listdir(d):
-        m = re.match(r'^(\d{8})_(.+)_portfolio\.jpe?g$', fn, re.I)
-        if not m:
-            continue
-        title = m.group(2).replace('_', ' ')
-        out[title.casefold()] = (os.path.join(d, fn), m.group(1))
-    return out
 
 
 def fmt_date(ymd):
@@ -168,25 +156,17 @@ def build_html(book, lang, fonts):
     is_loose = book['kind'] == 'loose'
     display_title = tr['loose'] if is_loose else book['title']
     folder_abs = os.path.join(MASTER, book['folder'])
-    pidx = portfolio_index(folder_abs)
 
     resolved = []  # (title, date, uri, size)
     missing = []
     for ph in book['photos']:
-        title = ph['title']
-        hit = pidx.get(title.casefold())
-        if hit:
-            path, ymd = hit
-        else:
-            webp = os.path.join(REPO, 'public', ph['webp'].lstrip('/'))
-            if os.path.isfile(webp):
-                path, ymd = webp, ''
-                missing.append(title + ' (webp fallback)')
-            else:
-                missing.append(title + ' (FALTA)')
-                continue
-        uri, size = img_data_uri(path)
-        resolved.append((title, ymd, uri, size))
+        port_abs = os.path.join(MASTER, ph['portfolio'])
+        if not os.path.exists(port_abs):
+            missing.append(ph['title'] + ' (FALTA portfolio)')
+            continue
+        uri, size = img_data_uri(port_abs)
+        ymd = ph['date'].replace('-', '')  # 'YYYY-MM-DD' -> 'YYYYMMDD'
+        resolved.append((ph['title'], ymd, uri, size))
 
     dates = [d for _, d, _, _ in resolved]
     span = year_span(dates) or book['yearLabel']
@@ -236,7 +216,7 @@ def render_pdf(html, out_pdf):
 
 def main():
     flt = sys.argv[1].casefold() if len(sys.argv) > 1 else None
-    books = json.load(open(MANIFEST, encoding='utf-8'))
+    books = _cl.books_from_catalog(_cl.load_catalog(os.path.join(MASTER, 'catalog.json')))
     made = 0
     for book in books:
         if flt and flt not in book['slug'].casefold() and flt not in book['title'].casefold():

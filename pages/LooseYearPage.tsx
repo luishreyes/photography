@@ -1,5 +1,5 @@
 import { useParams, Link } from 'react-router-dom';
-import { looseYears } from '../data/loose';
+import { looseYears } from '../data/catalog-data';
 import { useI18n } from '../context/i18n';
 import PhotoViewer from '../components/PhotoViewer';
 

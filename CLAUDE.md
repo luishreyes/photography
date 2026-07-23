@@ -19,7 +19,7 @@ Portafolio de fotografía artística en blanco y negro, hospedado en GitHub Page
 
 ```
 data/
-  series.ts         ← Definición de todas las series y fotos (FUENTE DE VERDAD)
+  catalog-data.ts   ← AUTO-GENERADO desde catalog.json (NO editar). Exporta series/studies/looseYears.
 context/
   i18n.tsx          ← Sistema de idiomas EN/ES (provider + hook + strings de UI)
 components/
@@ -61,18 +61,14 @@ Dirección **editorial** (amarillo ácido sobre negro):
 
 El hero **es** el landing (sin splash aparte). Entrada con framer-motion: flash de cámara → foto B/N con leve Ken Burns → nombre sube con máscara de línea. Al hacer scroll (`useScroll`/`useTransform`) el bloque sale del frame y la foto hace parallax, estilo Apple. El índice de la home son **tres puertas monumentales** (Work/Studies/Loose): la fila entera es un link a la categoría — **solo clic, sin desplegar** sub-ítems (hay demasiados trabajos/años). El listado completo vive dentro de cada página de categoría.
 
-## Sync desde el archivo (carpetas → repo)
+## Fuente única: `catalog.json` → sitio
 
-Las fotos del sitio se derivan del **archivo maestro** (`~/Desktop/Portafolio Fotográfico/{Works,Studies,Loose}`). Siempre desde la copia **`Portfolio/`** (aspecto nativo, sin marco). NUNCA `Web/` (cuadrada + marco = redes sociales).
+**Toda** la data del portafolio (colecciones, fotos, orden, statements, quotes, covers, títulos ES/EN) vive en **`catalog.json`** en la raíz del archivo maestro (`~/Desktop/Portafolio Fotográfico/catalog.json`, NO versionado en git). El sitio, los fotolibros y la rutina de Instagram leen de ahí. Las transformaciones puras están en `_scripts/catalog/catalog_lib.py`.
 
-- **`scripts/sync-photos.py`** → Works + Studies: genera webp en `public/photography/<slug>/` y `.../studies/<slug>/`, crea `cover.webp` si falta (no pisa portadas curadas), y escribe **`data/generated.ts`** (`GEN[slug]`).
-- **`scripts/sync-loose.py`** → Loose por rangos (Portfolio, date-desc).
-- **`data/merge.ts`** (`mergePhotos`): combina `GEN[slug]` sobre el fallback de `series.ts`/`studies.ts`. La **metadata** (statements, quotes, orden) vive en código; las **fotos** vienen de las carpetas. Modos: `keep` (respeta orden curado de Works), `curated` (Villeta, por secuencia), `date-desc` (estudios abiertos y Loose). Lo que NO esté en las carpetas se **conserva** del repo.
-- Estudios: `Passenger` y `Chicago` agregados. `Ground` es repo-only (no está en carpetas todavía). El statement de `Passenger` es provisional (revisar).
-
-## Loose (por año)
-
-`/loose` = `LoosePage` (grid de años, más reciente primero); `/loose/:year` = `LooseYearPage` (galería vía `PhotoViewer`). Datos en **`data/loose.ts`** (auto-generado — NO editar a mano). Fuente de verdad: `<carpeta madre>/Loose/<AAAA>/Web/`. Regenerar imágenes + data con **`scripts/sync-loose.py`** (lee las copias Web del archivo, produce webp ≤2000px en `public/photography/loose/<año>/` y reescribe `data/loose.ts`). Loose en el archivo está organizado **una carpeta por año** con `{HD,Portfolio,Web}`.
+- **`./build.sh`** (raíz del maestro → `_scripts/catalog/build_all.py`): valida el catálogo, materializa los `site_webp`/`site_thumb` faltantes desde `files.portfolio` (1600px q80; thumb cuadrado 640 q78) en `public/photography/...`, genera los `cover.webp` faltantes, y **emite `data/catalog-data.ts`** (exporta `series`, `studies`, `looseYears`). Correr después de cualquier cambio al catálogo.
+- Las imágenes se derivan de la copia **`Portfolio/`** del archivo (aspecto nativo, sin marco). NUNCA `Web/` (cuadrada + marco = redes).
+- `data/catalog-data.ts` es **auto-generado — NO editar a mano**. Para cambiar un statement, título, orden o cover: editar `catalog.json` y correr `./build.sh`.
+- Loose: `/loose` = `LoosePage` (grid de bins por rango de años, más reciente primero); `/loose/:year` = `LooseYearPage` (galería vía `PhotoViewer`). Los bins salen de las colecciones `loose-*` del catálogo, orden `date_captured` desc.
 
 ## Idiomas (i18n) — EN / ES
 
@@ -87,44 +83,28 @@ El sitio es **bilingüe** con toggle EN/ES en el navbar. Implementado en `contex
 | Contenido | ¿Traducido? | Dónde |
 |---|---|---|
 | Menú, etiquetas, hero, botones, lightbox | ✓ EN/ES | `ui` en `i18n.tsx` |
-| **Statements** de cada serie (`description`) | ✓ EN/ES | `description: { en, es }` en `series.ts` |
-| **Citas** de fotógrafos (`quote`) | ✗ solo inglés (original) | `series.ts` |
-| **Nombres de serie y estudio** | ✓ EN/ES | `names: { en, es }` en `series.ts`/`studies.ts` (el campo `title` queda como identidad estable; el render usa `names[lang]`) |
-| **Títulos de fotos** | ✗ solo inglés (original) | `series.ts` (pendiente decidir) |
+| **Statements** de cada serie (`description`) | ✓ EN/ES | `statement: { en, es }` en `catalog.json` |
+| **Citas** de fotógrafos (`quote`) | ✗ solo inglés (original) | `quote` en `catalog.json` |
+| **Nombres de serie y estudio** | ✓ EN/ES | `names: { en, es }` en `catalog.json` (el campo `title` queda como identidad estable; el render usa `names[lang]`) |
+| **Títulos de fotos** | ✗ **SIEMPRE español** (no conmuta) | `title.es` en `catalog.json` es el título mostrado; `title.en` queda como referencia/legado |
 
-⚠️ Al **agregar una serie nueva**, `description` DEBE ser `{ en: '...', es: '...' }`. Si solo tienes el inglés, traduce el statement al español manteniendo el tono personal y en primera persona (la revisa el usuario).
+⚠️ Los cambios se hacen en `catalog.json` (no en `data/`) y se propagan con `./build.sh`. Al **agregar una colección nueva**, `statement` DEBE ser `{ en, es }` (tono personal, primera persona; la revisa el usuario).
 
 ## Imágenes
 
-**IMPORTANTE:** Las fotos se sirven **localmente** desde `public/photography/`, NO desde Supabase. `sips` no soporta WebP en esta máquina; se usa **ImageMagick (`magick`)**. `ffmpeg` tiene una dependencia rota (libx265) — no usar.
+**IMPORTANTE:** Las fotos se sirven **localmente** desde `public/photography/`, NO desde Supabase. `build_all.py` genera los WebP con **PIL/Pillow** (no ImageMagick ni `sips`). `ffmpeg` tiene una dependencia rota (libx265) — no usar.
 
-### Flujo para procesar una serie nueva
-Cuando el usuario sube los originales a la raíz de `Photography/`:
+### Flujo para procesar una foto/colección nueva
+El pipeline vive en el archivo maestro (`_scripts/`), no en el repo del sitio:
 
-1. **Consultar orden y títulos** en el sitio actual: `https://luishreyes.myportfolio.com/{slug}` (WebFetch). El orden de visualización lo manda Adobe Portfolio, NO el número en el nombre del archivo.
-2. **Mover originales** a `originals/{serie}/` (preservar nombres `fecha-NN-titulo`).
-3. **Copiar + renombrar limpio** a `public/photography/{serie}/` como `01-titulo.jpg`, `02-titulo.jpg`, ... + `cover.jpg` (= primera foto). Slugs en kebab-case minúscula.
-4. **Convertir a WebP** (máx 2000px, calidad 85):
-   ```bash
-   for f in 0*.jpg 1*.jpg cover.jpg; do
-     magick "$f" -resize "2000x2000>" -quality 85 "${f%.jpg}.webp"
-   done
-   ```
-5. **Obtener dimensiones** de cada WebP con `sips -g pixelWidth -g pixelHeight` (necesarias para el masonry).
-6. **Registrar en `data/series.ts`**: `coverPhoto` → `.webp`, y poblar `photos[]` con `id`, `title`, `src` (ruta `/photography/...`), `width`, `height`.
+1. **`make_copies.py <HD> "<Título>" <carpeta>`** → crea las 3 copias (`HD/`, `Portfolio/`, `Web/`) con marco auto.
+2. **`_scripts/catalog/ingest_collection.py <slug>`** → Fase A: agrega la foto al `catalog.json` (EXIF, archivos, memo del log, web_frame).
+3. **`_scripts/catalog/enrich_collection.py <slug>`** → Fase B: punctum, dimensiones, keywords, título ES, etc. (curaduría a mano, persona Alfred).
+4. **`./build.sh`** → materializa webp/thumbs, regenera `data/catalog-data.ts`. Deploy con push a `main`.
 
-Resultado típico: 6.7MB JPG → ~250KB WebP.
+## Colecciones (en `catalog.json`)
 
-## Series
-
-Definidas en `data/series.ts`. Cada serie tiene:
-- `slug` — URL friendly (`in-passing`, no `in passing`)
-- `title` — nombre visible
-- `year`
-- `description` — `{ en, es }` párrafo intro (EN verbatim de Adobe Portfolio; ES traducido)
-- `quote?` — `{ text, author }` cita de fotógrafo (solo inglés, de Adobe Portfolio)
-- `coverPhoto` — ruta local `.webp` de la portada
-- `photos[]` — array con `id`, `title`, `src`, `width`, `height` (en orden de Adobe Portfolio)
+Definidas en `catalog.json` (`collections[]`). Cada colección tiene: `slug`, `kind` (work/study/loose), `names {en,es}`, `year`, `statement {en,es}`, `quote?`, `cover_photo_id`/`cover_file`, `order` (ids en secuencia curada), `status`. Cada foto (`photos[]`) tiene `title {en,es}`, `position`, `files {hd,portfolio,web,site_webp,site_thumb}`, `dimensions`, `alfred {punctum,dimensions_eval,arc_role,...}`, `keywords`, `subjects`, etc.
 
 ### Estado de las series
 

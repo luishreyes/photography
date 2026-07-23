@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { series } from '../data/series';
+import { series } from '../data/catalog-data';
 import { useI18n } from '../context/i18n';
 import Footer from '../components/Footer';
 import SmartImg from '../components/SmartImg';
