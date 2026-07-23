@@ -24,7 +24,7 @@ export default function StudyPage() {
         <Link to="/studies" className="u-label text-white/40 text-[11px] hover:text-brand-yellow transition-colors mb-6 inline-block">
           {t('study.back')}
         </Link>
-        <h1 className="font-disp font-light uppercase tracking-[0.01em] leading-[0.86] text-brand-yellow text-[clamp(3rem,12vw,8rem)]">{study.title}</h1>
+        <h1 className="font-disp font-light uppercase tracking-[0.01em] leading-[0.86] text-brand-yellow text-[clamp(3rem,12vw,8rem)]">{(study.names ? study.names[lang] : study.title)}</h1>
         <p className="mt-4 text-brand-cream/70 text-base leading-relaxed">{study.description[lang]}</p>
         <p className="mt-10 u-label text-brand-yellow/70 text-[11px]">{t('studies.empty')}</p>
       </div>
@@ -35,7 +35,7 @@ export default function StudyPage() {
     <PhotoViewer
       backHref="/studies"
       backLabel={t('study.back')}
-      title={study.title}
+      title={(study.names ? study.names[lang] : study.title)}
       description={study.description[lang]}
       quote={study.quote}
       metaSuffix={study.year ? `· ${study.year}` : undefined}

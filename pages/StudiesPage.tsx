@@ -37,7 +37,7 @@ export default function StudiesPage() {
                 <p className="u-label text-white/55 text-[10px] mb-1">
                   {study.status === 'ongoing' ? t('studies.ongoing') : study.year}
                 </p>
-                <h3 className="font-disp font-normal uppercase tracking-[0.02em] text-white text-2xl md:text-3xl leading-none group-hover:text-brand-yellow transition-colors duration-300">{study.title}</h3>
+                <h3 className="font-disp font-normal uppercase tracking-[0.02em] text-white text-2xl md:text-3xl leading-none group-hover:text-brand-yellow transition-colors duration-300">{study.names ? study.names[lang] : study.title}</h3>
                 <p className="text-white/0 group-hover:text-white text-sm mt-2 transition-all duration-400 translate-y-2 group-hover:translate-y-0 leading-snug">{study.description[lang]}</p>
               </div>
             </Link>

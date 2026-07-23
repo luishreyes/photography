@@ -89,7 +89,8 @@ El sitio es **bilingüe** con toggle EN/ES en el navbar. Implementado en `contex
 | Menú, etiquetas, hero, botones, lightbox | ✓ EN/ES | `ui` en `i18n.tsx` |
 | **Statements** de cada serie (`description`) | ✓ EN/ES | `description: { en, es }` en `series.ts` |
 | **Citas** de fotógrafos (`quote`) | ✗ solo inglés (original) | `series.ts` |
-| **Títulos de fotos** y de series | ✗ solo inglés (original) | `series.ts` |
+| **Nombres de serie y estudio** | ✓ EN/ES | `names: { en, es }` en `series.ts`/`studies.ts` (el campo `title` queda como identidad estable; el render usa `names[lang]`) |
+| **Títulos de fotos** | ✗ solo inglés (original) | `series.ts` (pendiente decidir) |
 
 ⚠️ Al **agregar una serie nueva**, `description` DEBE ser `{ en: '...', es: '...' }`. Si solo tienes el inglés, traduce el statement al español manteniendo el tono personal y en primera persona (la revisa el usuario).
 

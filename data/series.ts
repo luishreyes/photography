@@ -12,6 +12,8 @@ export interface Photo {
 export interface Series {
   slug: string;
   title: string;
+  /** Display name per language (title stays as stable identity). */
+  names?: { en: string; es: string };
   year: number;
   description: { en: string; es: string };
   quote?: { text: string; author: string }; // queda en inglés (original)
@@ -25,6 +27,7 @@ const rawSeries: Series[] = [
   {
     slug: 'geometries',
     title: 'Geometries',
+    names: { en: 'Geometries', es: 'Geometrías' },
     year: 2026,
     description: {
       en: "I keep finding myself looking at buildings the way other people look at faces. Lines, curves, repetition. There's something in the way a structure holds space that feels almost alive. These photographs are about that feeling: the moment when architecture stops being a backdrop and starts being the subject.",
@@ -50,6 +53,7 @@ const rawSeries: Series[] = [
   {
     slug: 'abstractions',
     title: 'Abstractions',
+    names: { en: 'Abstractions', es: 'Abstracciones' },
     year: 2026,
     description: {
       en: "Everything here started as something recognizable. But movement, blur, or light got in the way, and the original thing dissolved into something else. That's not an accident I chose to keep: it's the point. I'm less interested in what you see and more interested in what you feel before you figure out what you're looking at.",
@@ -75,6 +79,7 @@ const rawSeries: Series[] = [
   {
     slug: 'in-passing',
     title: 'In Passing',
+    names: { en: 'In Passing', es: 'De Paso' },
     year: 2026,
     description: {
       en: "Street life moves fast and most of it disappears. Every now and then something shows up for barely a second, and if the camera is ready, it stays. These are the ones I managed to catch. Some are funny, some are heavy, and a few are both at the same time.",
@@ -100,6 +105,7 @@ const rawSeries: Series[] = [
   {
     slug: 'elsewhere',
     title: 'Elsewhere',
+    names: { en: 'Elsewhere', es: 'Lejos' },
     year: 2026,
     description: {
       en: "These aren't travel photos. They were taken in other places, yes, but that's not the point. The point is that some places stick with you long after you leave, and not always the ones you'd expect. This is my collection of places I couldn't shake off.",
@@ -125,6 +131,7 @@ const rawSeries: Series[] = [
   {
     slug: 'organic',
     title: 'Organic',
+    names: { en: 'Organic', es: 'Orgánico' },
     year: 2026,
     description: {
       en: "Animals, plants, insects, feathers. Living things have this way of being incredibly delicate and ridiculously strong at the same time. Up close, each one reveals an architecture of its own, an intelligence that doesn't need to explain itself. This section is about looking long enough to see it.",
@@ -150,6 +157,7 @@ const rawSeries: Series[] = [
   {
     slug: 'close',
     title: 'Close',
+    names: { en: 'Close', es: 'Cercano' },
     year: 2026,
     description: {
       en: "This is the personal stuff. The camera gets quieter here, closer. These are the people I love, photographed the way I see them: in ordinary light, doing ordinary things, being everything.",

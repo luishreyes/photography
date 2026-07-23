@@ -37,7 +37,7 @@ export default function WorkPage() {
               <div className="absolute bottom-0 left-0 h-0.5 w-0 bg-brand-yellow transition-all duration-500 group-hover:w-full" />
               <div className="absolute bottom-0 left-0 right-0 p-6">
                 <p className="u-label text-white/55 text-[10px] mb-1">{s.year}</p>
-                <h3 className="font-disp font-normal uppercase tracking-[0.02em] text-white text-2xl md:text-3xl leading-none group-hover:text-brand-yellow transition-colors duration-300">{s.title}</h3>
+                <h3 className="font-disp font-normal uppercase tracking-[0.02em] text-white text-2xl md:text-3xl leading-none group-hover:text-brand-yellow transition-colors duration-300">{s.names ? s.names[lang] : s.title}</h3>
                 <p className="text-white/0 group-hover:text-white text-sm mt-2 transition-all duration-400 translate-y-2 group-hover:translate-y-0 leading-snug">{s.description[lang]}</p>
               </div>
               <div className="absolute top-4 right-5 font-disp font-light text-white/15 text-6xl leading-none group-hover:text-brand-yellow/25 transition-colors duration-300">
