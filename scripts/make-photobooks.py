@@ -111,9 +111,24 @@ def page_title(kicker, display_title, statement, count_line, quote=None):
 </section>"""
 
 
+# Regla de tamaños de placa: el lado LARGO es el mismo para vertical y horizontal.
+# Las cuadradas (y casi cuadradas) se reducen para emparejar el área percibida:
+# a proporción 1:1 el lado vale SQ_FACTOR*LONG (área pareja con una 2:3) y crece
+# linealmente hasta proporción 1.3, donde ya rige el lado largo completo.
+PLATE_LONG_CM = 20.6
+SQ_FACTOR = 0.82
+
+
+def plate_css(w, h):
+    aspect = max(w, h) / min(w, h)
+    f = 1.0 if aspect >= 1.3 else SQ_FACTOR + (1.0 - SQ_FACTOR) * (aspect - 1.0) / 0.3
+    edge = PLATE_LONG_CM * f
+    return f'width:{edge:.2f}cm;height:auto;' if w > h else f'height:{edge:.2f}cm;width:auto;'
+
+
 def page_photo(num, title, date_str, uri, size):
     w, h = size
-    dim = 'width:20.6cm;height:auto;' if w > h else 'height:16.8cm;width:auto;'
+    dim = plate_css(w, h)
     return f"""<section class="pg" style="background:{BONE};color:{INK};display:flex;align-items:center;justify-content:center;">
 <div style="display:flex;flex-direction:column;">
 <img src="{uri}" alt="{esc(title)}" style="display:block;{dim}object-fit:contain;">
@@ -148,6 +163,41 @@ def page_colophon(heading, rows, footer_left):
 <div style="font-family:'Archivo';font-weight:600;font-size:8.5pt;letter-spacing:0.28em;text-transform:uppercase;color:{CIT};">{esc(heading)}</div>
 <div style="margin-top:1cm;display:flex;flex-direction:column;">{items}</div>
 {footer}
+</section>"""
+
+
+def page_rights(lang, year):
+    """Página final: símbolo del visor (Manual de identidad) + wordmark + derechos.
+    Colores del manual: citrón #C9C41C, carbón #0A0A0A, hueso #E8E6E1."""
+    legend = {
+        'es': (f"© {year} Luis H. Reyes. Todos los derechos reservados. Ninguna parte de este libro "
+               "puede reproducirse, almacenarse o transmitirse por ningún medio sin autorización "
+               "escrita del autor."),
+        'en': (f"© {year} Luis H. Reyes. All rights reserved. No part of this book may be reproduced, "
+               "stored or transmitted in any form without written permission from the author."),
+    }[lang]
+    printed = {'es': f"Impreso en {year}", 'en': f"Printed in {year}"}[lang]
+    photog = T[lang]['photog'].upper()
+    # Símbolo: caja S con 4 esquinas de visor en hueso y la H citrón (mitad de la altura).
+    S, arm, stroke = '3.2cm', '0.7cm', '0.055cm'
+    corner = lambda pos: (f'<div style="position:absolute;{pos};width:{arm};height:{arm};'
+                          f'border-style:solid;border-color:{BONE};border-width:0;{{bw}}"></div>')
+    corners = (corner('left:0;top:0').format(bw=f'border-top-width:{stroke};border-left-width:{stroke};') +
+               corner('right:0;top:0').format(bw=f'border-top-width:{stroke};border-right-width:{stroke};') +
+               corner('left:0;bottom:0').format(bw=f'border-bottom-width:{stroke};border-left-width:{stroke};') +
+               corner('right:0;bottom:0').format(bw=f'border-bottom-width:{stroke};border-right-width:{stroke};'))
+    return f"""<section class="pg" style="background:{DARK};color:{BONE};display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;">
+<div style="position:relative;width:{S};height:{S};">
+{corners}
+<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Big Shoulders Display';font-weight:300;font-size:1.6cm;line-height:1;color:{CIT};">H</div>
+</div>
+<div style="margin-top:1.1cm;font-family:'Big Shoulders Display';font-weight:300;font-size:26pt;letter-spacing:0.06em;text-transform:uppercase;color:{CIT};">Luis H. Reyes</div>
+<div style="margin-top:0.25cm;font-family:'Archivo';font-weight:600;font-size:9pt;letter-spacing:0.42em;text-transform:uppercase;color:{BONE};">{photog}</div>
+<div style="margin-top:1.4cm;max-width:12.5cm;font-family:'Archivo';font-weight:400;font-size:8.5pt;line-height:1.7;color:rgba(232,230,225,0.62);">{esc(legend)}</div>
+<div style="margin-top:0.9cm;display:flex;align-items:baseline;gap:0.5cm;font-family:'Archivo';font-weight:400;font-size:8.5pt;color:rgba(232,230,225,0.55);">
+<span>{esc(printed)}</span><span style="color:{CIT};">·</span>
+<a href="https://photography.luishreyes.com" style="color:rgba(232,230,225,0.55);text-decoration:none;">photography.luishreyes.com</a>
+</div>
 </section>"""
 
 
@@ -188,6 +238,8 @@ def build_html(book, lang, fonts):
     for ci, chunk in enumerate(chunks):
         last = ci == len(chunks) - 1
         pages.append(page_colophon(tr['index'], chunk, footer_left if last else None))
+    import datetime
+    pages.append(page_rights(lang, datetime.date.today().year))
 
     html = f"""<!DOCTYPE html><html><head><meta charset="utf-8"><style>
 @page{{size:25cm 25cm;margin:0;}}
