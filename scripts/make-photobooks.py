@@ -204,7 +204,8 @@ def page_rights(lang, year):
 def build_html(book, lang, fonts):
     tr = T[lang]
     is_loose = book['kind'] == 'loose'
-    display_title = tr['loose'] if is_loose else book['title']
+    # El nombre de la colección se muestra en el idioma de la edición (names.es/names.en).
+    display_title = tr['loose'] if is_loose else (book.get('names') or {}).get(lang, book['title'])
     folder_abs = os.path.join(MASTER, book['folder'])
 
     resolved = []  # (title, date, uri, size)
@@ -280,7 +281,8 @@ def main():
         for lang in ('es', 'en'):
             html, missing, n = build_html(book, lang, FONTS)
             is_loose = book['kind'] == 'loose'
-            base = f"Fotolibro {T[lang]['loose']} {book['yearLabel']}" if is_loose else f"Fotolibro {book['title']}"
+            base = (f"Fotolibro {T[lang]['loose']} {book['yearLabel']}" if is_loose
+                    else f"Fotolibro {(book.get('names') or {}).get(lang, book['title'])}")
             out_pdf = os.path.join(folder_abs, f"{base} ({lang.upper()}).pdf")
             render_pdf(html, out_pdf)
             mb = os.path.getsize(out_pdf) / 1e6
