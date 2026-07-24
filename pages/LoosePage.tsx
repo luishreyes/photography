@@ -36,7 +36,7 @@ export default function LoosePage() {
                   {y.photos.length} {y.photos.length === 1 ? (lang === 'es' ? 'imagen' : 'image') : (lang === 'es' ? 'imágenes' : 'images')}
                 </p>
                 <h3 className="font-disp font-normal uppercase tracking-[0.02em] text-white text-4xl md:text-5xl leading-none group-hover:text-brand-yellow transition-colors duration-300 tabular-nums">
-                  {y.year}
+                  {y.label ? y.label[lang] : y.year}
                 </h3>
               </div>
             </Link>

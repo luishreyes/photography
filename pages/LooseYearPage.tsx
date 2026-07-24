@@ -5,7 +5,7 @@ import PhotoViewer from '../components/PhotoViewer';
 
 export default function LooseYearPage() {
   const { year } = useParams<{ year: string }>();
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
   const y = looseYears.find(y => y.year === year);
 
   if (!y) return (
@@ -21,7 +21,7 @@ export default function LooseYearPage() {
     <PhotoViewer
       backHref="/loose"
       backLabel={t('loose.back')}
-      title={y.year}
+      title={y.label ? y.label[lang] : y.year}
       photos={y.photos}
       resetKey={y.year}
     />
