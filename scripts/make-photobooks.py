@@ -203,9 +203,9 @@ def page_rights(lang, year):
 
 def build_html(book, lang, fonts):
     tr = T[lang]
-    is_loose = book['kind'] == 'loose'
-    # El nombre de la colección se muestra en el idioma de la edición (names.es/names.en).
-    display_title = tr['loose'] if is_loose else (book.get('names') or {}).get(lang, book['title'])
+    # El nombre de la colección se muestra en el idioma de la edición (names.es/names.en);
+    # los tomos de Loose usan su nombre propio (Tomo I · span / Volume I · span).
+    display_title = (book.get('names') or {}).get(lang, book['title'])
     folder_abs = os.path.join(MASTER, book['folder'])
 
     resolved = []  # (title, date, uri, size)
@@ -223,7 +223,7 @@ def build_html(book, lang, fonts):
     span = year_span(dates) or book['yearLabel']
     n = len(resolved)
 
-    subline = f"{tr['sub']} · {span}" if not is_loose else f"{LABELS['loose'][lang]} · {book['yearLabel']}"
+    subline = f"{tr['sub']} · {span}"
     kicker = LABELS[book['kind']][lang]
     count_line = f"{n} {tr['plates']} · {span}"
     footer_left = f"{display_title} — Luis H. Reyes · 25 × 25 cm"
@@ -267,23 +267,21 @@ def render_pdf(html, out_pdf):
         os.unlink(tmp)
 
 
+BOOKS_DIR = os.path.join(MASTER, 'Fotolibros')  # todos los PDFs viven aquí
+
+
 def main():
     flt = sys.argv[1].casefold() if len(sys.argv) > 1 else None
     books = _cl.books_from_catalog(_cl.load_catalog(os.path.join(MASTER, 'catalog.json')))
+    os.makedirs(BOOKS_DIR, exist_ok=True)
     made = 0
     for book in books:
         if flt and flt not in book['slug'].casefold() and flt not in book['title'].casefold():
             continue
-        folder_abs = os.path.join(MASTER, book['folder'])
-        if not os.path.isdir(folder_abs):
-            print(f"SKIP {book['title']}: no existe {book['folder']}")
-            continue
         for lang in ('es', 'en'):
             html, missing, n = build_html(book, lang, FONTS)
-            is_loose = book['kind'] == 'loose'
-            base = (f"Fotolibro {T[lang]['loose']} {book['yearLabel']}" if is_loose
-                    else f"Fotolibro {(book.get('names') or {}).get(lang, book['title'])}")
-            out_pdf = os.path.join(folder_abs, f"{base} ({lang.upper()}).pdf")
+            base = f"Fotolibro {(book.get('names') or {}).get(lang, book['title'])}"
+            out_pdf = os.path.join(BOOKS_DIR, f"{base} ({lang.upper()}).pdf")
             render_pdf(html, out_pdf)
             mb = os.path.getsize(out_pdf) / 1e6
             note = f"  ⚠ {', '.join(missing)}" if missing else ''
