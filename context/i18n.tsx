@@ -29,13 +29,11 @@ const ui = {
 
   // Loose
   'loose.title':  { en: 'The Loose', es: 'Las Sueltas' },
-  'loose.kicker': { en: 'Loose', es: 'Sueltas' },
   'loose.intro':  { en: "Photographs that don't belong to any series. Kept loose, ordered by year.", es: 'Fotografías que no pertenecen a ninguna serie. Sueltas, ordenadas por año.' },
   'loose.back':   { en: '← Loose', es: '← Sueltas' },
   'loose.year':   { en: 'Year', es: 'Año' },
 
   // Studies
-  'studies.kicker': { en: 'Studies', es: 'Estudios' },
   'studies.title':  { en: 'The Studies', es: 'Los Estudios' },
   'studies.intro':  { en: "Collections have rules. Studies work differently. One subject, one inquiry, as many images as the subject demands. The only rule is that each photograph has to say something the others don't.", es: 'Las colecciones tienen reglas. Los estudios funcionan distinto. Un sujeto, una indagación, tantas imágenes como el sujeto demande. La única regla es que cada fotografía diga algo que las demás no dicen.' },
   'studies.ongoing': { en: 'Ongoing', es: 'En progreso' },

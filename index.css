@@ -35,6 +35,17 @@
     letter-spacing: 0.32em;
     text-transform: uppercase;
   }
+  /* Columna del título en el colofón de las páginas índice (Obra, Estudios,
+     Sueltas). El titular usa clamp(3rem,11vw,8rem); el título más largo del
+     sitio ("Los Estudios") mide 3.48x su font-size, así que la columna escala
+     con el mismo vw (11 * 3.48 ~= 38vw, +2 de holgura) y se topa donde se topa
+     la fuente. Debajo de lg el encabezado se apila y esto no aplica. */
+  @media (min-width: 1024px) {
+    .u-headcol {
+      width: min(40vw, 470px);
+      flex-shrink: 0;
+    }
+  }
   /* Monumental big-shoulders display */
   .u-disp {
     font-family: "Big Shoulders Display Variable", "Arial Narrow", sans-serif;

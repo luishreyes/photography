@@ -9,10 +9,21 @@ export default function WorkPage() {
   return (
     <main className="min-h-screen bg-brand-dark pt-28 pb-16 px-6 md:px-16">
       <div className="max-w-7xl mx-auto">
-        <div className="border-t border-white/15 pt-4 mb-12 md:mb-16">
-          <p className="u-label text-white/40 text-[11px] mb-3">{t('work.kicker')}</p>
-          <h1 className="font-disp font-light uppercase tracking-[0.01em] text-brand-yellow leading-[0.86] text-[clamp(3rem,11vw,8rem)]">{t('work.title')}</h1>
-          <div className="mt-5 max-w-xl space-y-3">
+        {/* Colofón editorial: título a la izquierda, texto a la derecha; la grilla
+            queda a ancho completo debajo (la obra nunca cede ancho al texto).
+            El ancho de la columna del título escala con el mismo vw que la fuente
+            (ver u-headcol en index.css) para que "Los Estudios", el título más
+            largo del sitio, quepa en una línea en todo el rango lg+.
+            self-start + self-end: el texto se posa en la base del título cuando
+            es más bajo, y se alinea arriba cuando lo supera. Lo resuelve el flex
+            (mide max(alturas) en cada ancho), sin media query ni JS. Mismo patrón
+            en StudiesPage y LoosePage. */}
+        <div className="border-t border-white/15 pt-4 mb-12 md:mb-16 lg:flex lg:gap-x-16">
+          <div className="u-headcol lg:self-start">
+            <p className="u-label text-white/40 text-[11px] mb-3">{t('work.kicker')}</p>
+            <h1 className="font-disp font-light uppercase tracking-[0.01em] text-brand-yellow leading-[0.86] text-[clamp(3rem,11vw,8rem)]">{t('work.title')}</h1>
+          </div>
+          <div className="mt-5 lg:mt-0 lg:flex-1 lg:self-end max-w-2xl space-y-3">
             {t('work.intro').split('\n\n').map((para, i) => (
               <p key={i} className="text-brand-cream/70 leading-relaxed text-[15px] md:text-base">{para}</p>
             ))}

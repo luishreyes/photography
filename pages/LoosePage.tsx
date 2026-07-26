@@ -9,10 +9,11 @@ export default function LoosePage() {
   return (
     <main className="min-h-screen bg-brand-dark pt-28 pb-16 px-6 md:px-16">
       <div className="max-w-7xl mx-auto">
-        <div className="border-t border-white/15 pt-4 mb-12 md:mb-16">
-          <p className="u-label text-white/40 text-[11px] mb-3">{t('loose.kicker')}</p>
-          <h1 className="font-disp font-light uppercase tracking-[0.01em] text-brand-yellow leading-[0.86] text-[clamp(3rem,11vw,8rem)]">{t('loose.title')}</h1>
-          <p className="mt-4 text-brand-cream/70 max-w-lg leading-relaxed">{t('loose.intro')}</p>
+        <div className="border-t border-white/15 pt-4 mb-12 md:mb-16 lg:flex lg:gap-x-16">
+          <div className="u-headcol lg:self-start">
+            <h1 className="font-disp font-light uppercase tracking-[0.01em] text-brand-yellow leading-[0.86] text-[clamp(3rem,11vw,8rem)]">{t('loose.title')}</h1>
+          </div>
+          <p className="mt-4 lg:mt-0 lg:flex-1 lg:self-end text-brand-cream/70 max-w-2xl leading-relaxed">{t('loose.intro')}</p>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-px bg-white/5">
