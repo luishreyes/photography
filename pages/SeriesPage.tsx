@@ -21,6 +21,7 @@ export default function SeriesPage() {
     <PhotoViewer
       backHref="/work"
       backLabel={t('series.back')}
+      kicker={s.eye ? s.eye[lang] : undefined}
       title={s.names ? s.names[lang] : s.title}
       description={s.description[lang]}
       quote={s.quote}

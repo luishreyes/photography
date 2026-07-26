@@ -12,9 +12,11 @@ export default function WorkPage() {
         <div className="border-t border-white/15 pt-4 mb-12 md:mb-16">
           <p className="u-label text-white/40 text-[11px] mb-3">{t('work.kicker')}</p>
           <h1 className="font-disp font-light uppercase tracking-[0.01em] text-brand-yellow leading-[0.86] text-[clamp(3rem,11vw,8rem)]">{t('work.title')}</h1>
-          <p className="mt-4 text-brand-cream/70 max-w-lg leading-relaxed">
-            {t('work.introShort')}
-          </p>
+          <div className="mt-5 max-w-xl space-y-3">
+            {t('work.intro').split('\n\n').map((para, i) => (
+              <p key={i} className="text-brand-cream/70 leading-relaxed text-[15px] md:text-base">{para}</p>
+            ))}
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-white/5">
@@ -37,6 +39,9 @@ export default function WorkPage() {
               <div className="absolute bottom-0 left-0 h-0.5 w-0 bg-brand-yellow transition-all duration-500 group-hover:w-full" />
               <div className="absolute bottom-0 left-0 right-0 p-6">
                 <p className="u-label text-white/55 text-[10px] mb-1">{s.year}</p>
+                {s.eye && (
+                  <p className="u-label text-brand-yellow/70 text-[10px] mb-1.5">{s.eye[lang]}</p>
+                )}
                 <h3 className="font-disp font-normal uppercase tracking-[0.02em] text-white text-2xl md:text-3xl leading-none group-hover:text-brand-yellow transition-colors duration-300">{s.names ? s.names[lang] : s.title}</h3>
                 <p className="text-white/0 group-hover:text-white text-sm mt-2 transition-all duration-400 translate-y-2 group-hover:translate-y-0 leading-snug">{s.description[lang]}</p>
               </div>

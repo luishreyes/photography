@@ -15,6 +15,7 @@ export interface ViewerPhoto {
 export interface PhotoViewerProps {
   backHref: string;
   backLabel: string;
+  kicker?: string;      // "el ojo que ..." encima del título (Works)
   title: string;
   description?: string;
   quote?: { text: string; author: string };
@@ -28,7 +29,7 @@ export interface PhotoViewerProps {
 // they scroll into view. Tapping a photo opens it full-screen at full size; a
 // tap anywhere (no close button) dismisses it, swipe/arrows navigate.
 export default function PhotoViewer({
-  backHref, backLabel, title, description, quote, metaSuffix, photos, resetKey,
+  backHref, backLabel, kicker, title, description, quote, metaSuffix, photos, resetKey,
 }: PhotoViewerProps) {
   const [open, setOpen] = useState<number | null>(null);
   const [dir, setDir] = useState(1); // 1 = next, -1 = prev
@@ -91,6 +92,9 @@ export default function PhotoViewer({
         >
           {backLabel}
         </Link>
+        {kicker && (
+          <p className="u-label text-brand-yellow/70 text-[10px] mb-2">{kicker}</p>
+        )}
         <h1 className="font-disp font-light uppercase tracking-[0.01em] leading-[0.86] text-brand-yellow text-[clamp(2.6rem,10vw,7rem)]">
           {title}
         </h1>
