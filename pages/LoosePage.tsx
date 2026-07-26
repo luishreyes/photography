@@ -3,6 +3,7 @@ import { looseYears } from '../data/catalog-data';
 import { useI18n } from '../context/i18n';
 import Footer from '../components/Footer';
 import SmartImg from '../components/SmartImg';
+import IndexColophon from '../components/IndexColophon';
 
 export default function LoosePage() {
   const { t, lang } = useI18n();
@@ -12,6 +13,7 @@ export default function LoosePage() {
         <div className="border-t border-white/15 pt-4 mb-12 md:mb-16 lg:flex lg:gap-x-16">
           <div className="u-headcol lg:self-start">
             <h1 className="font-disp font-light uppercase tracking-[0.01em] text-brand-yellow leading-[0.86] text-[clamp(3rem,11vw,8rem)]">{t('loose.title')}</h1>
+            <IndexColophon groups={looseYears} unit="colophon.volumes" />
           </div>
           <p className="mt-4 lg:mt-0 lg:flex-1 lg:self-end text-brand-cream/70 max-w-2xl leading-relaxed">{t('loose.intro')}</p>
         </div>

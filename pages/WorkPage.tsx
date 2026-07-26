@@ -3,6 +3,7 @@ import { series } from '../data/catalog-data';
 import { useI18n } from '../context/i18n';
 import Footer from '../components/Footer';
 import SmartImg from '../components/SmartImg';
+import IndexColophon from '../components/IndexColophon';
 
 export default function WorkPage() {
   const { t, lang } = useI18n();
@@ -22,6 +23,7 @@ export default function WorkPage() {
           <div className="u-headcol lg:self-start">
             <p className="u-label text-white/40 text-[11px] mb-3">{t('work.kicker')}</p>
             <h1 className="font-disp font-light uppercase tracking-[0.01em] text-brand-yellow leading-[0.86] text-[clamp(3rem,11vw,8rem)]">{t('work.title')}</h1>
+            <IndexColophon groups={series} unit="colophon.collections" />
           </div>
           <div className="mt-5 lg:mt-0 lg:flex-1 lg:self-end max-w-2xl space-y-3">
             {t('work.intro').split('\n\n').map((para, i) => (

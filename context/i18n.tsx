@@ -27,6 +27,14 @@ const ui = {
   'series.count': { en: 'photographs', es: 'fotografías' },
   'lightbox.close': { en: 'Close', es: 'Cerrar' },
 
+  // Colofón de las páginas índice. Los conteos salen de catalog.json y hoy
+  // ninguno puede ser 1 (la página menor tiene 5 grupos y 72 fotos), por eso
+  // solo hay forma plural.
+  'colophon.collections':  { en: 'collections', es: 'colecciones' },
+  'colophon.studies':      { en: 'studies', es: 'estudios' },
+  'colophon.volumes':      { en: 'volumes', es: 'tomos' },
+  'colophon.photographs':  { en: 'photographs', es: 'fotografías' },
+
   // Loose
   'loose.title':  { en: 'The Loose', es: 'Las Sueltas' },
   'loose.intro':  { en: "Photographs that don't belong to any series. Kept loose, ordered by year.", es: 'Fotografías que no pertenecen a ninguna serie. Sueltas, ordenadas por año.' },
