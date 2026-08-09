@@ -68,7 +68,25 @@ El hero **es** el landing (sin splash aparte). Entrada con framer-motion: flash 
 - **`./build.sh`** (raíz del maestro → `_scripts/catalog/build_all.py`): valida el catálogo, materializa los `site_webp`/`site_thumb` faltantes desde `files.portfolio` (1600px q80; thumb cuadrado 640 q78) en `public/photography/...`, genera los `cover.webp` faltantes, y **emite `data/catalog-data.ts`** (exporta `series`, `studies`, `looseYears`). Correr después de cualquier cambio al catálogo.
 - Las imágenes se derivan de la copia **`Portfolio/`** del archivo (aspecto nativo, sin marco). NUNCA `Web/` (cuadrada + marco = redes).
 - `data/catalog-data.ts` es **auto-generado — NO editar a mano**. Para cambiar un statement, título, orden o cover: editar `catalog.json` y correr `./build.sh`.
-- Loose: `/loose` = `LoosePage` (grid de bins por rango de años, más reciente primero); `/loose/:year` = `LooseYearPage` (galería vía `PhotoViewer`). Los bins salen de las colecciones `loose-*` del catálogo, orden `date_captured` desc.
+- Loose: `/loose` = `LoosePage` (grid de **tomos** de 24, más reciente primero); `/loose/:year` = `LooseYearPage` (galería vía `PhotoViewer`). Los tomos salen de las colecciones `loose-tomo-N` del catálogo, orden `date_captured` desc. La ruta usa el sufijo del slug (`tomo-5`), no un año.
+
+### Campos derivados que emite `site_data`
+
+Dos campos del TS **no existen en `catalog.json`** o no se ven ahí igual. Si los tocas, se tocan en `catalog_lib.site_data`, nunca en el `.ts`:
+
+- **`span: { from, to }`** por colección y por tomo. Lo calcula `_span()` con el **año mínimo y máximo de `date_captured`**, es decir el EXIF que guardó la Fase A. Nadie lo escribe a mano. Colecciones sin fotos (ground, chicago) no traen span y por eso no estiran el rango.
+- **`eye: { en, es }`** pasa tal cual desde `collections[].eye`. Solo lo tienen las 6 de Work.
+
+### Colofón de las páginas índice
+
+`components/IndexColophon.tsx` es **un solo componente** para Obra, Estudios y Sueltas. Recibe `groups` (el array de series/studies/looseYears) y `unit` (una `UIKey`, tipada, así que un sustantivo inválido no compila). Suma las fotos, une los `span` y pinta `N unidades · M fotografías · AAAA–AAAA`. **Los números no se escriben en ninguna parte**: al ingresar una foto y correr `./build.sh` suben solos. Las etiquetas son solo plurales a propósito, porque la página más pequeña tiene 5 grupos y 72 fotos y ningún conteo puede llegar a 1.
+
+### Encabezado de las páginas índice
+
+Las tres comparten una regla en `index.css`:
+
+- **`.u-headcol`** fija el ancho de la columna del título en `min(40vw, 470px)` desde `lg`. Escala con el mismo vw que la fuente (`clamp(3rem,11vw,8rem)`) porque el título más largo del sitio, "Los Estudios", mide **3.48 veces su font-size**. Si algún día entra una colección con nombre más largo, ese 3.48 es el número a recalcular.
+- La alineación del texto la resuelve el flex, sin media query ni JS: **`lg:self-start` en el título y `lg:self-end` en el texto**. El contenedor mide `max(alturas)`, así que un intro corto se posa en la base del título y uno alto se alinea arriba. Estudios cruza ese umbral solo entre 1440 y 1024.
 
 ## Idiomas (i18n) — EN / ES
 
