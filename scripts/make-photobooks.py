@@ -118,17 +118,44 @@ def page_title(kicker, display_title, statement, count_line, quote=None):
 PLATE_LONG_CM = 20.6
 SQ_FACTOR = 0.82
 
+# Geometría de página. La cuadrada de 25 cm es el formato histórico y se conserva
+# para las colecciones mixtas. Cuando un libro es abrumadoramente vertical (caso
+# Chicago, 62 de 62 en vertical porque el estudio se impuso esa restricción), la
+# página cuadrada desperdicia los flancos y achica la placa: ahí se usa retrato.
+# Decisión de Luis, 2026-08-27: "creelo portrait, como todas las fotos son así".
+PAGE_SQUARE = (25.0, 25.0)
+PAGE_PORTRAIT = (22.0, 29.7)
+PORTRAIT_SHARE = 0.8   # fracción de verticales que dispara el formato retrato
+PAGE_W, PAGE_H = PAGE_SQUARE
 
-def plate_css(w, h):
+
+def page_geometry(sizes):
+    """Devuelve (ancho, alto, lado_largo_de_placa) según la orientación dominante."""
+    if not sizes:
+        return (*PAGE_SQUARE, PLATE_LONG_CM)
+    vert = sum(1 for w, h in sizes if h > w) / len(sizes)
+    if vert >= PORTRAIT_SHARE:
+        return (*PAGE_PORTRAIT, 23.7)
+    return (*PAGE_SQUARE, PLATE_LONG_CM)
+
+
+def plate_css(w, h, plate_long=None):
+    plate_long = PLATE_LONG_CM if plate_long is None else plate_long
     aspect = max(w, h) / min(w, h)
     f = 1.0 if aspect >= 1.3 else SQ_FACTOR + (1.0 - SQ_FACTOR) * (aspect - 1.0) / 0.3
-    edge = PLATE_LONG_CM * f
-    return f'width:{edge:.2f}cm;height:auto;' if w > h else f'height:{edge:.2f}cm;width:auto;'
+    edge = plate_long * f
+    if w > h:
+        # una horizontal dentro de una página retrato se limita por el ancho útil
+        edge = min(edge, PAGE_W - 2.4)
+        return f'width:{edge:.2f}cm;height:auto;'
+    # una vertical no puede pasarse del alto útil (placa + pie + márgenes)
+    edge = min(edge, PAGE_H - 4.4)
+    return f'height:{edge:.2f}cm;width:auto;'
 
 
-def page_photo(num, title, date_str, uri, size):
+def page_photo(num, title, date_str, uri, size, plate_long=None):
     w, h = size
-    dim = plate_css(w, h)
+    dim = plate_css(w, h, plate_long)
     return f"""<section class="pg" style="background:{BONE};color:{INK};display:flex;align-items:center;justify-content:center;">
 <div style="display:flex;flex-direction:column;">
 <img src="{uri}" alt="{esc(title)}" style="display:block;{dim}object-fit:contain;">
@@ -219,6 +246,10 @@ def build_html(book, lang, fonts):
         ymd = ph['date'].replace('-', '')  # 'YYYY-MM-DD' -> 'YYYYMMDD'
         resolved.append((ph['title'], ymd, uri, size))
 
+    global PAGE_W, PAGE_H
+    page_w, page_h, plate_long = page_geometry([sz for _, _, _, sz in resolved])
+    PAGE_W, PAGE_H = page_w, page_h
+
     dates = [d for _, d, _, _ in resolved]
     span = year_span(dates) or book['yearLabel']
     n = len(resolved)
@@ -226,14 +257,14 @@ def build_html(book, lang, fonts):
     subline = f"{tr['sub']} · {span}"
     kicker = LABELS[book['kind']][lang]
     count_line = f"{n} {tr['plates']} · {span}"
-    footer_left = f"{display_title} — Luis H. Reyes · 25 × 25 cm"
+    footer_left = f"{display_title} — Luis H. Reyes · {page_w:g} × {page_h:g} cm"
 
     pages = [page_cover(display_title, subline, tr['photog']),
              page_title(kicker, display_title, book['statement'][lang], count_line, book.get('quote'))]
     rows = []
     for i, (title, ymd, uri, size) in enumerate(resolved, 1):
         ds = fmt_date(ymd)
-        pages.append(page_photo(i, title, ds, uri, size))
+        pages.append(page_photo(i, title, ds, uri, size, plate_long))
         rows.append((i, title, ds))
     chunks = [rows[i:i + ROWS_PER_PAGE] for i in range(0, len(rows), ROWS_PER_PAGE)] or [[]]
     for ci, chunk in enumerate(chunks):
@@ -243,11 +274,11 @@ def build_html(book, lang, fonts):
     pages.append(page_rights(lang, datetime.date.today().year))
 
     html = f"""<!DOCTYPE html><html><head><meta charset="utf-8"><style>
-@page{{size:25cm 25cm;margin:0;}}
+@page{{size:{page_w}cm {page_h}cm;margin:0;}}
 *{{margin:0;padding:0;box-sizing:border-box;}}
 {fonts}
 html,body{{background:{DARK};}}
-.pg{{width:25cm;height:25cm;overflow:hidden;position:relative;break-after:page;page-break-after:always;}}
+.pg{{width:{page_w}cm;height:{page_h}cm;overflow:hidden;position:relative;break-after:page;page-break-after:always;}}
 .pg:last-child{{break-after:auto;page-break-after:auto;}}
 </style></head><body>{''.join(pages)}</body></html>"""
     return html, missing, n
