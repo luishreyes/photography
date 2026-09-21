@@ -29,6 +29,32 @@ autoalojado vía `@fontsource`. Lo que cambia respecto a `main`:
 - Home: Obra y último tomo en **cuadrados iguales** en todos los dispositivos (72vw en celular, 64vh desde md), recorte centrado. Estudio destacado fijo: Chicago con Filo, contenida sobre tinta, título debajo.
 - Tres trampas resueltas que conviene no reabrir: `HorizontalTrack` empuja con `behavior: 'instant'` porque el `scroll-behavior: smooth` del html pisaba los deltas laterales; los slides llevan **ancho explícito** (en un flex el ancho derivado de `aspect-ratio` no llega al padre y las leyendas se solapan) y en la tira móvil el envoltorio es `flex` (un `<a>` inline ignora ancho y alto); y `Clip` observa desde un envoltorio sin recorte, porque Chrome calcula la intersección sobre el área ya recortada por `clip-path` y un elemento recortado al 100 % nunca "entra en pantalla".
 
+### Navegación: seis reglas que costaron caro (2026-09-21)
+
+Se revisó la navegación entera y salieron seis fallas. Ninguna se debe reabrir:
+
+1. **Nada de `scroll-behavior: smooth` en el `html`.** El salto al tope de cada
+   cambio de ruta salía animado, la animación moría al cambiar el DOM y la
+   página nueva aterrizaba a media altura, en blanco. `ScrollToTop` usa
+   `behavior: 'instant'` por si alguien lo vuelve a poner.
+2. **Hay ruta comodín.** `pages/NotFoundPage.tsx` con `<Route path="*">`. Antes,
+   una dirección inventada dejaba la pantalla vacía con la barra sola.
+3. **`/study/:slug` redirige a `/studies/:slug`.** `published.site_url` usó el
+   singular en 181 fotos y esas direcciones ya salieron en Instagram. La tabla
+   de `ingest_collection.py` ya escribe el plural, pero la redirección se queda:
+   las leyendas viejas no se pueden corregir.
+4. **Ningún texto visible en inglés fijo.** Los "no encontrado" de las tres
+   galerías van por `t()`, como todo lo demás.
+5. **La pista horizontal usa `overflow-clip`, no `overflow-hidden`.** Con
+   `hidden` el contenedor sigue siendo desplazable por programa y el navegador
+   lo desplazaba al enfocar una foto fuera de vista: la pista quedaba descuadrada
+   hasta recargar. Además el foco de teclado se traduce a scroll de página
+   (un píxel de scroll = un píxel de pista) y solo con `:focus-visible`, para que
+   un clic del ratón no dé el salto.
+6. **El visor es un `dialog` con foco atrapado.** Sin eso el tabulador se iba a
+   la página de atrás y la desplazaba por debajo del visor. Al cerrar, el foco
+   vuelve al botón de origen.
+
 Las secciones "Colores del sistema", "Tipografía" y "Animación del hero" de más abajo describen la dirección oscura anterior; valen para la rama `oscuro`, no para `main`.
 
 ## Proyecto
