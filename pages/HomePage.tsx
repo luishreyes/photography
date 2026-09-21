@@ -1,117 +1,85 @@
-import { useRef } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, useScroll, useTransform, type Variants } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { series, studies, looseYears } from '../data/catalog-data';
-import { useI18n, type Lang } from '../context/i18n';
+import { useI18n } from '../context/i18n';
 import Footer from '../components/Footer';
 import SmartImg from '../components/SmartImg';
+import IndexRows from '../components/IndexRows';
+import { Reveal, Clip, EASE } from '../components/Reveal';
+import { colophon } from '../components/IndexColophon';
+import { layoutCells } from '../components/PhotoViewer';
 
 const HERO_IMAGE = '/hero.webp';
 
-const EASE = [0.16, 0.9, 0.24, 1] as const;
-
-// Line-mask rise: wrap in an overflow-hidden span, animate the inner up from below.
-const rise: Variants = {
-  hidden: { y: '116%' },
-  show: (i: number) => ({ y: 0, transition: { duration: 0.95, ease: EASE, delay: 0.15 + i * 0.1 } }),
-};
-const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 18 },
-  show: (i: number) => ({ opacity: 1, y: 0, transition: { duration: 0.8, ease: EASE, delay: 0.15 + i * 0.1 } }),
-};
-
 export default function HomePage() {
   const { t, lang } = useI18n();
-  const heroRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
 
-  // Apple-style scroll-out: photo drifts + scales, the text block rises out and fades.
-  const photoY = useTransform(scrollYProgress, [0, 1], ['0%', '12%']);
-  const photoScale = useTransform(scrollYProgress, [0, 1], [1, 1.09]);
-  const inY = useTransform(scrollYProgress, [0, 1], ['0px', '-150px']);
-  const inOpacity = useTransform(scrollYProgress, [0, 0.78], [1, 0]);
-  const scrollOpacity = useTransform(scrollYProgress, [0, 0.35], [1, 0]);
+  const looseTotal = looseYears.reduce((n, g) => n + g.photos.length, 0);
+  const workTotal = series.reduce((n, s) => n + s.photos.length, 0);
+  const studiesTotal = studies.reduce((n, s) => n + s.photos.length, 0);
+  const { range } = colophon([...series, ...studies, ...looseYears]);
+
+  const doors = [
+    { to: '/work',    name: t('work.title'),    meta: `${series.length} ${t('unit.collections')} · ${workTotal}` },
+    { to: '/studies', name: t('studies.title'), meta: `${studies.length} ${t('unit.studies')} · ${studiesTotal}` },
+    { to: '/loose',   name: t('loose.title'),   meta: `${looseYears.length} ${t('unit.volumes')} · ${looseTotal}` },
+  ];
 
   return (
-    <main className="bg-brand-dark">
-      {/* ── Hero: wordmark alive ── */}
-      <section ref={heroRef} className="relative h-screen overflow-hidden bg-black">
-        {/* Parallax B/N photo */}
-        <motion.div className="absolute inset-0" style={{ y: photoY, scale: photoScale }}>
-          <motion.img
-            src={HERO_IMAGE}
-            alt="Luis H. Reyes"
-            initial={{ opacity: 0, scale: 1.12 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ opacity: { duration: 1, ease: 'easeOut' }, scale: { duration: 5, ease: [0.3, 0, 0.2, 1] } }}
-            className="w-full h-full object-cover grayscale contrast-[1.14] brightness-[0.82]"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black" />
-          <div className="absolute inset-0 bg-[radial-gradient(120%_92%_at_50%_40%,rgba(5,5,5,0.12)_38%,rgba(5,5,5,0.66)_100%)]" />
-        </motion.div>
-
-        {/* Camera-flash entrance */}
-        <motion.div
-          className="absolute inset-0 bg-white pointer-events-none z-20"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: [0, 0.8, 0] }}
-          transition={{ duration: 0.5, ease: 'easeOut', times: [0, 0.12, 1] }}
-        />
-
-        {/* Hero text — settles in, scrolls out */}
-        <motion.div
-          style={{ y: inY, opacity: inOpacity }}
-          className="relative z-10 h-full flex flex-col justify-end pb-[clamp(38px,7vh,88px)] px-6 md:px-16 max-w-7xl mx-auto"
-        >
-          <div className="overflow-hidden mb-3 md:mb-5">
-            <motion.p variants={fadeUp} custom={0} initial="hidden" animate="show"
-              className="u-label text-brand-yellow text-[9.5px] md:text-[11px] tracking-[0.28em] md:tracking-[0.34em]">
-              {t('hero.kicker')}
-            </motion.p>
-          </div>
-
-          <h1 className="font-disp font-light uppercase text-brand-yellow leading-[0.82] tracking-[0.005em] text-[clamp(3.4rem,19vw,15rem)]">
-            <span className="block overflow-hidden">
-              <motion.span variants={rise} custom={0} initial="hidden" animate="show" className="block pt-[0.1em] -mt-[0.1em]">
-                Luis H.
-              </motion.span>
-            </span>
-            <span className="block overflow-hidden">
-              <motion.span variants={rise} custom={1} initial="hidden" animate="show" className="block pt-[0.1em] -mt-[0.1em]">
-                Reyes
-              </motion.span>
-            </span>
-          </h1>
-
-          <div className="overflow-hidden mt-5 md:mt-8">
-            <motion.p variants={fadeUp} custom={3} initial="hidden" animate="show"
-              className="text-brand-cream/90 text-base md:text-xl max-w-[40ch] leading-snug">
-              {t('hero.title')} <span className="text-brand-yellow">{t('hero.sub')}</span>
-            </motion.p>
-          </div>
-
-          {/* Index indicator */}
-          <motion.div style={{ opacity: scrollOpacity }}
-            className="hidden md:flex absolute right-16 bottom-[clamp(38px,7vh,88px)] flex-col items-end gap-2">
-            <span className="u-label text-white/40 text-[11px]">{lang === 'es' ? 'Índice' : 'Index'}</span>
-            <span className="w-px h-12 bg-gradient-to-b from-brand-yellow to-transparent" />
-          </motion.div>
-        </motion.div>
-      </section>
-
-      {/* ── Index: three monumental doors (click to enter) ── */}
-      <section className="py-[clamp(64px,9vh,140px)] px-6 md:px-16">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex items-baseline justify-between gap-5 border-t border-white/15 pt-4 mb-[clamp(20px,4vw,44px)]">
-            <h2 className="font-disp font-normal uppercase tracking-[0.02em] text-white text-[clamp(1.5rem,3.4vw,2.4rem)]">
-              {lang === 'es' ? 'Índice' : 'Index'}
-            </h2>
-            <span className="u-label text-white/40 text-[10px] md:text-[11px] text-right">
-              {lang === 'es' ? 'Toca para ver cada categoría' : 'Click to open each category'}
-            </span>
-          </div>
-          <IndexDoors />
+    <main className="bg-paper">
+      {/* ── Hero · Índice (magazine) ── */}
+      <header className="min-h-screen grid lg:grid-cols-2 gap-[var(--pad)] pad-x pt-[16vh] pb-[var(--pad)]">
+        <div>
+          <Reveal><p className="eyebrow">{t('hero.kicker')}</p></Reveal>
+          <Reveal delay={1}>
+            <h1 className="display text-[clamp(54px,9vw,150px)] mt-6">
+              Luis <span className="serif-italic">H.</span><br />Reyes
+            </h1>
+          </Reveal>
+          <Reveal delay={2}>
+            <p className="mt-[4vh] max-w-[40ch] text-ink-soft text-[clamp(15px,1.2vw,18px)] leading-[1.6]">
+              {t('hero.title')} <span className="font-serif italic">{t('hero.sub')}</span>
+            </p>
+          </Reveal>
         </div>
+        <div className="self-end">
+          <Clip delay={2}>
+            <Link to="/work" className="block w-full aspect-[16/10] overflow-hidden bg-paper-2 mb-7">
+              <motion.div initial={{ scale: 1.08 }} animate={{ scale: 1 }} transition={{ duration: 5, ease: [0.3, 0, 0.2, 1] }} className="w-full h-full">
+                <SmartImg src={HERO_IMAGE} alt="Luis H. Reyes" className="w-full h-full object-cover grayscale contrast-[1.08]" />
+              </motion.div>
+            </Link>
+          </Clip>
+          <Reveal delay={3}>
+            <IndexRows items={doors} />
+          </Reveal>
+        </div>
+        <div className="lg:col-span-2 flex justify-between gap-4 pt-[18px] mt-[2vh] border-t border-hair">
+          <span className="eyebrow">{t('home.selection')} {range}</span>
+          <span className="eyebrow hidden sm:inline">{t('contact.based').replace(/^(Based in|En) /, '')}</span>
+          <span className="eyebrow">{t('home.scroll')}</span>
+        </div>
+      </header>
+
+      {/* ── Selección: una foto por colección, maqueta editorial ── */}
+      <Selection lang={lang} />
+
+      {/* ── Colección destacada: zoom fijo a pantalla completa ── */}
+      <Feature lang={lang} />
+
+      {/* ── Último tomo: galería horizontal que avanza con el scroll ── */}
+      <Horizontal lang={lang} />
+
+      {/* ── Una frase, en serif ── */}
+      <section className="section-pad">
+        <Reveal>
+          <p className="font-serif text-[clamp(30px,4vw,58px)] leading-[1.05] max-w-[22ch]">
+            {lang === 'es'
+              ? 'Ver con mi propio ojo un mundo que ya tiene demasiados ojos encima.'
+              : 'Seeing with my own eye a world that already has too many eyes on it.'}
+          </p>
+        </Reveal>
       </section>
 
       <Footer />
@@ -119,74 +87,169 @@ export default function HomePage() {
   );
 }
 
-// ── Three-door index (Work / Studies / Loose) — whole row links to the category ──
-interface Door {
-  n: string;
-  title: string;
-  to: string;
-  cover?: string;
-  meta: { en: string; es: string };
-}
-
-function IndexDoors() {
-  const { t, lang } = useI18n();
-  const looseTotal = looseYears.reduce((n, g) => n + g.photos.length, 0);
-  const workTotal = series.reduce((n, s) => n + s.photos.length, 0);
-  const doors: Door[] = [
-    {
-      n: '01', title: t('work.title'), to: '/work', cover: series[0]?.coverPhoto,
-      meta: { en: `${series.length} collections · ${workTotal} images`, es: `${series.length} colecciones · ${workTotal} imágenes` },
-    },
-    {
-      n: '02', title: t('studies.title'), to: '/studies', cover: studies.find(s => s.slug === 'containment')?.coverPhoto ?? studies.find(s => s.coverPhoto)?.coverPhoto,
-      meta: { en: `${studies.length} series · open`, es: `${studies.length} series · abiertas` },
-    },
-    {
-      n: '03', title: t('loose.title'), to: '/loose', cover: looseYears.find(g => g.year === '2017-2021')?.coverPhoto ?? looseYears[0]?.coverPhoto,
-      meta: { en: `${looseTotal} images · 2012–2026`, es: `${looseTotal} imágenes · 2012–2026` },
-    },
-  ];
-
+// ── Selección ─────────────────────────────────────────────────────────────
+function Selection({ lang }: { lang: 'en' | 'es' }) {
+  const { t } = useI18n();
+  // La portada de cada colección de Obra, con su título y el nombre de la colección.
+  const picks = series.map(s => {
+    const cover = s.photos.find(p => p.src === s.coverPhoto) ?? s.photos[0];
+    return { photo: cover, slug: s.slug, name: s.names ? s.names[lang] : s.title };
+  });
+  const cells = layoutCells(picks.map(p => p.photo));
+  const bySlug = new Map(picks.map(p => [p.photo.id, p]));
+  const SPAN: Record<number, string> = { 4: 'md:col-span-4', 5: 'md:col-span-5', 6: 'md:col-span-6', 7: 'md:col-span-7', 8: 'md:col-span-8' };
   return (
-    <div className="border-t border-white/15">
-      {doors.map((d, i) => (
-        <motion.div
-          key={d.title}
-          initial={{ opacity: 0, y: 22 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.7, ease: EASE, delay: i * 0.06 }}
-        >
-          <DoorRow door={d} lang={lang} />
-        </motion.div>
-      ))}
-    </div>
+    <section id="seleccion" className="section-pad">
+      <Reveal className="grid grid-cols-[auto_1fr_auto] gap-6 items-end">
+        <h2 className="font-serif font-medium text-[clamp(34px,5vw,72px)] leading-[0.95]">{t('work.title')}</h2>
+        <div className="rule mb-3.5" />
+        <span className="font-mono text-[12px] text-muted whitespace-nowrap">001 — {String(series.length).padStart(3, '0')}</span>
+      </Reveal>
+      <div className="grid grid-cols-12 gap-x-[clamp(16px,2vw,34px)] gap-y-[clamp(28px,4vh,56px)] mt-[clamp(40px,7vh,90px)]">
+        {cells.map(c => {
+          const pick = bySlug.get(c.photo.id)!;
+          return (
+            <Parallax key={c.photo.id} amount={c.parallax}
+              className={`col-span-12 ${SPAN[c.span]} ${c.offset ? 'md:mt-[clamp(40px,9vh,120px)]' : ''}`}>
+              <Reveal delay={c.offset ? 1 : 0}>
+                <Link to={`/work/${pick.slug}`} className="block group">
+                  <span className="block w-full overflow-hidden bg-paper-2" style={{ aspectRatio: String(c.photo.ar ?? 1.5) }}>
+                    <SmartImg src={c.photo.src} alt={c.photo.title} loading="lazy"
+                      className="w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.02]" />
+                  </span>
+                  <span className="flex justify-between gap-4 mt-3 font-mono text-[11px] tracking-[0.06em] text-muted">
+                    <span className="group-hover:text-ink transition-colors">{pick.name} / {String(c.index + 1).padStart(2, '0')}</span>
+                    <span className="truncate">{c.photo.title}</span>
+                  </span>
+                </Link>
+              </Reveal>
+            </Parallax>
+          );
+        })}
+      </div>
+      <Reveal className="mt-[clamp(40px,7vh,90px)]">
+        <Link to="/work" className="inline-flex items-baseline gap-3 font-serif text-[clamp(20px,2vw,28px)] hover:italic transition-all">
+          {t('home.enter')} <span className="font-mono text-[11px] tracking-[0.2em] uppercase text-muted">{t('work.title')} →</span>
+        </Link>
+      </Reveal>
+    </section>
   );
 }
 
-function DoorRow({ door: d, lang }: { door: Door; lang: Lang }) {
+function Parallax({ amount, className, children }: { amount: number; className?: string; children: ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
+  const y = useTransform(scrollYProgress, [0, 1], [amount / 2, -amount / 2]);
+  return <div ref={ref} className={className}><motion.div style={{ y }}>{children}</motion.div></div>;
+}
+
+// ── Destacada ──────────────────────────────────────────────────────────────
+// Un estudio abierto, a pantalla completa y fijo mientras se recorre el tramo:
+// la imagen crece, el título flota y se apaga al salir.
+function Feature({ lang }: { lang: 'en' | 'es' }) {
+  const { t } = useI18n();
+  const study = studies.find(s => s.photos.length >= 12) ?? studies[0];
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: p } = useScroll({ target: ref, offset: ['start start', 'end end'] });
+  const scale = useTransform(p, [0, 1], [1.12, 1.34]);
+  const layerY = useTransform(p, [0, 1], [0, -30]);
+  const copyY = useTransform(p, [0, 1], [60, -60]);
+  const copyOpacity = useTransform(p, [0, 0.5, 1], [0.1, 1, 0.1]);
+  if (!study) return null;
+  const cover = study.photos.find(p => p.src === study.coverPhoto) ?? study.photos[0];
   return (
-    <Link
-      to={d.to}
-      className="group relative grid grid-cols-[auto_1fr_auto] items-center gap-4 md:gap-8 py-[clamp(20px,3.4vw,44px)] border-b border-white/15 overflow-hidden"
-    >
-      {/* hover cover reveal */}
-      {d.cover && (
-        <div
-          className="pointer-events-none absolute inset-y-0 right-0 w-[min(46%,520px)] opacity-0 group-hover:opacity-50 transition-opacity duration-500"
-          style={{ WebkitMaskImage: 'linear-gradient(90deg,transparent,#000 55%)', maskImage: 'linear-gradient(90deg,transparent,#000 55%)' }}
-        >
-          <SmartImg src={d.cover} alt="" loading="lazy" className="w-full h-full object-cover grayscale contrast-[1.1] brightness-[0.7]" />
-        </div>
-      )}
-      <span className="relative z-10 u-label text-white/35 text-[12px] self-start pt-[0.4em]">{d.n}</span>
-      <span className="relative z-10 justify-self-start font-disp font-light uppercase tracking-[0.01em] leading-[0.86] text-[clamp(2.7rem,10vw,7.4rem)] text-white group-hover:text-brand-yellow transition-colors duration-300">
-        {d.title}
-      </span>
-      <div className="relative z-10 flex items-center gap-4 justify-self-end">
-        <span className="u-label text-white/45 text-[11px] whitespace-nowrap hidden sm:inline">{d.meta[lang]}</span>
-        <span aria-hidden className="text-brand-yellow text-lg leading-none transition-transform duration-300 group-hover:translate-x-1.5">→</span>
+    <section ref={ref} className="relative h-[160vh] md:h-[230vh] bg-ink">
+      <div className="sticky top-0 h-screen overflow-hidden grid place-items-center">
+        <motion.div style={{ scale, y: layerY }} className="absolute inset-[-8%]">
+          <SmartImg src={cover.src} alt={study.title} className="w-full h-full object-cover" />
+        </motion.div>
+        <div className="absolute inset-0 z-[2] bg-[radial-gradient(120%_90%_at_50%_50%,transparent_40%,rgba(0,0,0,.55))]" />
+        <motion.div style={{ y: copyY, opacity: copyOpacity }} className="relative z-[3] text-center text-white blend-diff max-w-[26ch] px-6">
+          <p className="eyebrow !text-white/70">{t('home.feature')}</p>
+          <h3 className="font-serif font-medium text-[clamp(40px,8vw,120px)] leading-[0.95] mt-4">
+            {study.names ? study.names[lang] : study.title}
+          </h3>
+          <p className="font-mono text-[12px] tracking-[0.2em] uppercase mt-[18px]">
+            {study.photos.length} {t('unit.images')} · {study.status === 'ongoing' ? t('studies.ongoing') : study.year}
+          </p>
+        </motion.div>
+        <Link to={`/studies/${study.slug}`} className="absolute inset-0 z-[4]" aria-label={study.title} />
       </div>
+    </section>
+  );
+}
+
+// ── Horizontal ────────────────────────────────────────────────────────────
+// El último tomo de Sueltas. En pantallas grandes la pista se desplaza con el
+// scroll vertical, con una barra de progreso; en el celular es una tira que se
+// desliza con el dedo.
+function Horizontal({ lang }: { lang: 'en' | 'es' }) {
+  const { t } = useI18n();
+  const tomo = looseYears[0];
+  const ref = useRef<HTMLDivElement>(null);
+  const track = useRef<HTMLDivElement>(null);
+  const [dist, setDist] = useState(0);
+  const { scrollYProgress: p } = useScroll({ target: ref, offset: ['start start', 'end end'] });
+  const x = useTransform(p, [0, 1], [0, -dist]);
+  const bar = useTransform(p, [0, 1], ['0%', '100%']);
+
+  useEffect(() => {
+    const measure = () => {
+      if (!track.current) return;
+      setDist(Math.max(0, track.current.scrollWidth - window.innerWidth));
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    if (track.current) ro.observe(track.current);
+    window.addEventListener('resize', measure);
+    return () => { ro.disconnect(); window.removeEventListener('resize', measure); };
+  }, [tomo]);
+
+  if (!tomo) return null;
+  const photos = tomo.photos.slice(0, 8);
+  const label = tomo.label ? tomo.label[lang] : tomo.year;
+
+  const intro = (
+    <div className="flex-none flex flex-col justify-center md:pl-[var(--pad)] w-[78vw] md:w-[36vw]">
+      <p className="eyebrow">{t('home.latest')} · {photos.length} / {tomo.photos.length}</p>
+      <h2 className="font-serif font-medium text-[clamp(34px,5vw,72px)] leading-[0.95] mt-4">{label}</h2>
+      <Link to={`/loose/${tomo.year}`} className="mt-6 font-mono text-[11px] tracking-[0.2em] uppercase text-muted hover:text-ink transition-colors">
+        {t('home.seeAll')} →
+      </Link>
+    </div>
+  );
+
+  const slides = photos.map((ph, i) => (
+    <Link key={ph.id} to={`/loose/${tomo.year}`} className="flex-none relative h-[52vh] md:h-[64vh] group">
+      <span className="block h-full overflow-hidden bg-paper-2" style={{ aspectRatio: String(ph.ar ?? 1.5) }}>
+        <SmartImg src={ph.src} alt={ph.title} loading="lazy"
+          className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.02]" />
+      </span>
+      <span className="block mt-3 font-mono text-[11px] tracking-[0.06em] text-muted">{ph.title} / {String(i + 1).padStart(2, '0')}</span>
     </Link>
+  ));
+
+  return (
+    <>
+      {/* Pantallas grandes: pista fija */}
+      <section ref={ref} className="hidden md:block relative h-[320vh]">
+        <div className="sticky top-0 h-screen overflow-hidden flex items-center">
+          <motion.div ref={track} style={{ x }} className="flex gap-[clamp(20px,3vw,56px)] pr-[var(--pad)] will-change-transform">
+            {intro}
+            {slides}
+          </motion.div>
+          <div className="absolute left-[var(--pad)] right-[var(--pad)] bottom-[42px] h-px bg-[var(--hair)]">
+            <motion.div style={{ width: bar }} className="h-px bg-ink" />
+          </div>
+        </div>
+      </section>
+      {/* Celular: tira deslizable */}
+      <section className="md:hidden py-[clamp(60px,9vh,120px)]">
+        <div className="flex gap-6 overflow-x-auto no-scrollbar px-[var(--pad)] snap-x snap-mandatory">
+          <div className="snap-start">{intro}</div>
+          {slides.map((s, i) => <div key={i} className="snap-start">{s}</div>)}
+        </div>
+      </section>
+    </>
   );
 }

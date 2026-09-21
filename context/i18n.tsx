@@ -56,6 +56,29 @@ const ui = {
   'contact.based':  { en: 'Based in Bogotá, Colombia', es: 'En Bogotá, Colombia' },
   'contact.back':   { en: '← Home', es: '← Inicio' },
 
+  // Home (museo)
+  'home.index':     { en: 'Index', es: 'Índice' },
+  'home.selection': { en: 'Selection', es: 'Selección' },
+  'home.enter':     { en: 'Enter', es: 'Entrar' },
+  'home.scroll':    { en: '↓ Scroll', es: '↓ Desliza' },
+  'home.open':      { en: 'open', es: 'abiertos' },
+  'home.latest':    { en: 'Latest volume', es: 'Último tomo' },
+  'home.seeAll':    { en: 'See the whole volume', es: 'Ver el tomo completo' },
+  'home.feature':   { en: 'Featured collection', es: 'Colección destacada' },
+
+  // Contacto / pie (museo)
+  'contact.email':  { en: 'Email', es: 'Correo' },
+  'contact.social': { en: 'Social', es: 'Redes' },
+  'contact.studio': { en: 'Studio', es: 'Estudio' },
+  'footer.rights':  { en: 'All images © Luis H. Reyes', es: 'Todas las imágenes © Luis H. Reyes' },
+  'footer.line':    { en: 'Black & white photography · Bogotá', es: 'Fotografía en blanco y negro · Bogotá' },
+
+  // Unidades
+  'unit.images':      { en: 'images', es: 'imágenes' },
+  'unit.collections': { en: 'collections', es: 'colecciones' },
+  'unit.studies':     { en: 'studies', es: 'estudios' },
+  'unit.volumes':     { en: 'volumes', es: 'tomos' },
+
   // Placeholders
   'soon': { en: 'coming soon', es: 'próximamente' },
 } as const;

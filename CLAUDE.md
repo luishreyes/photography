@@ -2,6 +2,31 @@
 
 > **Leer este archivo al inicio de cada sesión de trabajo.**
 
+## Rama `museo` (2026-09-21) — versión clara, look del template de Claude Design
+
+Esta rama reemplaza la dirección "amarillo sobre negro" por el sistema **museo**: papel
+blanco cálido (`--paper`), tinta negra, un solo acento (el amarillo ácido del manual,
+`--accent`, cambiable en una línea de `index.css`), serif editorial **Playfair Display**
+para titulares, **IBM Plex Mono** para cejas y metadatos, Archivo para el cuerpo. Todo
+autoalojado vía `@fontsource`. Lo que cambia respecto a `main`:
+
+- **Navbar** en `mix-blend-mode: difference` (lee sobre papel y sobre fotos), enlaces mono
+  con subrayado que crece; menú móvil sobre papel con titulares serif.
+- **Home** = hero "Índice" (nombre en serif + foto 16:10 + tres filas Obra/Estudios/Sueltas),
+  luego una selección editorial (portada de cada colección), un estudio destacado con zoom
+  fijo, el último tomo en pista horizontal y el pie de contacto en tinta.
+- **Índices** (Obra, Estudios, Sueltas): filas número / nombre / año con vista previa
+  pegajosa de la portada al pasar el cursor (`components/IndexRows.tsx`).
+- **Galerías** (`PhotoViewer`): **pista horizontal fija**. El scroll vertical, o el lateral
+  del trackpad, mueve las fotos de lado (64vh de alto, barra de progreso); el tramo mide
+  `100vh + recorrido` para que un píxel de scroll sea un píxel de pista. Toque = pantalla
+  completa sobre tinta. En celular es una tira deslizable con snap.
+- `catalog-data.ts` trae **`ar`** (aspect_ratio del master) en las tres clases de foto; lo
+  emite `catalog_lib.site_data` para reservar el ancho de cada celda antes de cargar.
+- El pie es el único bloque oscuro y cierra todas las páginas (`components/Footer.tsx`).
+
+Lo que sigue describe la dirección de `main` (oscura) y sigue vigente allí.
+
 ## Proyecto
 
 Portafolio de fotografía artística en blanco y negro, hospedado en GitHub Pages.

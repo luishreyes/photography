@@ -9,10 +9,10 @@ export default function LooseYearPage() {
   const y = looseYears.find(y => y.year === year);
 
   if (!y) return (
-    <main className="min-h-screen bg-brand-dark flex items-center justify-center">
+    <main className="min-h-screen bg-paper flex items-center justify-center">
       <div className="text-center">
-        <p className="text-white/40 mb-4">Year not found</p>
-        <Link to="/loose" className="text-brand-yellow underline">{t('loose.back')}</Link>
+        <p className="eyebrow mb-4">Year not found</p>
+        <Link to="/loose" className="font-serif italic text-xl hover:text-accent transition-colors">{t('loose.back')}</Link>
       </div>
     </main>
   );

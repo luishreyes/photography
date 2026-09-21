@@ -1,4 +1,7 @@
-import '@fontsource-variable/big-shoulders-display';
+import '@fontsource-variable/playfair-display';
+import '@fontsource-variable/playfair-display/wght-italic.css';
+import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/ibm-plex-mono/500.css';
 import '@fontsource-variable/archivo';
 import './index.css';
 import React from 'react';

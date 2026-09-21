@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useI18n, type UIKey } from '../context/i18n';
+import { EASE } from './Reveal';
 
 const links: { key: UIKey; href: string }[] = [
   { key: 'nav.work',    href: '/work' },
@@ -13,120 +14,81 @@ const links: { key: UIKey; href: string }[] = [
 function LangToggle({ className = '' }: { className?: string }) {
   const { lang, setLang } = useI18n();
   return (
-    <div className={`flex items-center gap-1.5 text-xs font-semibold tracking-[0.16em] ${className}`}>
-      <button
-        onClick={() => setLang('es')}
-        className={lang === 'es' ? 'text-brand-yellow' : 'text-white/40 hover:text-white transition-colors'}
-        aria-label="Español"
-      >
-        ES
-      </button>
-      <span className="text-white/20">/</span>
-      <button
-        onClick={() => setLang('en')}
-        className={lang === 'en' ? 'text-brand-yellow' : 'text-white/40 hover:text-white transition-colors'}
-        aria-label="English"
-      >
-        EN
-      </button>
+    <div className={`flex items-center gap-1.5 font-mono text-[11px] tracking-[0.18em] ${className}`}>
+      <button onClick={() => setLang('es')} aria-label="Español"
+        className={lang === 'es' ? 'opacity-100' : 'opacity-45 hover:opacity-100 transition-opacity'}>ES</button>
+      <span className="opacity-30">/</span>
+      <button onClick={() => setLang('en')} aria-label="English"
+        className={lang === 'en' ? 'opacity-100' : 'opacity-45 hover:opacity-100 transition-opacity'}>EN</button>
     </div>
   );
 }
 
-function Wordmark() {
-  const { lang } = useI18n();
-  return (
-    <Link to="/" className="flex items-center gap-2.5 group" aria-label="Luis H. Reyes">
-      <span className="font-disp font-normal uppercase tracking-[0.06em] text-xl leading-none text-white group-hover:text-brand-yellow transition-colors">
-        Luis H. Reyes
-      </span>
-      <span className="u-label text-[8.5px] text-brand-cream/70 hidden sm:inline">
-        {lang === 'es' ? 'Fotografía' : 'Photography'}
-      </span>
-    </Link>
-  );
-}
-
+// Barra fija en `mix-blend-mode: difference`: blanca sobre el papel se ve
+// negra, y sobre una foto en B&N invierte lo que tenga debajo, así que
+// siempre se lee. Los enlaces en mono con subrayado que crece.
 export default function Navbar() {
   const { t } = useI18n();
-  const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
   useEffect(() => setMenuOpen(false), [location]);
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [menuOpen]);
 
   return (
     <>
-      <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled ? 'bg-brand-dark/90 backdrop-blur-md border-b border-white/5' : 'bg-transparent'
-        }`}
-      >
-        <nav className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <Wordmark />
+      <header className="fixed inset-x-0 top-0 z-[80] blend-diff text-white pointer-events-none">
+        <nav className="flex items-center justify-between py-5 pad-x pointer-events-auto">
+          <Link to="/" className="font-serif font-semibold text-[19px] tracking-[-0.01em] leading-none" aria-label="Luis H. Reyes">
+            Luis H. Reyes
+          </Link>
 
-          {/* Desktop */}
-          <div className="hidden lg:flex items-center gap-8">
-            <ul className="flex items-center gap-8">
-              {links.map(({ key, href }) => (
-                <li key={href}>
-                  <Link
-                    to={href}
-                    className={`u-label text-[11px] transition-colors ${
-                      location.pathname.startsWith(href)
-                        ? 'text-brand-yellow'
-                        : 'text-white/55 hover:text-white'
-                    }`}
-                  >
-                    {t(key)}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-            <span className="w-px h-4 bg-white/15" />
+          <div className="hidden md:flex items-center gap-[clamp(14px,2.4vw,40px)]">
+            {links.map(({ key, href }) => (
+              <Link key={href} to={href}
+                className={`u-grow font-mono text-[11px] tracking-[0.18em] uppercase py-1 ${
+                  location.pathname.startsWith(href) ? 'opacity-100' : 'opacity-80 hover:opacity-100'
+                }`}>
+                {t(key)}
+              </Link>
+            ))}
+            <span className="w-px h-3.5 bg-white/40" />
             <LangToggle />
           </div>
 
-          {/* Mobile: toggle de idioma + hamburguesa */}
-          <div className="lg:hidden flex items-center gap-4">
+          <div className="md:hidden flex items-center gap-5">
             <LangToggle />
-            <button
-              className="flex flex-col gap-1.5 p-1"
-              onClick={() => setMenuOpen(o => !o)}
-              aria-label="Menu"
-            >
-              <span className={`block w-5 h-px bg-white transition-all ${menuOpen ? 'rotate-45 translate-y-2' : ''}`} />
-              <span className={`block w-5 h-px bg-white transition-all ${menuOpen ? 'opacity-0' : ''}`} />
-              <span className={`block w-5 h-px bg-white transition-all ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+            <button className="flex flex-col gap-1.5 p-1" onClick={() => setMenuOpen(o => !o)} aria-label="Menu">
+              <span className={`block w-5 h-px bg-white transition-all duration-300 ${menuOpen ? 'rotate-45 translate-y-[3.5px]' : ''}`} />
+              <span className={`block w-5 h-px bg-white transition-all duration-300 ${menuOpen ? '-rotate-45 -translate-y-[3.5px]' : ''}`} />
             </button>
           </div>
         </nav>
       </header>
 
-      {/* Mobile menu */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className="fixed inset-0 z-40 bg-brand-dark flex flex-col items-center justify-center gap-10"
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            transition={{ duration: 0.35, ease: EASE }}
+            className="fixed inset-0 z-[70] bg-paper flex flex-col justify-end pad-x pb-[14vh]"
           >
-            {links.map(({ key, href }) => (
-              <Link
-                key={href}
-                to={href}
-                className="font-disp font-light uppercase tracking-wide text-5xl text-white hover:text-brand-yellow transition-colors"
-              >
-                {t(key)}
-              </Link>
-            ))}
+            <ul className="border-t border-hair">
+              {links.map(({ key, href }, i) => (
+                <motion.li key={href}
+                  initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, ease: EASE, delay: 0.08 + i * 0.06 }}
+                  className="border-b border-hair">
+                  <Link to={href} className="flex items-baseline justify-between py-5">
+                    <span className="display text-[clamp(38px,11vw,64px)]">{t(key)}</span>
+                    <span className="eyebrow">0{i + 1}</span>
+                  </Link>
+                </motion.li>
+              ))}
+            </ul>
           </motion.div>
         )}
       </AnimatePresence>

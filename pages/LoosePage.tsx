@@ -1,52 +1,35 @@
-import { Link } from 'react-router-dom';
 import { looseYears } from '../data/catalog-data';
 import { useI18n } from '../context/i18n';
 import Footer from '../components/Footer';
-import SmartImg from '../components/SmartImg';
 import IndexColophon from '../components/IndexColophon';
+import IndexRows from '../components/IndexRows';
+import { Reveal } from '../components/Reveal';
 
 export default function LoosePage() {
   const { t, lang } = useI18n();
+  const items = looseYears.map(y => ({
+    to: `/loose/${y.year}`,
+    name: y.label ? y.label[lang].split(' · ')[0] : y.year,
+    meta: `${y.photos.length} ${t('unit.images')} · ${y.label ? y.label[lang].split(' · ')[1] ?? '' : ''}`.replace(/ · $/, ''),
+    cover: y.coverPhoto,
+  }));
   return (
-    <main className="min-h-screen bg-brand-dark pt-28 pb-16 px-6 md:px-16">
-      <div className="max-w-7xl mx-auto">
-        <div className="border-t border-white/15 pt-4 mb-12 md:mb-16 lg:flex lg:gap-x-16">
-          <div className="u-headcol lg:self-start">
-            <h1 className="font-disp font-light uppercase tracking-[0.01em] text-brand-yellow leading-[0.86] text-[clamp(3rem,11vw,8rem)]">{t('loose.title')}</h1>
-            <IndexColophon groups={looseYears} unit="colophon.volumes" />
-          </div>
-          <p className="mt-4 lg:mt-0 lg:flex-1 lg:self-end text-brand-cream/70 max-w-2xl leading-relaxed">{t('loose.intro')}</p>
+    <main className="min-h-screen bg-paper">
+      <div className="pad-x pt-[16vh] pb-[clamp(60px,9vh,120px)]">
+        <div className="lg:grid lg:grid-cols-2 lg:gap-[var(--pad)] lg:items-end">
+          <Reveal>
+            <h1 className="display text-[clamp(54px,9vw,150px)]">{t('loose.title')}</h1>
+            <IndexColophon groups={looseYears} unit="unit.volumes" />
+          </Reveal>
+          <Reveal delay={2} className="mt-8 lg:mt-0 max-w-[54ch]">
+            <p className="text-ink-soft text-[clamp(15px,1.15vw,18px)] leading-[1.7]">{t('loose.intro')}</p>
+          </Reveal>
         </div>
-
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-px bg-white/5">
-          {looseYears.map((y, i) => (
-            <Link
-              key={y.year}
-              to={`/loose/${y.year}`}
-              className="group relative block aspect-[4/5] overflow-hidden bg-zinc-900"
-            >
-              <SmartImg
-                src={y.coverPhoto}
-                alt={y.year}
-                loading="lazy"
-                className="absolute inset-0 w-full h-full object-cover grayscale transition-all duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/5 to-transparent" />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-all duration-300" />
-              <div className="absolute bottom-0 left-0 h-0.5 w-0 bg-brand-yellow transition-all duration-500 group-hover:w-full" />
-              <div className="absolute bottom-0 left-0 right-0 p-5">
-                <p className="u-label text-white/55 text-[10px] mb-1">
-                  {y.photos.length} {y.photos.length === 1 ? (lang === 'es' ? 'imagen' : 'image') : (lang === 'es' ? 'imágenes' : 'images')}
-                </p>
-                <h3 className="font-disp font-normal uppercase tracking-[0.02em] text-white text-4xl md:text-5xl leading-none group-hover:text-brand-yellow transition-colors duration-300 tabular-nums">
-                  {y.label ? y.label[lang] : y.year}
-                </h3>
-              </div>
-            </Link>
-          ))}
-        </div>
+        <Reveal delay={1} className="mt-[clamp(48px,8vh,110px)]">
+          <IndexRows items={items} preview />
+        </Reveal>
       </div>
-      <div className="mt-24"><Footer /></div>
+      <Footer />
     </main>
   );
 }

@@ -1,35 +1,47 @@
 import { useI18n } from '../context/i18n';
 import LogoMark from './LogoMark';
-import SocialLinks from './SocialLinks';
+import { EMAIL, SOCIAL } from './SocialLinks';
+import { Reveal } from './Reveal';
 
+// Bloque de contacto en tinta: es el único tramo oscuro del sitio y cierra
+// todas las páginas. El enlace grande se vuelve itálico y toma el acento.
 export default function Footer() {
-  const { lang } = useI18n();
+  const { t } = useI18n();
+  const year = new Date().getFullYear();
   return (
-    <footer className="border-t border-white/15 px-6 md:px-16 pt-[clamp(60px,9vh,120px)]">
-      <div className="max-w-7xl mx-auto">
-        {/* Logo lockup — símbolo visor-H + nombre + etiqueta (Manual §02) */}
-        <div className="mb-[clamp(32px,6vh,64px)]">
-          <LogoMark className="w-[clamp(56px,7vw,84px)] h-auto mb-5" />
-          <div className="font-disp font-light uppercase tracking-[0.02em] leading-[0.86] text-brand-yellow text-[clamp(2.6rem,9vw,6rem)]">
-            Luis H. Reyes
-          </div>
-          <div className="u-label text-brand-cream/85 text-[11px] md:text-[13px] mt-2.5">
-            {lang === 'es' ? 'Fotografía' : 'Photography'}
-          </div>
+    <footer id="contacto" className="bg-ink text-white section-pad">
+      <Reveal><p className="eyebrow !text-white/50 mb-[30px]">{t('nav.contact')}</p></Reveal>
+      <Reveal delay={1}>
+        <h2 className="display text-[clamp(40px,9vw,150px)]">
+          {t('contact.kicker')}<br />
+          <a href={`mailto:${EMAIL}`} className="transition-all duration-[400ms] ease-out hover:text-accent hover:italic">
+            {t('contact.cta')} →
+          </a>
+        </h2>
+      </Reveal>
+      <Reveal delay={2} className="flex flex-wrap justify-between gap-6 mt-[clamp(50px,9vh,120px)] pt-[26px] border-t border-white/15">
+        <div>
+          <div className="eyebrow !text-white/45 !tracking-[0.2em] mb-2.5">{t('contact.email')}</div>
+          <a href={`mailto:${EMAIL}`} className="block text-[15px] leading-[1.9] hover:text-accent transition-colors">{EMAIL}</a>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-8 md:items-end">
-          <p className="font-medium text-brand-cream text-[clamp(1.2rem,2.6vw,1.9rem)] leading-[1.28] max-w-[22ch]">
-            {lang === 'es'
-              ? 'Ver con mi propio ojo un mundo que ya tiene demasiados ojos encima.'
-              : 'Seeing with my own eye a world that already has too many eyes on it.'}
-          </p>
-          <SocialLinks size={24} className="md:justify-end" />
+        <div>
+          <div className="eyebrow !text-white/45 !tracking-[0.2em] mb-2.5">{t('contact.social')}</div>
+          {SOCIAL.map(s => (
+            <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer"
+              className="block text-[15px] leading-[1.9] hover:text-accent transition-colors">{s.label}</a>
+          ))}
         </div>
-        <div className="u-label text-white/25 text-[10px] text-center mt-[clamp(40px,7vh,90px)] py-10 border-t border-white/5">
-          {lang === 'es'
-            ? 'Luis H. Reyes · Fotografía en blanco y negro · Bogotá'
-            : 'Luis H. Reyes · Black & white photography · Bogotá'}
+        <div>
+          <div className="eyebrow !text-white/45 !tracking-[0.2em] mb-2.5">{t('contact.studio')}</div>
+          <span className="block text-[15px] leading-[1.9]">Bogotá, Colombia</span>
         </div>
+        <div className="hidden lg:block self-end">
+          <LogoMark className="w-14 h-auto opacity-90" />
+        </div>
+      </Reveal>
+      <div className="flex flex-wrap justify-between gap-4 mt-[60px] font-mono text-[11px] tracking-[0.06em] text-white/40">
+        <span>© {year} Luis H. Reyes · {t('footer.line')}</span>
+        <span>{t('footer.rights')}</span>
       </div>
     </footer>
   );

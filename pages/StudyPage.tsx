@@ -9,24 +9,24 @@ export default function StudyPage() {
   const study = studies.find(s => s.slug === slug);
 
   if (!study) return (
-    <main className="min-h-screen bg-brand-dark flex items-center justify-center">
+    <main className="min-h-screen bg-paper flex items-center justify-center">
       <div className="text-center">
-        <p className="text-white/40 mb-4">Study not found</p>
-        <Link to="/studies" className="text-brand-yellow underline">{t('study.back')}</Link>
+        <p className="eyebrow mb-4">Study not found</p>
+        <Link to="/studies" className="font-serif italic text-xl hover:text-accent transition-colors">{t('study.back')}</Link>
       </div>
     </main>
   );
 
   // Ongoing study with no photos yet: show the statement only.
   if (study.photos.length === 0) return (
-    <main className="min-h-screen bg-brand-dark pt-28 pb-16 px-6 md:px-16">
-      <div className="max-w-2xl mx-auto">
-        <Link to="/studies" className="u-label text-white/40 text-[11px] hover:text-brand-yellow transition-colors mb-6 inline-block">
+    <main className="min-h-screen bg-paper pad-x pt-[16vh] pb-24">
+      <div className="max-w-[54ch]">
+        <Link to="/studies" className="eyebrow hover:text-ink transition-colors mb-8 inline-block">
           {t('study.back')}
         </Link>
-        <h1 className="font-disp font-light uppercase tracking-[0.01em] leading-[0.86] text-brand-yellow text-[clamp(3rem,12vw,8rem)]">{(study.names ? study.names[lang] : study.title)}</h1>
-        <p className="mt-4 text-brand-cream/70 text-base leading-relaxed">{study.description[lang]}</p>
-        <p className="mt-10 u-label text-brand-yellow/70 text-[11px]">{t('studies.empty')}</p>
+        <h1 className="display text-[clamp(38px,6.5vw,96px)]">{(study.names ? study.names[lang] : study.title)}</h1>
+        <p className="mt-6 text-ink-soft text-[clamp(15px,1.15vw,18px)] leading-[1.7]">{study.description[lang]}</p>
+        <p className="mt-10 eyebrow">{t('studies.empty')}</p>
       </div>
     </main>
   );

@@ -1,9 +1,10 @@
 // Redes sociales + correo, como iconos monoline (currentColor, sin librería).
 // URLs reales de Luis. Reutilizado en Footer y ContactPage.
 
-const IG = 'https://www.instagram.com/luish_photography/';
-const LI = 'https://www.linkedin.com/in/luishreyes/';
-const MAIL = 'mailto:luishreyesbarrios@gmail.com';
+export const IG = 'https://www.instagram.com/luish_photography/';
+export const LI = 'https://www.linkedin.com/in/luishreyes/';
+export const EMAIL = 'luishreyesbarrios@gmail.com';
+const MAIL = `mailto:${EMAIL}`;
 
 const S = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.6, strokeLinecap: 'round', strokeLinejoin: 'round' } as const;
 
@@ -38,6 +39,11 @@ function MailIcon({ s }: { s: number }) {
   );
 }
 
+export const SOCIAL = [
+  { label: 'Instagram', href: IG },
+  { label: 'LinkedIn', href: LI },
+];
+
 const LINKS = [
   { label: 'Instagram', href: IG, Icon: InstagramIcon },
   { label: 'LinkedIn', href: LI, Icon: LinkedInIcon },
@@ -50,14 +56,9 @@ export default function SocialLinks({ size = 22, gap = 'gap-6', className = '' }
       {LINKS.map(({ label, href, Icon }) => {
         const external = !href.startsWith('mailto:');
         return (
-          <a
-            key={label}
-            href={href}
-            aria-label={label}
-            title={label}
+          <a key={label} href={href} aria-label={label} title={label}
             {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-            className="text-white/50 hover:text-brand-yellow transition-colors duration-300"
-          >
+            className="opacity-60 hover:opacity-100 transition-opacity duration-300">
             <Icon s={size} />
           </a>
         );
