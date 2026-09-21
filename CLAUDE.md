@@ -2,9 +2,9 @@
 
 > **Leer este archivo al inicio de cada sesión de trabajo.**
 
-## Rama `museo` (2026-09-21) — versión clara, look del template de Claude Design
+## Dirección vigente: **museo** (desde el 2026-09-21)
 
-Esta rama reemplaza la dirección "amarillo sobre negro" por el sistema **museo**: papel
+El 2026-09-21 Luis reemplazó la dirección "amarillo sobre negro" por el sistema **museo**, con el look del template de Claude Design. La versión oscura anterior quedó guardada en la etiqueta `oscuro-2026-09-21` y la rama `oscuro` (commit `cf9de27`): `git checkout oscuro` la devuelve entera. Museo es: papel
 blanco cálido (`--paper`), tinta negra, un solo acento (el amarillo ácido del manual,
 `--accent`, cambiable en una línea de `index.css`), serif editorial **Playfair Display**
 para titulares, **IBM Plex Mono** para cejas y metadatos, Archivo para el cuerpo. Todo
@@ -25,7 +25,11 @@ autoalojado vía `@fontsource`. Lo que cambia respecto a `main`:
   emite `catalog_lib.site_data` para reservar el ancho de cada celda antes de cargar.
 - El pie es el único bloque oscuro y cierra todas las páginas (`components/Footer.tsx`).
 
-Lo que sigue describe la dirección de `main` (oscura) y sigue vigente allí.
+- **Webp a 2 048 px, calidad 82** (antes 1 600 / 80), para pantallas 2x; el borde largo de la copia Portfolio es 2 048, así que es el tope. Decisión de Luis: el sitio sirve solo webp, nunca el master, y esas copias no son para imprimir.
+- Home: Obra y último tomo en **cuadrados iguales** en todos los dispositivos (72vw en celular, 64vh desde md), recorte centrado. Estudio destacado fijo: Chicago con Filo, contenida sobre tinta, título debajo.
+- Tres trampas resueltas que conviene no reabrir: `HorizontalTrack` empuja con `behavior: 'instant'` porque el `scroll-behavior: smooth` del html pisaba los deltas laterales; los slides llevan **ancho explícito** (en un flex el ancho derivado de `aspect-ratio` no llega al padre y las leyendas se solapan) y en la tira móvil el envoltorio es `flex` (un `<a>` inline ignora ancho y alto); y `Clip` observa desde un envoltorio sin recorte, porque Chrome calcula la intersección sobre el área ya recortada por `clip-path` y un elemento recortado al 100 % nunca "entra en pantalla".
+
+Las secciones "Colores del sistema", "Tipografía" y "Animación del hero" de más abajo describen la dirección oscura anterior; valen para la rama `oscuro`, no para `main`.
 
 ## Proyecto
 
@@ -90,7 +94,7 @@ El hero **es** el landing (sin splash aparte). Entrada con framer-motion: flash 
 
 **Toda** la data del portafolio (colecciones, fotos, orden, statements, quotes, covers, títulos ES/EN) vive en **`catalog.json`** en la raíz del archivo maestro (`~/Desktop/Portafolio Fotográfico/catalog.json`, NO versionado en git). El sitio, los fotolibros y la rutina de Instagram leen de ahí. Las transformaciones puras están en `_scripts/catalog/catalog_lib.py`.
 
-- **`./build.sh`** (raíz del maestro → `_scripts/catalog/build_all.py`): valida el catálogo, materializa los `site_webp`/`site_thumb` faltantes desde `files.portfolio` (1600px q80; thumb cuadrado 640 q78) en `public/photography/...`, genera los `cover.webp` faltantes, y **emite `data/catalog-data.ts`** (exporta `series`, `studies`, `looseYears`). Correr después de cualquier cambio al catálogo.
+- **`./build.sh`** (raíz del maestro → `_scripts/catalog/build_all.py`): valida el catálogo, materializa los `site_webp`/`site_thumb` faltantes desde `files.portfolio` (2048px q82; thumb cuadrado 640 q78) en `public/photography/...`, genera los `cover.webp` faltantes, y **emite `data/catalog-data.ts`** (exporta `series`, `studies`, `looseYears`). Correr después de cualquier cambio al catálogo.
 - Las imágenes se derivan de la copia **`Portfolio/`** del archivo (aspecto nativo, sin marco). NUNCA `Web/` (cuadrada + marco = redes).
 - `data/catalog-data.ts` es **auto-generado — NO editar a mano**. Para cambiar un statement, título, orden o cover: editar `catalog.json` y correr `./build.sh`.
 - Loose: `/loose` = `LoosePage` (grid de **tomos** de 24, más reciente primero); `/loose/:year` = `LooseYearPage` (galería vía `PhotoViewer`). Los tomos salen de las colecciones `loose-tomo-N` del catálogo, orden `date_captured` desc. La ruta usa el sufijo del slug (`tomo-5`), no un año.

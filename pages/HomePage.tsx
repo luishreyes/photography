@@ -1,4 +1,4 @@
-import { useRef, type CSSProperties } from 'react';
+import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { series, studies, looseYears } from '../data/catalog-data';
@@ -106,18 +106,18 @@ function Selection({ lang }: { lang: 'en' | 'es' }) {
       </Link>
     </div>
   );
-  // En escritorio (lg+) todas del mismo tamaño: cuadrado de 64vh con recorte
-  // centrado del webp grande (1600 px, no el thumb de 640, para pantallas 2x).
-  // En iPhone e iPad cada foto conserva su proporción (decisión de Luis).
+  // Todas del mismo tamaño en todos los dispositivos: cuadrado de 72vw en el
+  // celular y 64vh de md en adelante, recorte centrado del webp grande. El
+  // ancho va explícito (no derivado del alto por aspect-ratio): dentro de un
+  // flex el ancho derivado no llegaba al padre y las leyendas se solapaban.
   const slides = picks.map((pick, i) => (
-    <Link key={pick.photo.id} to={`/work/${pick.slug}`} className="flex-none relative h-[52vh] md:h-[64vh] group">
-      <span className="block h-full aspect-[var(--ar)] lg:aspect-square overflow-hidden bg-paper-2"
-        style={{ '--ar': String(pick.photo.ar ?? 1.5) } as CSSProperties}>
+    <Link key={pick.photo.id} to={`/work/${pick.slug}`} className="flex-none relative w-[72vw] h-[72vw] md:w-[64vh] md:h-[64vh] group">
+      <span className="block w-full h-full overflow-hidden bg-paper-2">
         <SmartImg src={pick.photo.src} alt={pick.photo.title} loading="lazy"
           className="h-full w-full object-cover object-center transition-transform duration-[1200ms] ease-out group-hover:scale-[1.02]" />
       </span>
       <span className="flex justify-between gap-4 mt-3 font-mono text-[11px] tracking-[0.06em] text-muted">
-        <span className="group-hover:text-ink transition-colors">{pick.name} / {String(i + 1).padStart(2, '0')}</span>
+        <span className="group-hover:text-ink transition-colors whitespace-nowrap">{pick.name} / {String(i + 1).padStart(2, '0')}</span>
         <span className="truncate">{pick.photo.title}</span>
       </span>
     </Link>
@@ -180,13 +180,17 @@ function Horizontal({ lang }: { lang: 'en' | 'es' }) {
       </Link>
     </div>
   );
+  // Mismos cuadrados que Obra.
   const slides = photos.map((ph, i) => (
-    <Link key={ph.id} to={`/loose/${tomo.year}`} className="flex-none relative h-[52vh] md:h-[64vh] group">
-      <span className="block h-full overflow-hidden bg-paper-2" style={{ aspectRatio: String(ph.ar ?? 1.5) }}>
+    <Link key={ph.id} to={`/loose/${tomo.year}`} className="flex-none relative w-[72vw] h-[72vw] md:w-[64vh] md:h-[64vh] group">
+      <span className="block w-full h-full overflow-hidden bg-paper-2">
         <SmartImg src={ph.src} alt={ph.title} loading="lazy"
-          className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.02]" />
+          className="h-full w-full object-cover object-center transition-transform duration-[1200ms] ease-out group-hover:scale-[1.02]" />
       </span>
-      <span className="block mt-3 font-mono text-[11px] tracking-[0.06em] text-muted">{ph.title} / {String(i + 1).padStart(2, '0')}</span>
+      <span className="flex justify-between gap-4 mt-3 font-mono text-[11px] tracking-[0.06em] text-muted">
+        <span className="truncate">{ph.title}</span>
+        <span>{String(i + 1).padStart(2, '0')}</span>
+      </span>
     </Link>
   ));
   return <HorizontalTrack intro={intro} slides={slides} />;

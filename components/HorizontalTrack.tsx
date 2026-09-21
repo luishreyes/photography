@@ -61,7 +61,7 @@ export default function HorizontalTrack({ intro, slides, id, className = '' }: {
       <section className={`md:hidden py-[clamp(60px,9vh,120px)] ${className}`}>
         <div className="pad-x">{intro}</div>
         <div className="flex gap-5 overflow-x-auto no-scrollbar px-[var(--pad)] mt-10 snap-x snap-mandatory">
-          {slides.map((s, i) => <div key={i} className="snap-start">{s}</div>)}
+          {slides.map((s, i) => <div key={i} className="snap-start flex-none flex">{s}</div>)}
         </div>
       </section>
     </>

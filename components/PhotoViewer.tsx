@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback, type TouchEvent } from 'react';
+import { useState, useEffect, useRef, useCallback, type TouchEvent, type CSSProperties } from 'react';
 import { Link } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import HorizontalTrack from './HorizontalTrack';
@@ -124,8 +124,9 @@ export default function PhotoViewer({
 
   const slides = photos.map((ph, i) => (
     <button key={ph.id} type="button" onClick={() => setOpen(i)} aria-label={ph.title}
-      className="flex-none relative h-[52vh] md:h-[64vh] text-left group">
-      <span className="block h-full overflow-hidden bg-paper-2" style={{ aspectRatio: String(ratio(ph)) }}>
+      style={{ '--ar': String(ratio(ph)) } as CSSProperties}
+      className="flex-none relative w-[80vw] h-[calc(80vw/var(--ar))] md:h-[64vh] md:w-[calc(64vh*var(--ar))] text-left group">
+      <span className="block w-full h-full overflow-hidden bg-paper-2">
         <SmartImg src={ph.src} alt={ph.title} loading="lazy" draggable={false}
           className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.02]" />
       </span>
