@@ -28,6 +28,26 @@ export default function HorizontalTrack({ intro, slides, id, className = '' }: {
     return () => { ro.disconnect(); window.removeEventListener('resize', measure); };
   }, [slides.length]);
 
+  // Tabular hasta una foto que aún no está a la vista: el navegador no puede
+  // traerla solo (la pista se mueve con el scroll de la página, no con el
+  // scroll del contenedor), así que lo hacemos nosotros. Solo con foco de
+  // teclado: un clic del ratón también enfoca, y ahí un salto sería molesto.
+  useEffect(() => {
+    const el = stage.current;
+    if (!el) return;
+    const onFocusIn = (e: FocusEvent) => {
+      const target = e.target as HTMLElement | null;
+      if (!target || !track.current) return;
+      if (typeof target.matches === 'function' && !target.matches(':focus-visible')) return;
+      const pad = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--pad')) || 24;
+      const offset = target.getBoundingClientRect().left - track.current.getBoundingClientRect().left;
+      const top = el.offsetTop + Math.max(0, Math.min(dist, offset - pad));
+      window.scrollTo({ top, behavior: 'instant' });
+    };
+    el.addEventListener('focusin', onFocusIn);
+    return () => el.removeEventListener('focusin', onFocusIn);
+  }, [dist]);
+
   useEffect(() => {
     const el = stage.current;
     if (!el) return;
@@ -36,8 +56,8 @@ export default function HorizontalTrack({ intro, slides, id, className = '' }: {
       const r = el.getBoundingClientRect();
       if (r.top > 0 || r.bottom < window.innerHeight) return; // sólo mientras está fija
       e.preventDefault();
-      // `instant`, no `auto`: el html tiene scroll-behavior smooth y con `auto`
-      // cada delta del trackpad reiniciaba la animación anterior.
+      // `instant` explícito: con scroll-behavior smooth en el html cada delta
+      // del trackpad reiniciaba la animación anterior y la pista se atascaba.
       window.scrollBy({ top: e.deltaX, behavior: 'instant' });
     };
     el.addEventListener('wheel', onWheel, { passive: false });
@@ -47,7 +67,7 @@ export default function HorizontalTrack({ intro, slides, id, className = '' }: {
   return (
     <>
       <section id={id} ref={stage} className={`hidden md:block relative ${className}`} style={{ height: `calc(100vh + ${dist}px)` }}>
-        <div className="sticky top-0 h-screen overflow-hidden flex items-center">
+        <div className="sticky top-0 h-screen overflow-clip flex items-center">
           <motion.div ref={track} style={{ x }} className="flex items-center gap-[clamp(20px,3vw,56px)] pr-[var(--pad)] will-change-transform">
             {intro}
             {slides}

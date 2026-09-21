@@ -11,7 +11,7 @@ export default function SeriesPage() {
   if (!s) return (
     <main className="min-h-screen bg-paper flex items-center justify-center">
       <div className="text-center">
-        <p className="eyebrow mb-4">Series not found</p>
+        <p className="eyebrow mb-4">{t('nf.series')}</p>
         <Link to="/work" className="font-serif italic text-xl hover:text-accent transition-colors">{t('series.back')}</Link>
       </div>
     </main>

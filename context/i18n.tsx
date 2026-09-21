@@ -79,6 +79,14 @@ const ui = {
   'unit.studies':     { en: 'studies', es: 'estudios' },
   'unit.volumes':     { en: 'volumes', es: 'tomos' },
 
+  // Rutas que no existen
+  'nf.title':   { en: 'Page not found', es: 'Página no encontrada' },
+  'nf.intro':   { en: "That address doesn't lead anywhere. These do.", es: 'Esa dirección no lleva a ninguna parte. Estas sí.' },
+  'nf.series':  { en: 'That collection is not here', es: 'Esa colección no está aquí' },
+  'nf.study':   { en: 'That study is not here', es: 'Ese estudio no está aquí' },
+  'nf.volume':  { en: 'That volume is not here', es: 'Ese tomo no está aquí' },
+  'nf.home':    { en: 'Home', es: 'Inicio' },
+
   // Placeholders
   'soon': { en: 'coming soon', es: 'próximamente' },
 } as const;

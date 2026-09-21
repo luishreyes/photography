@@ -11,7 +11,7 @@ export default function LooseYearPage() {
   if (!y) return (
     <main className="min-h-screen bg-paper flex items-center justify-center">
       <div className="text-center">
-        <p className="eyebrow mb-4">Year not found</p>
+        <p className="eyebrow mb-4">{t('nf.volume')}</p>
         <Link to="/loose" className="font-serif italic text-xl hover:text-accent transition-colors">{t('loose.back')}</Link>
       </div>
     </main>

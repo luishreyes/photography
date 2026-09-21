@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation, useParams } from 'react-router-dom';
 import { I18nProvider } from './context/i18n';
 import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
@@ -10,14 +10,26 @@ import StudyPage from './pages/StudyPage';
 import LoosePage from './pages/LoosePage';
 import LooseYearPage from './pages/LooseYearPage';
 import ContactPage from './pages/ContactPage';
+import NotFoundPage from './pages/NotFoundPage';
 
 // Always start a freshly navigated page at the top — React Router otherwise
 // keeps the previous scroll position, which left long pages (mobile gallery)
-// mid-page on entry.
+// mid-page on entry. `instant` es explícito: si alguien vuelve a poner
+// scroll-behavior smooth en el html, este salto no debe animarse.
 function ScrollToTop() {
   const { pathname } = useLocation();
-  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, [pathname]);
   return null;
+}
+
+// `published.site_url` del catálogo usó /study/<slug> (singular) durante 181
+// fotos, y esas direcciones ya salieron en leyendas de Instagram. La ruta real
+// es /studies/<slug>, así que las viejas se redirigen en vez de morir.
+function LegacyStudy() {
+  const { slug } = useParams<{ slug: string }>();
+  return <Navigate to={`/studies/${slug ?? ''}`} replace />;
 }
 
 export default function App() {
@@ -35,6 +47,9 @@ export default function App() {
           <Route path="/loose" element={<LoosePage />} />
           <Route path="/loose/:year" element={<LooseYearPage />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/study/:slug" element={<LegacyStudy />} />
+          <Route path="/study" element={<Navigate to="/studies" replace />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
     </I18nProvider>

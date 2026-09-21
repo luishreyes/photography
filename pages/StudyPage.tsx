@@ -11,7 +11,7 @@ export default function StudyPage() {
   if (!study) return (
     <main className="min-h-screen bg-paper flex items-center justify-center">
       <div className="text-center">
-        <p className="eyebrow mb-4">Study not found</p>
+        <p className="eyebrow mb-4">{t('nf.study')}</p>
         <Link to="/studies" className="font-serif italic text-xl hover:text-accent transition-colors">{t('study.back')}</Link>
       </div>
     </main>

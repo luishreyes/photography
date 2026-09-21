@@ -22,8 +22,12 @@
 }
 
 @layer base {
+  /* Sin scroll-behavior: smooth. Lo traía el template para su navegación por
+     anclas, pero aquí es dañino: el salto al tope de cada cambio de ruta salía
+     animado, la animación se cancelaba al cambiar el DOM y la página nueva
+     aterrizaba a media altura, en blanco (2026-09-21). También pisaba los
+     deltas laterales de la pista horizontal. El sitio no tiene anclas. */
   html {
-    scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }

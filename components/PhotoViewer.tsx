@@ -79,19 +79,45 @@ export default function PhotoViewer({
 
   useEffect(() => { setOpen(null); }, [resetKey]);
 
+  // Apertura y cierre: bloquea el scroll del fondo, lleva el foco al visor y lo
+  // devuelve al botón de origen al salir. Va aparte del teclado para que pasar
+  // de una foto a otra no mueva el foco en cada flecha.
+  const dialog = useRef<HTMLDivElement | null>(null);
+  const opener = useRef<HTMLElement | null>(null);
+  const isOpen = open !== null;
   useEffect(() => {
-    if (open === null) return;
+    if (!isOpen) return;
+    opener.current = document.activeElement as HTMLElement | null;
     document.body.style.overflow = 'hidden';
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setOpen(null);
-      if (e.key === 'ArrowRight') go(open + 1);
-      if (e.key === 'ArrowLeft') go(open - 1);
-    };
-    window.addEventListener('keydown', onKey);
+    dialog.current?.focus();
     return () => {
       document.body.style.overflow = '';
-      window.removeEventListener('keydown', onKey);
+      opener.current?.focus?.();
     };
+  }, [isOpen]);
+
+  // Teclado del visor. El tabulador queda atrapado adentro: sin esto el foco se
+  // iba a la página de atrás, que además se desplazaba sola bajo el visor.
+  useEffect(() => {
+    if (open === null) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') { setOpen(null); return; }
+      if (e.key === 'ArrowRight') { go(open + 1); return; }
+      if (e.key === 'ArrowLeft') { go(open - 1); return; }
+      if (e.key !== 'Tab') return;
+      e.preventDefault();
+      const focusables: HTMLButtonElement[] = dialog.current
+        ? Array.from(dialog.current.querySelectorAll('button'))
+        : [];
+      if (!focusables.length) { dialog.current?.focus(); return; }
+      const i = focusables.indexOf(document.activeElement as HTMLButtonElement);
+      const next = e.shiftKey
+        ? (i <= 0 ? focusables.length - 1 : i - 1)
+        : (i === focusables.length - 1 || i === -1 ? 0 : i + 1);
+      focusables[next].focus();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
   }, [open, go]);
 
   const onTouchStart = (e: TouchEvent) => { touchStartX.current = e.touches[0].clientX; swiped.current = false; };
@@ -145,9 +171,11 @@ export default function PhotoViewer({
       <AnimatePresence>
         {photo && (
           <motion.div
+            ref={dialog}
+            role="dialog" aria-modal="true" aria-label={photo.title} tabIndex={-1}
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-[100] bg-ink flex items-center justify-center"
+            className="fixed inset-0 z-[100] bg-ink flex items-center justify-center outline-none"
             onClick={() => { if (swiped.current) { swiped.current = false; return; } setOpen(null); }}
             onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}
           >
