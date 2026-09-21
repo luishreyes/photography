@@ -7,12 +7,20 @@ import { Reveal } from '../components/Reveal';
 
 export default function WorkPage() {
   const { t, lang } = useI18n();
-  const items = series.map(s => ({
-    to: `/work/${s.slug}`,
-    name: s.names ? s.names[lang] : s.title,
-    meta: s.span ? (s.span.from === s.span.to ? s.span.from : `${s.span.from} — ${s.span.to}`) : String(s.year ?? ''),
-    cover: s.coverPhoto,
-  }));
+  // El enunciado dice que las colecciones se nombran con un verbo ("el ojo que
+  // organiza"), así que el índice muestra eso como título; el nombre corto
+  // (Geometrías) y los años van a la derecha, en mono. Decisión de Luis, 2026-09-21.
+  const cap = (t: string) => t.charAt(0).toUpperCase() + t.slice(1);
+  const items = series.map(s => {
+    const name = s.names ? s.names[lang] : s.title;
+    const years = s.span ? (s.span.from === s.span.to ? s.span.from : `${s.span.from} — ${s.span.to}`) : String(s.year ?? '');
+    return {
+      to: `/work/${s.slug}`,
+      name: s.eye ? cap(s.eye[lang]) : name,
+      meta: s.eye ? `${name} · ${years}` : years,
+      cover: s.coverPhoto,
+    };
+  });
   return (
     <main className="min-h-screen bg-paper">
       <div className="pad-x pt-[16vh] pb-[clamp(60px,9vh,120px)]">
