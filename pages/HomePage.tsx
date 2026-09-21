@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { series, studies, looseYears } from '../data/catalog-data';
@@ -6,9 +6,9 @@ import { useI18n } from '../context/i18n';
 import Footer from '../components/Footer';
 import SmartImg from '../components/SmartImg';
 import IndexRows from '../components/IndexRows';
-import { Reveal, Clip, EASE } from '../components/Reveal';
+import { Reveal, Clip } from '../components/Reveal';
+import HorizontalTrack from '../components/HorizontalTrack';
 import { colophon } from '../components/IndexColophon';
-import { layoutCells } from '../components/PhotoViewer';
 
 const HERO_IMAGE = '/hero.webp';
 
@@ -88,129 +88,89 @@ export default function HomePage() {
 }
 
 // ── Selección ─────────────────────────────────────────────────────────────
+// La portada de cada colección de Obra, en pista horizontal. Cada foto lleva al
+// interior de su colección.
 function Selection({ lang }: { lang: 'en' | 'es' }) {
   const { t } = useI18n();
-  // La portada de cada colección de Obra, con su título y el nombre de la colección.
   const picks = series.map(s => {
     const cover = s.photos.find(p => p.src === s.coverPhoto) ?? s.photos[0];
     return { photo: cover, slug: s.slug, name: s.names ? s.names[lang] : s.title };
   });
-  const cells = layoutCells(picks.map(p => p.photo));
-  const bySlug = new Map(picks.map(p => [p.photo.id, p]));
-  const SPAN: Record<number, string> = { 4: 'md:col-span-4', 5: 'md:col-span-5', 6: 'md:col-span-6', 7: 'md:col-span-7', 8: 'md:col-span-8' };
-  return (
-    <section id="seleccion" className="section-pad">
-      <Reveal className="grid grid-cols-[auto_1fr_auto] gap-6 items-end">
-        <h2 className="font-serif font-medium text-[clamp(34px,5vw,72px)] leading-[0.95]">{t('work.title')}</h2>
-        <div className="rule mb-3.5" />
-        <span className="font-mono text-[12px] text-muted whitespace-nowrap">001 — {String(series.length).padStart(3, '0')}</span>
-      </Reveal>
-      <div className="grid grid-cols-12 gap-x-[clamp(16px,2vw,34px)] gap-y-[clamp(28px,4vh,56px)] mt-[clamp(40px,7vh,90px)]">
-        {cells.map(c => {
-          const pick = bySlug.get(c.photo.id)!;
-          return (
-            <Parallax key={c.photo.id} amount={c.parallax}
-              className={`col-span-12 ${SPAN[c.span]} ${c.offset ? 'md:mt-[clamp(40px,9vh,120px)]' : ''}`}>
-              <Reveal delay={c.offset ? 1 : 0}>
-                <Link to={`/work/${pick.slug}`} className="block group">
-                  <span className="block w-full overflow-hidden bg-paper-2" style={{ aspectRatio: String(c.photo.ar ?? 1.5) }}>
-                    <SmartImg src={c.photo.src} alt={c.photo.title} loading="lazy"
-                      className="w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.02]" />
-                  </span>
-                  <span className="flex justify-between gap-4 mt-3 font-mono text-[11px] tracking-[0.06em] text-muted">
-                    <span className="group-hover:text-ink transition-colors">{pick.name} / {String(c.index + 1).padStart(2, '0')}</span>
-                    <span className="truncate">{c.photo.title}</span>
-                  </span>
-                </Link>
-              </Reveal>
-            </Parallax>
-          );
-        })}
-      </div>
-      <Reveal className="mt-[clamp(40px,7vh,90px)]">
-        <Link to="/work" className="inline-flex items-baseline gap-3 font-serif text-[clamp(20px,2vw,28px)] hover:italic transition-all">
-          {t('home.enter')} <span className="font-mono text-[11px] tracking-[0.2em] uppercase text-muted">{t('work.title')} →</span>
-        </Link>
-      </Reveal>
-    </section>
+  const intro = (
+    <div className="flex-none flex flex-col justify-center w-[78vw] md:w-[36vw] md:pl-[var(--pad)]">
+      <p className="eyebrow">{t('work.kicker')} · 001 — {String(series.length).padStart(3, '0')}</p>
+      <h2 className="font-serif font-medium text-[clamp(34px,5vw,72px)] leading-[0.95] mt-4">{t('work.title')}</h2>
+      <p className="mt-6 text-ink-soft text-[14px] md:text-[15px] leading-[1.6] max-w-[36ch]">{t('work.introShort')}</p>
+      <Link to="/work" className="mt-6 font-mono text-[11px] tracking-[0.2em] uppercase text-muted hover:text-ink transition-colors">
+        {t('home.enter')} →
+      </Link>
+    </div>
   );
-}
-
-function Parallax({ amount, className, children }: { amount: number; className?: string; children: ReactNode }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
-  const y = useTransform(scrollYProgress, [0, 1], [amount / 2, -amount / 2]);
-  return <div ref={ref} className={className}><motion.div style={{ y }}>{children}</motion.div></div>;
+  // Todas del mismo tamaño: cuadrado de 64vh, recorte centrado del webp
+  // grande (1600 px), no del thumb de 640, para que aguante pantallas 2x.
+  const slides = picks.map((pick, i) => (
+    <Link key={pick.photo.id} to={`/work/${pick.slug}`} className="flex-none relative h-[52vh] md:h-[64vh] group">
+      <span className="block h-full aspect-square overflow-hidden bg-paper-2">
+        <SmartImg src={pick.photo.src} alt={pick.photo.title} loading="lazy"
+          className="h-full w-full object-cover object-center transition-transform duration-[1200ms] ease-out group-hover:scale-[1.02]" />
+      </span>
+      <span className="flex justify-between gap-4 mt-3 font-mono text-[11px] tracking-[0.06em] text-muted">
+        <span className="group-hover:text-ink transition-colors">{pick.name} / {String(i + 1).padStart(2, '0')}</span>
+        <span className="truncate">{pick.photo.title}</span>
+      </span>
+    </Link>
+  ));
+  return <HorizontalTrack id="seleccion" intro={intro} slides={slides} />;
 }
 
 // ── Destacada ──────────────────────────────────────────────────────────────
-// Un estudio abierto, a pantalla completa y fijo mientras se recorre el tramo:
-// la imagen crece, el título flota y se apaga al salir.
+// Chicago, con Filo. La foto va entera, contenida a 78vh sobre tinta (no a
+// sangre: es vertical y a pantalla completa se comía la imagen), con un zoom
+// leve mientras el tramo está fijo; el título flota encima y se apaga al salir.
+const FEATURE = { slug: 'chicago', photoId: '20260824_filo' };
+
 function Feature({ lang }: { lang: 'en' | 'es' }) {
   const { t } = useI18n();
-  const study = studies.find(s => s.photos.length >= 12) ?? studies[0];
+  const study = studies.find(s => s.slug === FEATURE.slug) ?? studies[0];
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress: p } = useScroll({ target: ref, offset: ['start start', 'end end'] });
-  const scale = useTransform(p, [0, 1], [1.12, 1.34]);
-  const layerY = useTransform(p, [0, 1], [0, -30]);
-  const copyY = useTransform(p, [0, 1], [60, -60]);
-  const copyOpacity = useTransform(p, [0, 0.5, 1], [0.1, 1, 0.1]);
+  const scale = useTransform(p, [0, 1], [1, 1.08]);
+  const copyY = useTransform(p, [0, 1], [24, -24]);
+  const copyOpacity = useTransform(p, [0, 0.25, 0.75, 1], [0, 1, 1, 0]);
   if (!study) return null;
-  const cover = study.photos.find(p => p.src === study.coverPhoto) ?? study.photos[0];
+  const photo = study.photos.find(ph => ph.id === FEATURE.photoId) ?? study.photos[0];
   return (
-    <section ref={ref} className="relative h-[160vh] md:h-[230vh] bg-ink">
-      <div className="sticky top-0 h-screen overflow-hidden grid place-items-center">
-        <motion.div style={{ scale, y: layerY }} className="absolute inset-[-8%]">
-          <SmartImg src={cover.src} alt={study.title} className="w-full h-full object-cover" />
-        </motion.div>
-        <div className="absolute inset-0 z-[2] bg-[radial-gradient(120%_90%_at_50%_50%,transparent_40%,rgba(0,0,0,.55))]" />
-        <motion.div style={{ y: copyY, opacity: copyOpacity }} className="relative z-[3] text-center text-white blend-diff max-w-[26ch] px-6">
-          <p className="eyebrow !text-white/70">{t('home.feature')}</p>
-          <h3 className="font-serif font-medium text-[clamp(40px,8vw,120px)] leading-[0.95] mt-4">
+    <section ref={ref} className="relative h-[160vh] md:h-[200vh] bg-ink">
+      <div className="sticky top-0 h-screen overflow-hidden flex flex-col items-center justify-center gap-7 md:gap-9 px-6">
+        <Link to={`/studies/${study.slug}`} aria-label={study.title} className="relative block h-[56vh] md:h-[62vh] overflow-hidden"
+          style={{ aspectRatio: String(photo.ar ?? 0.6667) }}>
+          <motion.div style={{ scale }} className="w-full h-full">
+            <SmartImg src={photo.src} alt={photo.title} className="w-full h-full object-cover" />
+          </motion.div>
+        </Link>
+        <motion.div style={{ y: copyY, opacity: copyOpacity }} className="text-center text-white">
+          <p className="eyebrow !text-white/60">{t('home.feature')}</p>
+          <Link to={`/studies/${study.slug}`} className="block font-serif font-medium text-[clamp(34px,6vw,84px)] leading-[0.95] mt-3 hover:italic transition-all">
             {study.names ? study.names[lang] : study.title}
-          </h3>
-          <p className="font-mono text-[12px] tracking-[0.2em] uppercase mt-[18px]">
-            {study.photos.length} {t('unit.images')} · {study.status === 'ongoing' ? t('studies.ongoing') : study.year}
+          </Link>
+          <p className="font-mono text-[11px] tracking-[0.2em] uppercase mt-4 text-white/70">
+            {photo.title} · {study.photos.length} {t('unit.images')} · {study.status === 'ongoing' ? t('studies.ongoing') : (study.span?.to ?? study.year)}
           </p>
         </motion.div>
-        <Link to={`/studies/${study.slug}`} className="absolute inset-0 z-[4]" aria-label={study.title} />
       </div>
     </section>
   );
 }
 
-// ── Horizontal ────────────────────────────────────────────────────────────
-// El último tomo de Sueltas. En pantallas grandes la pista se desplaza con el
-// scroll vertical, con una barra de progreso; en el celular es una tira que se
-// desliza con el dedo.
+// ── Último tomo ───────────────────────────────────────────────────────────
 function Horizontal({ lang }: { lang: 'en' | 'es' }) {
   const { t } = useI18n();
   const tomo = looseYears[0];
-  const ref = useRef<HTMLDivElement>(null);
-  const track = useRef<HTMLDivElement>(null);
-  const [dist, setDist] = useState(0);
-  const { scrollYProgress: p } = useScroll({ target: ref, offset: ['start start', 'end end'] });
-  const x = useTransform(p, [0, 1], [0, -dist]);
-  const bar = useTransform(p, [0, 1], ['0%', '100%']);
-
-  useEffect(() => {
-    const measure = () => {
-      if (!track.current) return;
-      setDist(Math.max(0, track.current.scrollWidth - window.innerWidth));
-    };
-    measure();
-    const ro = new ResizeObserver(measure);
-    if (track.current) ro.observe(track.current);
-    window.addEventListener('resize', measure);
-    return () => { ro.disconnect(); window.removeEventListener('resize', measure); };
-  }, [tomo]);
-
   if (!tomo) return null;
   const photos = tomo.photos.slice(0, 8);
   const label = tomo.label ? tomo.label[lang] : tomo.year;
-
   const intro = (
-    <div className="flex-none flex flex-col justify-center md:pl-[var(--pad)] w-[78vw] md:w-[36vw]">
+    <div className="flex-none flex flex-col justify-center w-[78vw] md:w-[36vw] md:pl-[var(--pad)]">
       <p className="eyebrow">{t('home.latest')} · {photos.length} / {tomo.photos.length}</p>
       <h2 className="font-serif font-medium text-[clamp(34px,5vw,72px)] leading-[0.95] mt-4">{label}</h2>
       <Link to={`/loose/${tomo.year}`} className="mt-6 font-mono text-[11px] tracking-[0.2em] uppercase text-muted hover:text-ink transition-colors">
@@ -218,7 +178,6 @@ function Horizontal({ lang }: { lang: 'en' | 'es' }) {
       </Link>
     </div>
   );
-
   const slides = photos.map((ph, i) => (
     <Link key={ph.id} to={`/loose/${tomo.year}`} className="flex-none relative h-[52vh] md:h-[64vh] group">
       <span className="block h-full overflow-hidden bg-paper-2" style={{ aspectRatio: String(ph.ar ?? 1.5) }}>
@@ -228,28 +187,5 @@ function Horizontal({ lang }: { lang: 'en' | 'es' }) {
       <span className="block mt-3 font-mono text-[11px] tracking-[0.06em] text-muted">{ph.title} / {String(i + 1).padStart(2, '0')}</span>
     </Link>
   ));
-
-  return (
-    <>
-      {/* Pantallas grandes: pista fija */}
-      <section ref={ref} className="hidden md:block relative h-[320vh]">
-        <div className="sticky top-0 h-screen overflow-hidden flex items-center">
-          <motion.div ref={track} style={{ x }} className="flex gap-[clamp(20px,3vw,56px)] pr-[var(--pad)] will-change-transform">
-            {intro}
-            {slides}
-          </motion.div>
-          <div className="absolute left-[var(--pad)] right-[var(--pad)] bottom-[42px] h-px bg-[var(--hair)]">
-            <motion.div style={{ width: bar }} className="h-px bg-ink" />
-          </div>
-        </div>
-      </section>
-      {/* Celular: tira deslizable */}
-      <section className="md:hidden py-[clamp(60px,9vh,120px)]">
-        <div className="flex gap-6 overflow-x-auto no-scrollbar px-[var(--pad)] snap-x snap-mandatory">
-          <div className="snap-start">{intro}</div>
-          {slides.map((s, i) => <div key={i} className="snap-start">{s}</div>)}
-        </div>
-      </section>
-    </>
-  );
+  return <HorizontalTrack intro={intro} slides={slides} />;
 }

@@ -64,7 +64,7 @@ const ui = {
   'home.open':      { en: 'open', es: 'abiertos' },
   'home.latest':    { en: 'Latest volume', es: 'Último tomo' },
   'home.seeAll':    { en: 'See the whole volume', es: 'Ver el tomo completo' },
-  'home.feature':   { en: 'Featured collection', es: 'Colección destacada' },
+  'home.feature':   { en: 'Featured study', es: 'Estudio destacado' },
 
   // Contacto / pie (museo)
   'contact.email':  { en: 'Email', es: 'Correo' },

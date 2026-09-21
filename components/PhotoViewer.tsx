@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback, type TouchEvent } from 'react';
 import { Link } from 'react-router-dom';
-import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
+import HorizontalTrack from './HorizontalTrack';
 import SmartImg from './SmartImg';
 import { EASE } from './Reveal';
 
@@ -101,43 +102,6 @@ export default function PhotoViewer({
     touchStartX.current = null;
   };
 
-  // ── Pista horizontal fija ──────────────────────────────────────────────
-  // El tramo mide (alto de pantalla + recorrido de la pista), así que un
-  // píxel de scroll vertical mueve la pista un píxel: no hay bulto vertical.
-  // El scroll lateral del trackpad también la empuja (se traduce a vertical).
-  const stage = useRef<HTMLDivElement>(null);
-  const track = useRef<HTMLDivElement>(null);
-  const [dist, setDist] = useState(0);
-  const { scrollYProgress: p } = useScroll({ target: stage, offset: ['start start', 'end end'] });
-  const x = useTransform(p, [0, 1], [0, -dist]);
-  const bar = useTransform(p, [0, 1], ['0%', '100%']);
-
-  useEffect(() => {
-    const measure = () => {
-      if (!track.current) return;
-      setDist(Math.max(0, track.current.scrollWidth - window.innerWidth));
-    };
-    measure();
-    const ro = new ResizeObserver(measure);
-    if (track.current) ro.observe(track.current);
-    window.addEventListener('resize', measure);
-    return () => { ro.disconnect(); window.removeEventListener('resize', measure); };
-  }, [photos]);
-
-  useEffect(() => {
-    const el = stage.current;
-    if (!el) return;
-    const onWheel = (e: WheelEvent) => {
-      if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
-      const r = el.getBoundingClientRect();
-      if (r.top > 0 || r.bottom < window.innerHeight) return; // sólo mientras está fija
-      e.preventDefault();
-      window.scrollBy({ top: e.deltaX, behavior: 'instant' });
-    };
-    el.addEventListener('wheel', onWheel, { passive: false });
-    return () => el.removeEventListener('wheel', onWheel);
-  }, []);
-
   const photo = open !== null ? photos[open] : null;
 
   const intro = (
@@ -174,26 +138,7 @@ export default function PhotoViewer({
 
   return (
     <main className="bg-paper">
-      {/* Pantallas medianas y grandes: la pista avanza con el scroll */}
-      <div ref={stage} className="hidden md:block relative" style={{ height: `calc(100vh + ${dist}px)` }}>
-        <div className="sticky top-0 h-screen overflow-hidden flex items-center">
-          <motion.div ref={track} style={{ x }} className="flex items-center gap-[clamp(20px,3vw,56px)] pr-[var(--pad)] will-change-transform">
-            {intro}
-            {slides}
-          </motion.div>
-          <div className="absolute left-[var(--pad)] right-[var(--pad)] bottom-[42px] h-px bg-[var(--hair)]">
-            <motion.div style={{ width: bar }} className="h-px bg-ink" />
-          </div>
-        </div>
-      </div>
-
-      {/* Celular: tira que se desliza con el dedo */}
-      <div className="md:hidden min-h-screen pt-[14vh] pb-16">
-        <div className="pad-x">{intro}</div>
-        <div className="flex gap-5 overflow-x-auto no-scrollbar px-[var(--pad)] mt-10 snap-x snap-mandatory">
-          {slides.map((s, i) => <div key={i} className="snap-start">{s}</div>)}
-        </div>
-      </div>
+      <HorizontalTrack intro={intro} slides={slides} className="md:pt-0 pt-[8vh]" />
 
       {/* Pantalla completa: la foto sobre tinta. Toque en cualquier lado cierra. */}
       <AnimatePresence>
