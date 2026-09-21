@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, type CSSProperties } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { series, studies, looseYears } from '../data/catalog-data';
@@ -106,11 +106,13 @@ function Selection({ lang }: { lang: 'en' | 'es' }) {
       </Link>
     </div>
   );
-  // Todas del mismo tamaño: cuadrado de 64vh, recorte centrado del webp
-  // grande (1600 px), no del thumb de 640, para que aguante pantallas 2x.
+  // En escritorio (lg+) todas del mismo tamaño: cuadrado de 64vh con recorte
+  // centrado del webp grande (1600 px, no el thumb de 640, para pantallas 2x).
+  // En iPhone e iPad cada foto conserva su proporción (decisión de Luis).
   const slides = picks.map((pick, i) => (
     <Link key={pick.photo.id} to={`/work/${pick.slug}`} className="flex-none relative h-[52vh] md:h-[64vh] group">
-      <span className="block h-full aspect-square overflow-hidden bg-paper-2">
+      <span className="block h-full aspect-[var(--ar)] lg:aspect-square overflow-hidden bg-paper-2"
+        style={{ '--ar': String(pick.photo.ar ?? 1.5) } as CSSProperties}>
         <SmartImg src={pick.photo.src} alt={pick.photo.title} loading="lazy"
           className="h-full w-full object-cover object-center transition-transform duration-[1200ms] ease-out group-hover:scale-[1.02]" />
       </span>
