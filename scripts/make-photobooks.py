@@ -16,6 +16,7 @@ Image.MAX_IMAGE_PIXELS = None
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MASTER = os.path.abspath(os.path.join(REPO, '..', '..'))
 FONT_DIR = os.path.join(REPO, 'node_modules', '@fontsource-variable')
+FONT_DIR_STATIC = os.path.join(REPO, 'node_modules', '@fontsource')
 
 import sys as _sys
 _sys.path.insert(0, os.path.join(MASTER, '_scripts', 'catalog'))
@@ -38,7 +39,24 @@ MARK_GAP_CM = 0.15      # aire entre la marca y el corte
 PRINT_Q = 95            # jpeg de mayor calidad para imprenta
 PLATE_PRINT_CM = 23.7   # placa más grande posible; fija el tope de píxeles a embeber
 
-CIT, INK, BONE, DARK = '#C9C41C', '#121212', '#E8E6E1', '#0A0A0A'
+# Sistema museo (el mismo del sitio desde el 2026-09-21): papel blanco cálido,
+# tinta negra, un solo acento — el amarillo del manual — y serif editorial. Antes
+# el libro iba en la dirección oscura: Big Shoulders sobre carbón. INK y BONE
+# conservan el nombre porque los usa toda la maqueta; cambia lo que valen.
+CIT   = '#C9C41C'          # acento, el mismo amarillo del manual
+INK   = '#0B0B0B'          # tinta
+SOFT  = '#2A2A28'          # tinta suave, cuerpo de texto
+MUTED = '#8C8A85'          # metadatos
+BONE  = '#FBFBFA'          # papel
+PAPER2 = '#F2F1EE'         # papel de bloque
+HAIR  = 'rgba(11,11,11,0.12)'
+DARK  = '#0B0B0B'          # único bloque oscuro del sistema: la página de derechos
+# El acento casi no se usa sobre papel: a este amarillo le falta contraste en
+# tinta (1.8:1 sobre el papel) y en el sitio tampoco aparece salvo al pasar el
+# cursor. Queda para la H de la página de derechos, que va sobre tinta.
+SERIF = "'Playfair Display'"
+MONO  = "'IBM Plex Mono'"
+SANS  = "'Archivo'"
 
 LABELS = {
     'work':  {'es': 'Obra',    'en': 'Work'},
@@ -51,23 +69,75 @@ T = {
 }
 
 
-def b64_font(family_dir, fname):
-    p = os.path.join(FONT_DIR, family_dir, 'files', fname)
+def b64_font(family_dir, fname, base=None):
+    p = os.path.join(base or FONT_DIR, family_dir, 'files', fname)
     with open(p, 'rb') as f:
         return base64.b64encode(f.read()).decode()
 
 
 def font_css():
-    bs = b64_font('big-shoulders-display', 'big-shoulders-display-latin-wght-normal.woff2')
+    """Las tres del sistema museo, empotradas en el HTML: Chrome headless no sale
+    a la red y el PDF queda autocontenido."""
+    pf = b64_font('playfair-display', 'playfair-display-latin-wght-normal.woff2')
+    pfi = b64_font('playfair-display', 'playfair-display-latin-wght-italic.woff2')
+    mo = b64_font('ibm-plex-mono', 'ibm-plex-mono-latin-400-normal.woff2', FONT_DIR_STATIC)
+    mo5 = b64_font('ibm-plex-mono', 'ibm-plex-mono-latin-500-normal.woff2', FONT_DIR_STATIC)
     ar = b64_font('archivo', 'archivo-latin-wght-normal.woff2')
     return f"""
-@font-face{{font-family:'Big Shoulders Display';font-weight:200 700;font-style:normal;font-display:block;src:url(data:font/woff2;base64,{bs}) format('woff2');}}
+@font-face{{font-family:'Playfair Display';font-weight:400 700;font-style:normal;font-display:block;src:url(data:font/woff2;base64,{pf}) format('woff2');}}
+@font-face{{font-family:'Playfair Display';font-weight:400 700;font-style:italic;font-display:block;src:url(data:font/woff2;base64,{pfi}) format('woff2');}}
+@font-face{{font-family:'IBM Plex Mono';font-weight:400;font-style:normal;font-display:block;src:url(data:font/woff2;base64,{mo}) format('woff2');}}
+@font-face{{font-family:'IBM Plex Mono';font-weight:500;font-style:normal;font-display:block;src:url(data:font/woff2;base64,{mo5}) format('woff2');}}
 @font-face{{font-family:'Archivo';font-weight:400 700;font-style:normal;font-display:block;src:url(data:font/woff2;base64,{ar}) format('woff2');}}
 """
 
 
+SF_DATALESS = 0x40000000
+
+
+def materializa(path):
+    """Baja el archivo de iCloud leyéndolo entero, no el primer byte.
+
+    El maestro vive en el Desktop sincronizado y macOS evicta archivos cuando el
+    disco aprieta: quedan con la bandera SF_DATALESS, `os.path.exists` dice que
+    sí y PIL revienta con UnidentifiedImageError o TimeoutError. Además un
+    archivo puede volverse solo-nube ENTRE la materialización y la lectura, que
+    es lo que tumbó la corrida de los 20 libros el 2026-09-21 en Chicago/Filo.
+    Leerlo completo garantiza los bytes; `brctl download` es asíncrono y vuelve
+    antes de tenerlos.
+    """
+    import time
+    for intento in range(3):
+        try:
+            if not (os.stat(path).st_flags & SF_DATALESS):
+                return
+        except OSError:
+            return
+        try:
+            with open(path, 'rb') as fh:
+                while fh.read(1 << 22):
+                    pass
+            return
+        except (TimeoutError, OSError):
+            # `TimeoutError [Errno 60]` es iCloud tardando en servir el archivo.
+            # Se reintenta: la descarga sigue en curso del otro lado y suele
+            # completarse. Tumbó la edición de imprenta de Geometrías el
+            # 2026-09-21, cuando el guardia no cubría este caso.
+            if intento == 2:
+                raise
+            time.sleep(5 * (intento + 1))
+
+
 def img_data_uri(path, maxedge=None, quality=None):
-    im = Image.open(path).convert('RGB')
+    materializa(path)
+    try:
+        im = Image.open(path).convert('RGB')
+    except Exception:
+        # Segunda oportunidad: iCloud pudo evictarlo entre la materialización y
+        # la apertura. Se rescata una vez y se reintenta; si vuelve a fallar, el
+        # error sube y la colección se reporta como fallida.
+        materializa(path)
+        im = Image.open(path).convert('RGB')
     nat = im.size
     w, h = nat
     s = min(1.0, (maxedge or MAXEDGE) / max(w, h))
@@ -105,25 +175,25 @@ def page_cover(display_title, subline, brand_word, meta=None, cover_uri=None):
 
     Adapta la estructura de las portadas tipo fanzine editorial (banda clara con
     tres columnas de datos, titulo abajo a la izquierda, imagen ocupando el resto)
-    a la tipografia de la casa: Big Shoulders para el titulo, Archivo para los
-    datos, y el amarillo de marca solo en el numero de edicion. Referencia traida
+    a la tipografia de la casa museo: Playfair para el titulo, IBM Plex Mono para
+    los datos, y el amarillo de marca solo en el numero de edicion. Referencia traida
     por Luis el 2026-08-27. Sin foto disponible cae a la portada tipografica.
     """
     if not cover_uri:
         return page_cover_plain(display_title, subline, brand_word)
     m = meta or {}
     col = lambda a, b: (f'<div><div style="color:{INK};">{esc(a)}</div>'
-                        f'<div style="color:rgba(18,18,18,0.55);">{esc(b)}</div></div>')
+                        f'<div style="color:{MUTED};">{esc(b)}</div></div>')
     return f"""<section class="pg" style="background:{BONE};display:flex;flex-direction:column;">
 <div style="padding:1.5cm 1.5cm 1.1cm 1.5cm;">
-<div style="display:flex;justify-content:space-between;font-family:'Archivo';font-weight:500;font-size:8pt;line-height:1.45;letter-spacing:0.02em;">
+<div style="display:flex;justify-content:space-between;font-family:{MONO};font-weight:400;font-size:7.5pt;line-height:1.5;letter-spacing:0.12em;text-transform:uppercase;">
 <div style="color:{INK};">Luis H. Reyes</div>
 {col(m.get('edition',''), m.get('plates',''))}
-<div style="text-align:right;"><div style="color:{CIT};font-weight:600;">{esc(m.get('number',''))}</div><div style="color:rgba(18,18,18,0.55);">{esc(m.get('span',''))}</div></div>
+<div style="text-align:right;"><div style="color:{CIT};font-weight:500;">{esc(m.get('number',''))}</div><div style="color:{MUTED};">{esc(m.get('span',''))}</div></div>
 </div>
-<h1 style="margin:0.9cm 0 0 0;font-family:'Big Shoulders Display';font-weight:300;font-size:66pt;line-height:0.92;letter-spacing:0.01em;text-transform:uppercase;color:{INK};">{esc(display_title)}</h1>
+<h1 style="margin:0.9cm 0 0 0;font-family:{SERIF};font-weight:500;font-size:60pt;line-height:0.94;letter-spacing:-0.01em;color:{INK};">{esc(display_title)}</h1>
 </div>
-<div style="flex:1;overflow:hidden;background:{DARK};">
+<div style="flex:1;overflow:hidden;background:{PAPER2};">
 <img src="{cover_uri}" style="width:100%;height:100%;object-fit:cover;display:block;">
 </div>
 </section>"""
@@ -133,15 +203,15 @@ def page_cover_plain(display_title, subline, brand_word):
     """Portada tipografica original, fondo oscuro y esquinas. Se conserva como
     respaldo para los libros que no resuelvan imagen de portada."""
     corner = lambda pos, bw: f'<div style="position:absolute;{pos};width:0.85cm;height:0.85cm;border-style:solid;border-width:{bw};border-color:{CIT};"></div>'
-    return f"""<section class="pg" style="background:{DARK};padding:2.2cm;display:flex;flex-direction:column;justify-content:space-between;">
+    return f"""<section class="pg" style="background:{BONE};padding:2.2cm;display:flex;flex-direction:column;justify-content:space-between;">
 {corner('top:1.5cm;left:1.5cm', '2px 0 0 2px')}
 {corner('top:1.5cm;right:1.5cm', '2px 2px 0 0')}
 {corner('bottom:1.5cm;left:1.5cm', '0 0 2px 2px')}
 {corner('bottom:1.5cm;right:1.5cm', '0 2px 2px 0')}
-<div style="position:relative;font-family:'Archivo';font-weight:500;font-size:8.5pt;letter-spacing:0.28em;text-transform:uppercase;color:rgba(232,230,225,0.65);">Luis H. Reyes · {esc(brand_word)}</div>
+<div style="position:relative;font-family:{MONO};font-weight:400;font-size:8pt;letter-spacing:0.28em;text-transform:uppercase;color:{MUTED};">Luis H. Reyes · {esc(brand_word)}</div>
 <div style="position:relative;">
-<h1 style="margin:0;font-family:'Big Shoulders Display';font-weight:300;font-size:96pt;line-height:0.95;letter-spacing:0.01em;text-transform:uppercase;color:{BONE};">{esc(display_title)}</h1>
-<div style="margin-top:0.5cm;font-family:'Archivo';font-weight:400;font-size:9pt;letter-spacing:0.28em;text-transform:uppercase;color:rgba(232,230,225,0.55);">{esc(subline)}</div>
+<h1 style="margin:0;font-family:{SERIF};font-weight:500;font-size:84pt;line-height:0.96;letter-spacing:-0.01em;color:{INK};">{esc(display_title)}</h1>
+<div style="margin-top:0.5cm;font-family:{MONO};font-weight:400;font-size:8.5pt;letter-spacing:0.28em;text-transform:uppercase;color:{MUTED};">{esc(subline)}</div>
 </div>
 </section>"""
 
@@ -149,15 +219,16 @@ def page_cover_plain(display_title, subline, brand_word):
 def page_title(kicker, display_title, statement, count_line, quote=None):
     qhtml = ''
     if quote:
-        qhtml = ("<div style=\"margin-top:0.9cm;padding-left:0.5cm;border-left:2px solid %s;max-width:14cm;\">"
-                 "<div style=\"font-family:'Archivo';font-style:italic;font-weight:400;font-size:10.5pt;line-height:1.5;color:rgba(18,18,18,0.6);\">&ldquo;%s&rdquo;</div>"
-                 "<div style=\"margin-top:0.25cm;font-family:'Archivo';font-weight:600;font-size:8pt;letter-spacing:0.28em;text-transform:uppercase;color:%s;\">%s</div>"
-                 "</div>") % (CIT, esc(quote['text']), CIT, esc(quote['author']))
+        qhtml = (f'<div style="margin-top:0.9cm;padding-left:0.6cm;border-left:1px solid {HAIR};max-width:14cm;">'
+                 f'<div style="font-family:{SERIF};font-style:italic;font-weight:400;font-size:13pt;line-height:1.4;color:{SOFT};">&ldquo;{esc(quote["text"])}&rdquo;</div>'
+                 f'<div style="margin-top:0.3cm;font-family:{MONO};font-weight:400;font-size:8pt;letter-spacing:0.28em;text-transform:uppercase;color:{MUTED};">{esc(quote["author"])}</div>'
+                 f'</div>')
     return f"""<section class="pg" style="background:{BONE};color:{INK};padding:2.2cm;display:flex;flex-direction:column;justify-content:center;">
-<div style="font-family:'Archivo';font-weight:600;font-size:8.5pt;letter-spacing:0.28em;text-transform:uppercase;color:{CIT};">{esc(kicker)}</div>
-<div style="width:2.4cm;height:1px;background:rgba(18,18,18,0.25);margin:0.9cm 0;"></div>
-<p style="margin:0;max-width:15cm;font-family:'Archivo';font-weight:400;font-size:12pt;line-height:1.55;color:rgba(18,18,18,0.86);">{esc(statement)}</p>{qhtml}
-<div style="margin-top:1.1cm;font-family:'Archivo';font-weight:400;font-size:11pt;color:{INK};">Luis H. Reyes</div>
+<div style="font-family:{MONO};font-weight:400;font-size:8pt;letter-spacing:0.28em;text-transform:uppercase;color:{MUTED};">{esc(kicker)}</div>
+<h2 style="margin:0.6cm 0 0 0;font-family:{SERIF};font-weight:500;font-size:32pt;line-height:1.0;letter-spacing:-0.01em;color:{INK};">{esc(display_title)}</h2>
+<div style="width:100%;height:1px;background:{HAIR};margin:0.9cm 0;"></div>
+<p style="margin:0;max-width:15cm;font-family:{SANS};font-weight:400;font-size:11.5pt;line-height:1.7;color:{SOFT};">{esc(statement)}</p>{qhtml}
+<div style="margin-top:1.1cm;font-family:{MONO};font-weight:400;font-size:8pt;letter-spacing:0.28em;text-transform:uppercase;color:{MUTED};">{esc(count_line)}</div>
 </section>"""
 
 
@@ -246,11 +317,11 @@ def page_photo(num, title, date_str, uri, size, plate_long=None):
 <div style="display:flex;flex-direction:column;">
 <img src="{uri}" alt="{esc(title)}" style="display:block;{dim}object-fit:contain;">
 <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:0.55cm;">
-<div style="display:flex;align-items:baseline;gap:0.35cm;">
-<span style="font-family:'Archivo';font-weight:600;font-size:8.5pt;font-variant-numeric:tabular-nums;color:{CIT};">{num:02d}</span>
-<span style="font-family:'Archivo';font-weight:600;font-size:9.5pt;letter-spacing:0.28em;text-transform:uppercase;color:{INK};">{esc(title)}</span>
+<div style="display:flex;align-items:baseline;gap:0.4cm;">
+<span style="font-family:{MONO};font-weight:400;font-size:8pt;font-variant-numeric:tabular-nums;color:{MUTED};">{num:02d}</span>
+<span style="font-family:{SERIF};font-style:italic;font-weight:400;font-size:12pt;color:{INK};">{esc(title)}</span>
 </div>
-<span style="font-family:'Archivo';font-weight:400;font-size:9pt;font-variant-numeric:tabular-nums;color:rgba(18,18,18,0.55);">{date_str}</span>
+<span style="font-family:{MONO};font-weight:400;font-size:8pt;letter-spacing:0.08em;font-variant-numeric:tabular-nums;color:{MUTED};">{date_str}</span>
 </div>
 </div>
 </section>"""
@@ -261,27 +332,26 @@ ROWS_PER_PAGE = 14  # placas por página de colofón (evita que el índice largo
 
 def page_colophon(heading, rows, footer_left):
     items = ''.join(
-        f"""<div style="display:flex;justify-content:space-between;align-items:baseline;padding:0.4cm 0;border-bottom:1px solid rgba(232,230,225,0.16);">
+        f"""<div style="display:flex;justify-content:space-between;align-items:baseline;padding:0.4cm 0;border-bottom:1px solid {HAIR};">
 <div style="display:flex;align-items:baseline;gap:0.5cm;">
-<span style="font-family:'Archivo';font-weight:400;font-size:9pt;font-variant-numeric:tabular-nums;color:rgba(232,230,225,0.55);">{num:02d}</span>
-<span style="font-family:'Archivo';font-weight:500;font-size:10pt;letter-spacing:0.18em;text-transform:uppercase;color:{BONE};">{esc(title)}</span>
+<span style="font-family:{MONO};font-weight:400;font-size:8pt;font-variant-numeric:tabular-nums;color:{MUTED};">{num:02d}</span>
+<span style="font-family:{SERIF};font-weight:400;font-size:11pt;color:{INK};">{esc(title)}</span>
 </div>
-<span style="font-family:'Archivo';font-weight:400;font-size:9pt;font-variant-numeric:tabular-nums;color:rgba(232,230,225,0.55);">{date_str}</span>
+<span style="font-family:{MONO};font-weight:400;font-size:8pt;letter-spacing:0.08em;font-variant-numeric:tabular-nums;color:{MUTED};">{date_str}</span>
 </div>""" for num, title, date_str in rows)
-    footer = '' if footer_left is None else f"""<div style="margin-top:auto;display:flex;justify-content:space-between;align-items:baseline;">
-<div style="font-family:'Archivo';font-weight:400;font-size:9pt;color:rgba(232,230,225,0.55);">{esc(footer_left)}</div>
-<a href="https://photography.luishreyes.com" style="font-family:'Archivo';font-weight:400;font-size:9pt;color:{CIT};text-decoration:none;">photography.luishreyes.com</a>
+    footer = '' if footer_left is None else f"""<div style="margin-top:auto;display:flex;justify-content:space-between;align-items:baseline;padding-top:0.6cm;">
+<div style="font-family:{MONO};font-weight:400;font-size:8pt;letter-spacing:0.08em;color:{MUTED};">{esc(footer_left)}</div>
+<a href="https://photography.luishreyes.com" style="font-family:{MONO};font-weight:400;font-size:8pt;letter-spacing:0.08em;color:{MUTED};text-decoration:none;">photography.luishreyes.com</a>
 </div>"""
-    return f"""<section class="pg" style="background:{DARK};color:{BONE};padding:2.2cm;display:flex;flex-direction:column;">
-<div style="font-family:'Archivo';font-weight:600;font-size:8.5pt;letter-spacing:0.28em;text-transform:uppercase;color:{CIT};">{esc(heading)}</div>
-<div style="margin-top:1cm;display:flex;flex-direction:column;">{items}</div>
+    return f"""<section class="pg" style="background:{BONE};color:{INK};padding:2.2cm;display:flex;flex-direction:column;">
+<div style="font-family:{MONO};font-weight:400;font-size:8pt;letter-spacing:0.28em;text-transform:uppercase;color:{MUTED};">{esc(heading)}</div>
+<div style="margin-top:1cm;display:flex;flex-direction:column;border-top:1px solid {HAIR};">{items}</div>
 {footer}
 </section>"""
 
 
 def page_rights(lang, year):
-    """Página final: símbolo del visor (Manual de identidad) + wordmark + derechos.
-    Colores del manual: citrón #C9C41C, carbón #0A0A0A, hueso #E8E6E1."""
+    """Página final: símbolo del visor (Manual de identidad) + wordmark + derechos."""
     legend = {
         'es': (f"© {year} Luis H. Reyes. Todos los derechos reservados. Ninguna parte de este libro "
                "puede reproducirse, almacenarse o transmitirse por ningún medio sin autorización "
@@ -291,7 +361,9 @@ def page_rights(lang, year):
     }[lang]
     printed = {'es': f"Impreso en {year}", 'en': f"Printed in {year}"}[lang]
     photog = T[lang]['photog'].upper()
-    # Símbolo: caja S con 4 esquinas de visor en hueso y la H citrón (mitad de la altura).
+    # Último bloque en tinta, que es lo mismo que hace el sitio con su pie: el
+    # resto del libro va en papel. Símbolo del manual: visor de cuatro esquinas
+    # en papel y la H en el acento.
     S, arm, stroke = '3.2cm', '0.7cm', '0.055cm'
     corner = lambda pos: (f'<div style="position:absolute;{pos};width:{arm};height:{arm};'
                           f'border-style:solid;border-color:{BONE};border-width:0;{{bw}}"></div>')
@@ -302,14 +374,14 @@ def page_rights(lang, year):
     return f"""<section class="pg" style="background:{DARK};color:{BONE};display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;">
 <div style="position:relative;width:{S};height:{S};">
 {corners}
-<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Big Shoulders Display';font-weight:300;font-size:1.6cm;line-height:1;color:{CIT};">H</div>
+<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:{SERIF};font-weight:500;font-size:1.6cm;line-height:1;color:{CIT};">H</div>
 </div>
-<div style="margin-top:1.1cm;font-family:'Big Shoulders Display';font-weight:300;font-size:26pt;letter-spacing:0.06em;text-transform:uppercase;color:{CIT};">Luis H. Reyes</div>
-<div style="margin-top:0.25cm;font-family:'Archivo';font-weight:600;font-size:9pt;letter-spacing:0.42em;text-transform:uppercase;color:{BONE};">{photog}</div>
-<div style="margin-top:1.4cm;max-width:12.5cm;font-family:'Archivo';font-weight:400;font-size:8.5pt;line-height:1.7;color:rgba(232,230,225,0.62);">{esc(legend)}</div>
-<div style="margin-top:0.9cm;display:flex;align-items:baseline;gap:0.5cm;font-family:'Archivo';font-weight:400;font-size:8.5pt;color:rgba(232,230,225,0.55);">
+<div style="margin-top:1.1cm;font-family:{SERIF};font-weight:500;font-size:24pt;letter-spacing:-0.01em;color:{BONE};">Luis H. Reyes</div>
+<div style="margin-top:0.3cm;font-family:{MONO};font-weight:400;font-size:8pt;letter-spacing:0.42em;text-transform:uppercase;color:rgba(251,251,250,0.6);">{photog}</div>
+<div style="margin-top:1.4cm;max-width:12.5cm;font-family:{SANS};font-weight:400;font-size:8.5pt;line-height:1.7;color:rgba(251,251,250,0.62);">{esc(legend)}</div>
+<div style="margin-top:0.9cm;display:flex;align-items:baseline;gap:0.5cm;font-family:{MONO};font-weight:400;font-size:8pt;letter-spacing:0.08em;color:rgba(251,251,250,0.55);">
 <span>{esc(printed)}</span><span style="color:{CIT};">·</span>
-<a href="https://photography.luishreyes.com" style="color:rgba(232,230,225,0.55);text-decoration:none;">photography.luishreyes.com</a>
+<a href="https://photography.luishreyes.com" style="color:rgba(251,251,250,0.55);text-decoration:none;">photography.luishreyes.com</a>
 </div>
 </section>"""
 
@@ -390,7 +462,7 @@ def build_html(book, lang, fonts):
 @page{{size:{page_w}cm {page_h}cm;margin:0;}}
 *{{margin:0;padding:0;box-sizing:border-box;}}
 {fonts}
-html,body{{background:{DARK};}}
+html,body{{background:{BONE};}}
 .pg{{width:{page_w}cm;height:{page_h}cm;overflow:hidden;position:relative;break-after:page;page-break-after:always;}}
 .pg:last-child{{break-after:auto;page-break-after:auto;}}
 </style></head><body>{''.join(pages)}</body></html>"""

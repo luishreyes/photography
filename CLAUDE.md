@@ -123,7 +123,7 @@ El hero **es** el landing (sin splash aparte). Entrada con framer-motion: flash 
 - **`./build.sh`** (raíz del maestro → `_scripts/catalog/build_all.py`): valida el catálogo, materializa los `site_webp`/`site_thumb` faltantes desde `files.portfolio` (2048px q82; thumb cuadrado 640 q78) en `public/photography/...`, genera los `cover.webp` faltantes, y **emite `data/catalog-data.ts`** (exporta `series`, `studies`, `looseYears`). Correr después de cualquier cambio al catálogo.
 - Las imágenes se derivan de la copia **`Portfolio/`** del archivo (aspecto nativo, sin marco). NUNCA `Web/` (cuadrada + marco = redes).
 - `data/catalog-data.ts` es **auto-generado — NO editar a mano**. Para cambiar un statement, título, orden o cover: editar `catalog.json` y correr `./build.sh`.
-- Loose: `/loose` = `LoosePage` (grid de **tomos** de 24, más reciente primero); `/loose/:year` = `LooseYearPage` (galería vía `PhotoViewer`). Los tomos salen de las colecciones `loose-tomo-N` del catálogo, orden `date_captured` desc. La ruta usa el sufijo del slug (`tomo-5`), no un año.
+- Loose: `/loose` = `LoosePage` (grid de **tomos** de 36, más reciente primero); `/loose/:year` = `LooseYearPage` (galería vía `PhotoViewer`). Los tomos salen de las colecciones `loose-tomo-N` del catálogo, orden `date_captured` desc. La capacidad es 36 con tope duro (`TOMO_CAP`): cuando un tomo se llena nace el siguiente, y el último queda abierto. Un cambio de capacidad re-fluye TODO: renombra los webp, mueve los masters entre carpetas de tomo y desfasa las posiciones citadas en las fichas. La ruta usa el sufijo del slug (`tomo-5`), no un año.
 
 ### Campos derivados que emite `site_data`
 
