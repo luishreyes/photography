@@ -92,9 +92,13 @@ export default function HomePage() {
 // interior de su colección.
 function Selection({ lang }: { lang: 'en' | 'es' }) {
   const { t } = useI18n();
+  // Misma regla que el índice de Obra: el verbo ("El ojo que organiza") es el
+  // título de la colección; el nombre corto acompaña con el número.
+  const cap = (t: string) => t.charAt(0).toUpperCase() + t.slice(1);
   const picks = series.map(s => {
     const cover = s.photos.find(p => p.src === s.coverPhoto) ?? s.photos[0];
-    return { photo: cover, slug: s.slug, name: s.names ? s.names[lang] : s.title };
+    const name = s.names ? s.names[lang] : s.title;
+    return { photo: cover, slug: s.slug, name, eye: s.eye ? cap(s.eye[lang]) : name };
   });
   const intro = (
     <div className="flex-none flex flex-col justify-center w-[78vw] md:w-[36vw] md:pl-[var(--pad)]">
@@ -117,8 +121,8 @@ function Selection({ lang }: { lang: 'en' | 'es' }) {
           className="h-full w-full object-cover object-center transition-transform duration-[1200ms] ease-out group-hover:scale-[1.02]" />
       </span>
       <span className="flex justify-between gap-4 mt-3 font-mono text-[11px] tracking-[0.06em] text-muted">
-        <span className="group-hover:text-ink transition-colors whitespace-nowrap">{pick.name} / {String(i + 1).padStart(2, '0')}</span>
-        <span className="truncate">{pick.photo.title}</span>
+        <span className="group-hover:text-ink transition-colors truncate">{pick.eye}</span>
+        <span className="whitespace-nowrap">{pick.name} · {String(i + 1).padStart(2, '0')}</span>
       </span>
     </Link>
   ));
