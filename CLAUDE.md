@@ -73,6 +73,8 @@ GitHub Pages solo sirve archivos. Antes del 22 oct 2026 todo menos la portada re
 
 **Chromium:** en GitHub Actions usa el Google Chrome del runner; en la nube, el de Playwright; en el Mac, Chrome (o `CHROME_PATH`). Si no lo encuentra, las páginas salen con sus metadatos pero sin contenido y el build avisa (`::warning::` en Actions). El script solo corre sobre un `dist/` recién construido: para repetirlo, `npm run build`.
 
+**Google Search Console:** la propiedad es el prefijo `https://photography.luishreyes.com/`, verificada con la etiqueta `google-site-verification` de `index.html` (la misma del portafolio académico; el prerender la copia a todas las páginas). No se borra: Google la revisa de vez en cuando. El sitemap enviado es `sitemap.xml`.
+
 **`HorizontalTrack`:** al medir la pista dispara un scroll sintético para que framer recalcule el progreso. Sin eso, quien abría una galería por su dirección (no navegando dentro del sitio) la veía en la última foto hasta mover la rueda.
 
 ## Proyecto
