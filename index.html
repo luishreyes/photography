@@ -5,8 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="theme-color" content="#FBFBFA" />
-    <title>Luis H. Reyes — Photography</title>
-    <meta name="description" content="Black & white photography by Luis H. Reyes." />
+    <title>Luis H. Reyes · Black &amp; white photography</title>
+    <meta name="description" content="Black &amp; white photography by Luis H. Reyes, in Bogotá: the work, the studies and the loose photographs." />
+    <!-- El build (scripts/prerender.mjs) mete en #root la página ya armada, para los buscadores
+         y para quien no tiene JavaScript. Con JavaScript no se muestra: React la reemplaza al
+         arrancar, y así el sitio se ve igual que siempre. -->
+    <style>[data-previo]{display:none}</style>
+    <noscript><style>[data-previo]{display:block}</style></noscript>
     <script>
       // GitHub Pages SPA redirect restoration
       (function(l) {
@@ -16,6 +21,12 @@
           }).join('?');
           window.history.replaceState(null, null,
             l.pathname.slice(0, -1) + decoded + l.hash
+          );
+        }
+        // Quien llega con barra final (/work/) sigue en la dirección sin barra, que es la que usa la app.
+        if (l.pathname.length > 1 && l.pathname.slice(-1) === '/') {
+          window.history.replaceState(null, null,
+            l.pathname.replace(/\/+$/, '') + l.search + l.hash
           );
         }
       }(window.location))

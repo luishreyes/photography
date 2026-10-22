@@ -28,6 +28,14 @@ export default function HorizontalTrack({ intro, slides, id, className = '' }: {
     return () => { ro.disconnect(); window.removeEventListener('resize', measure); };
   }, [slides.length]);
 
+  // Al medir la pista, el tramo crece de una pantalla a pantalla + recorrido,
+  // pero framer no vuelve a calcular el progreso hasta el primer scroll. Con el
+  // tramo de una pantalla el progreso daba 1, así que quien abría una galería
+  // por su dirección (sin navegar dentro del sitio) la veía en la última foto.
+  useEffect(() => {
+    window.dispatchEvent(new Event('scroll'));
+  }, [dist]);
+
   // Tabular hasta una foto que aún no está a la vista: el navegador no puede
   // traerla solo (la pista se mueve con el scroll de la página, no con el
   // scroll del contenedor), así que lo hacemos nosotros. Solo con foco de

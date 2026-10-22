@@ -3,7 +3,7 @@ import { createContext, useContext, useState, useEffect, type ReactNode } from '
 export type Lang = 'en' | 'es';
 
 // ── UI strings ──────────────────────────────────────────────
-const ui = {
+export const ui = {
   // Nav
   'nav.work':     { en: 'Work',        es: 'Obra' },
   'nav.studies':  { en: 'Studies',     es: 'Estudios' },

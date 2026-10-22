@@ -11,6 +11,7 @@ import LoosePage from './pages/LoosePage';
 import LooseYearPage from './pages/LooseYearPage';
 import ContactPage from './pages/ContactPage';
 import NotFoundPage from './pages/NotFoundPage';
+import Metadatos from './components/Metadatos';
 
 // Always start a freshly navigated page at the top — React Router otherwise
 // keeps the previous scroll position, which left long pages (mobile gallery)
@@ -37,6 +38,7 @@ export default function App() {
     <I18nProvider>
       <BrowserRouter>
         <ScrollToTop />
+        <Metadatos />
         <Navbar />
         <Routes>
           <Route path="/" element={<HomePage />} />

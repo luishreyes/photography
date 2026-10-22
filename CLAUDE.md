@@ -57,6 +57,24 @@ Se revisó la navegación entera y salieron seis fallas. Ninguna se debe reabrir
 
 Las secciones "Colores del sistema", "Tipografía" y "Animación del hero" de más abajo describen la dirección oscura anterior; valen para la rama `oscuro`, no para `main`.
 
+## Buscadores: un HTML por página (22 oct 2026)
+
+GitHub Pages solo sirve archivos. Antes del 22 oct 2026 todo menos la portada respondía 404 y la app entraba por `public/404.html`, así que Google no indexaba nada más. Ahora `npm run build` corre `vite build` y después `scripts/prerender.mjs` (el mismo del portafolio académico, adaptado), que:
+
+- Abre cada página de `paginas.ts` en Chromium sobre `dist/`, como un visitante nuevo y en inglés, y escribe su HTML (`work/geometries.html`; las que tienen páginas debajo, también `work/index.html`) con título, `meta description`, dirección canónica y etiquetas Open Graph con la portada de la colección. El contenido va dentro de `#root` en `<div data-previo>`, escondido: React lo reemplaza al arrancar y el visitante ve lo mismo que antes. Lo leen los buscadores y quien no tiene JavaScript.
+- Escribe `sitemap.xml` (todas las páginas), `robots.txt` y una página que redirige por cada `/study/<slug>` viejo de Instagram (`REDIRECCIONES`, sacadas de los estudios del catálogo; conservan `?` y `#`).
+- `404.html` queda para lo que no existe.
+
+**Colección, estudio o tomo nuevo:** no hay que hacer nada; sale de `data/catalog-data.ts` (título = `names`, descripción = `statement`, foto = `coverPhoto`). **Página nueva:** su ruta en `App.tsx` y su entrada en `paginas()`; el prerender avisa si una ruta de `App.tsx` se queda sin página.
+
+**Al navegar**, `components/Metadatos.tsx` cambia el título y la canónica (el `lang` lo pone `i18n.tsx`).
+
+**Barra final:** GitHub Pages sirve `work.html` para `/work` aunque exista la carpeta `work/`; las canónicas van sin barra y el script de `index.html` le quita la barra a quien llega con ella.
+
+**Chromium:** en GitHub Actions usa el Google Chrome del runner; en la nube, el de Playwright; en el Mac, Chrome (o `CHROME_PATH`). Si no lo encuentra, las páginas salen con sus metadatos pero sin contenido y el build avisa (`::warning::` en Actions). El script solo corre sobre un `dist/` recién construido: para repetirlo, `npm run build`.
+
+**`HorizontalTrack`:** al medir la pista dispara un scroll sintético para que framer recalcule el progreso. Sin eso, quien abría una galería por su dirección (no navegando dentro del sitio) la veía en la última foto hasta mover la rueda.
+
 ## Proyecto
 
 Portafolio de fotografía artística en blanco y negro, hospedado en GitHub Pages.
